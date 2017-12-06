@@ -41,6 +41,7 @@
     "@types/react-router-redux": "^5.0.10",
     "@types/redux": "^3.6.0",
     "@types/webpack-env": "^1.13.2",
+    "@voiceofamerica/psiphon-cordova-plugin": "^0.1.0",
     "@voiceofamerica/voa-core-shared": "^1.25.0",
     "@voiceofamerica/voa-shared": "^1.6.0",
     "adobe-mobile-services": "^4.13.1-cor",
@@ -74,7 +75,6 @@
     "moment": "^2.19.2",
     "node-sass": "^4.5.3",
     "npm-run-all": "^4.1.1",
-    "psiphon-cordova-plugin": "git://git@github.com:Voiceofamerica/psiphon-cordova-plugin.git",
     "react": "^16.0.0",
     "react-apollo": "^2.0.1",
     "react-dnd": "^2.5.4",
@@ -103,9 +103,9 @@
       "cordova-plugin-splashscreen": {},
       "cordova-hot-code-push-plugin": {},
       "cordova-hot-code-push-local-dev-addon": {},
-      "psiphon-cordova-plugin": {},
       "cordova-wheel-selector-plugin": {},
-      "adobe-mobile-services": {}
+      "adobe-mobile-services": {},
+      "psiphon-cordova-plugin": {}
     },
     "platforms": [
       "android"
