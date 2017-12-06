@@ -43,6 +43,7 @@
     "@types/webpack-env": "^1.13.2",
     "@voiceofamerica/voa-core-shared": "^1.25.0",
     "@voiceofamerica/voa-shared": "^1.6.0",
+    "adobe-mobile-services": "^4.13.1-cor",
     "android-versions": "^1.2.1",
     "apollo-cache-inmemory": "^1.1.1",
     "apollo-client": "^2.0.3",
@@ -103,7 +104,8 @@
       "cordova-hot-code-push-plugin": {},
       "cordova-hot-code-push-local-dev-addon": {},
       "psiphon-cordova-plugin": {},
-      "cordova-wheel-selector-plugin": {}
+      "cordova-wheel-selector-plugin": {},
+      "adobe-mobile-services": {}
     },
     "platforms": [
       "android"
