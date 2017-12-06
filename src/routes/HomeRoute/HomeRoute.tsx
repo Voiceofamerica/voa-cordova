@@ -12,6 +12,7 @@ import ArticleBlurb from '@voiceofamerica/voa-shared/types/ArticleBlurb'
 import { homeRoute, row, loadMore, content, contentLoading, topNav } from './HomeRoute.scss'
 import * as Query from './HomeRoute.graphql'
 import { HomeRouteQuery } from 'helpers/graphql-types'
+import analytics from 'helpers/analytics'
 
 const Row = ({ children }: React.Props<any>) => (
   <div className={row}>
@@ -22,6 +23,10 @@ const Row = ({ children }: React.Props<any>) => (
 type Props = ChildProps<RouteComponentProps<void>, HomeRouteQuery>
 
 class HomeRouteBase extends React.Component<Props> {
+  componentDidMount () {
+    analytics.trackHome()
+  }
+
   renderLoading () {
     const { data } = this.props
     if (!data.loading) {

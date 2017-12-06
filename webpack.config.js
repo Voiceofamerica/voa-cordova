@@ -111,5 +111,10 @@ module.exports = {
       title: package.displayName,
       template: path.join(__dirname, 'src/index.ejs')
     }),
+    new CopyWebpackPlugin([
+      {
+        from: path.join(__dirname, 'static/ADBMobileConfig.json')
+      }
+    ]),
   ]
 }
