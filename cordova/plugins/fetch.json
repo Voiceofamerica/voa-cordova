@@ -1,0 +1,10 @@
+{
+  "ca.psiphon.psiphon": {
+    "source": {
+      "type": "local",
+      "path": "../psiphon-cordova-plugin"
+    },
+    "is_top_level": true,
+    "variables": {}
+  }
+}

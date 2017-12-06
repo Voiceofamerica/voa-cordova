@@ -1,0 +1,13 @@
+
+query ArticleRoute($id: Int) {
+  articleById(source: zh, id: $id) {
+    id
+    title
+    pubDate
+    lastUpdated
+    content
+    image {
+      url
+    }
+  }
+}

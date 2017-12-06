@@ -1,0 +1,57 @@
+
+@import "'~@voiceofamerica/voa-shared/commonStyles/index";
+
+.articleRoute {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    position: fixed;
+    top: 0;
+    bottom: 10px;
+    right: 0;
+    left: 0;
+    overflow-y: scroll;
+    padding-bottom: $menu-height;
+  }
+
+  .heading {
+    h1 {
+      font-size: 2.5em;
+      font-weight: bold;
+      margin: 2vw 5vw;
+      text-align: center;
+    }
+
+    hr {
+      border: none;
+      border-bottom: 1px solid black;
+      margin: 0 20vw;
+    }
+
+    h2 {
+      font-size: 1.5em;
+      font-weight: bold;
+      text-align: center;
+      margin: 1vw 5vw;
+    }
+
+    h3 {
+      font-size: 0.9em;
+      text-align: center;
+      margin: 1vw;
+    }
+  }
+
+  .articleText {
+    font-size: 1em;
+    margin: 1vw;
+  }
+}

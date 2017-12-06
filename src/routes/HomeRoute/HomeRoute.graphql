@@ -1,0 +1,11 @@
+query HomeRoute {
+  articles(source: zh) {
+    id
+    title
+    introduction
+    pubDate
+    image {
+      url
+    }
+  }
+}

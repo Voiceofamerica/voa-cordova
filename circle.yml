@@ -1,0 +1,95 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: "node:6.11.1"
+    steps:
+      - checkout
+      - restore_cache:
+          key: v3-voa-cordova-npm-{{ checksum "package-lock.json" }}
+      - run: yarn global add npm@5
+      - run: npm install --unsafe-perm --no-save
+      - save_cache:
+          key: v3-voa-cordova-npm-{{ checksum "package-lock.json" }}
+          paths:
+            - "~/.npm"
+            - "node_modules"
+      - run: npm run check
+
+  build_android:
+    docker:
+      - image: bitriseio/docker-android
+    steps:
+      - checkout
+      - restore_cache:
+          key: v3-voa-cordova-android-{{ checksum "package-lock.json" }}-{{ checksum "_cordova/package-lock.json" }}
+      - run: bash scripts/setupAndroid.sh
+      - run: npm install --unsafe-perm --no-save
+      - run: npm run cordova:prepare:project android
+      - run: git checkout -- _cordova/package-lock.json
+      - run: npm run www
+      - run: bash scripts/buildAndroid.sh
+      - save_cache:
+          key: v3-voa-cordova-android-{{ checksum "package-lock.json" }}-{{ checksum "_cordova/package-lock.json" }}
+          paths:
+            - "~/.npm"
+            - "~/.android"
+            - "node_modules"
+            - "_cordova/node_modules"
+            - "_cordova/plugins"
+            - "_cordova/platforms"
+      - store_artifacts:
+          path: _cordova/platforms/android/build/outputs/apk/android-local.apk
+          destination: local.apk
+      - store_artifacts:
+          path: _cordova/platforms/android/build/outputs/apk/android-debug.apk
+          destination: debug.apk
+      - store_artifacts:
+          path: _cordova/platforms/android/build/outputs/apk/android-release.apk
+          destination: release.apk
+
+  build_ios:
+    machine: true
+    environment:
+      NODE_VERSION: 6.11.1
+    steps:
+      - checkout
+      - restore_cache:
+          key: v3-voa-cordova-ios-{{ checksum "package-lock.json" }}-{{ checksum "_cordova/package-lock.json" }}
+      - run: bash scripts/setupiOS.sh
+      - run: npm install --unsafe-perm --no-save
+      - run: npm run cordova:prepare
+      - run: git checkout -- _cordova/package-lock.json
+      - save_cache:
+          key: v3-voa-cordova-ios-{{ checksum "package-lock.json" }}-{{ checksum "_cordova/package-lock.json" }}
+          paths:
+            - "~/.npm"
+            - "node_modules"
+            - "_cordova/node_modules"
+            - "_cordova/plugins"
+            - "_cordova/platforms"
+      - run: npm run www
+      - run: bash scripts/buildiOS.sh
+      - store_artifacts:
+          path: _cordova/builds/local/voa-cordova.ipa
+          destination: local.ipa
+      - store_artifacts:
+          path: _cordova/builds/debug/voa-cordova.ipa
+          destination: debug.ipa
+      - store_artifacts:
+          path: _cordova/builds/release/voa-cordova.ipa
+          destination: release.ipa
+
+workflows:
+  version: 2
+  test_and_build:
+    jobs:
+      - test
+      - build_android:
+          filters:
+            branches:
+              only: master
+      #- build_ios:
+      #    filters:
+      #      branches:
+      #        only: master

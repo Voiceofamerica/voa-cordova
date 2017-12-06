@@ -1,0 +1,37 @@
+
+@import "'~@voiceofamerica/voa-shared/commonStyles/index";
+
+.categorySettings {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  overflow: scroll;
+
+  .pillContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 2px;
+    background: transparent;
+
+    .pillOuter {
+      padding: 5px;
+  
+      .pill {
+        background: $light-grey;
+        color: black;
+        padding: 3px;
+        border-radius: 100px;
+        text-align: center;
+
+        &.dragged {
+          background: $border-grey;
+        }
+      }
+    }
+  }
+}
