@@ -36,13 +36,13 @@ jobs:
             - "platforms"
       - run: bash scripts/buildAndroid.sh
       - store_artifacts:
-          path: platforms/android/build/outputs/apk/android-local.apk
+          path: platforms/android/build/outputs/apk/debug/android-local.apk
           destination: local.apk
       - store_artifacts:
-          path: platforms/android/build/outputs/apk/android-debug.apk
+          path: platforms/android/build/outputs/apk/debug/android-debug.apk
           destination: debug.apk
       - store_artifacts:
-          path: platforms/android/build/outputs/apk/android-release.apk
+          path: platforms/android/build/outputs/apk/release/android-release.apk
           destination: release.apk
 
   build_ios:
