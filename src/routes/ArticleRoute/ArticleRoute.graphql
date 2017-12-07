@@ -1,6 +1,6 @@
 
 query ArticleRoute($id: Int) {
-  articleById(source: zh, id: $id) {
+  content(source: zhcn, type: [], id: $id) {
     id
     title
     pubDate
@@ -9,5 +9,12 @@ query ArticleRoute($id: Int) {
     image {
       url
     }
+    video {
+      url
+    }
+    audio {
+      url
+    }
+    type
   }
 }

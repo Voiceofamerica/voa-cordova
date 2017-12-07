@@ -42,12 +42,12 @@ class HomeRouteBase extends React.Component<Props> {
 
   renderHero () {
     const { history, data } = this.props
-    const { loading, articles } = data
-    if (loading || articles.length < 1) {
+    const { loading, content } = data
+    if (loading || content.length < 1) {
       return null
     }
 
-    const blurb = articles[0]
+    const blurb = content[0]
 
     return (
       <Row>
@@ -58,15 +58,15 @@ class HomeRouteBase extends React.Component<Props> {
 
   renderSecondary () {
     const { history, data } = this.props
-    const { loading, articles } = data
-    if (loading || articles.length < 2) {
+    const { loading, content } = data
+    if (loading || content.length < 2) {
       return null
     }
 
     return (
       <Row>
         {
-          articles.slice(1, 3).map((blurb, idx) => (
+          content.slice(1, 3).map((blurb, idx) => (
             <Card key={idx} onPress={() => history.push(`/article/${blurb.id}`)} blurb={blurb} factor={2} />
           ))
         }
@@ -76,14 +76,14 @@ class HomeRouteBase extends React.Component<Props> {
 
   renderRest () {
     const { history, data } = this.props
-    const { loading, articles } = data
+    const { loading, content } = data
 
-    if (loading || articles.length < 4) {
+    if (loading || content.length < 4) {
       return null
     }
 
     return (
-      articles.slice(3).map((blurb, idx) => (
+      content.slice(3).map((blurb, idx) => (
         <Row key={idx}>
           <Ticket onPress={() => history.push(`/article/${blurb.id}`)} blurb={blurb} />
         </Row>

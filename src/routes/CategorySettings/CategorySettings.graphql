@@ -1,6 +1,6 @@
 
 query CategorySettings {
-  zones(source: zh) {
+  zones(source: zhcn) {
     id
     name
   }

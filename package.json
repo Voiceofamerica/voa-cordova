@@ -23,7 +23,7 @@
     "build:cordova": "cordova build",
     "scss:types": "tcm -p './src/{components,containers,routes}/**/*.scss'",
     "scss:types:watch": "npm run scss:types -- -w",
-    "gql:types": "apollo-codegen generate src/**/*.graphql --schema node_modules/voa-core-shared/introspect/schema.json --target typescript --output src/helpers/graphql-types.d.ts"
+    "gql:types": "apollo-codegen generate src/**/*.graphql --schema node_modules/@voiceofamerica/voa-core-shared/introspect/schema.json --target typescript --output src/helpers/graphql-types.d.ts"
   },
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
@@ -41,7 +41,7 @@
     "@types/react-router-redux": "^5.0.10",
     "@types/redux": "^3.6.0",
     "@types/webpack-env": "^1.13.2",
-    "@voiceofamerica/voa-core-shared": "^1.25.0",
+    "@voiceofamerica/voa-core-shared": "^1.42.0",
     "@voiceofamerica/voa-shared": "^1.6.1",
     "adobe-mobile-services": "^4.13.1-cor",
     "android-versions": "^1.2.1",
@@ -75,6 +75,7 @@
     "moment": "^2.19.2",
     "node-sass": "^4.5.3",
     "npm-run-all": "^4.1.1",
+    "psiphon-cordova-plugin": "^0.1.1",
     "react": "^16.0.0",
     "react-apollo": "^2.0.1",
     "react-dnd": "^2.5.4",
@@ -95,8 +96,7 @@
     "typed-css-modules": "^0.3.0",
     "typescript": "^2.5.3",
     "url-loader": "^0.6.2",
-    "webpack": "^3.8.1",
-    "psiphon-cordova-plugin": "^0.1.1"
+    "webpack": "^3.8.1"
   },
   "cordova": {
     "plugins": {

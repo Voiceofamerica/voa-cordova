@@ -1,21 +1,36 @@
 /* tslint:disable */
 //  This file was automatically generated and should not be edited.
 
+export enum ContentType {
+  Article = "Article",
+  Video = "Video",
+  PhotoGallery = "PhotoGallery",
+  Clip = "Clip",
+}
+
+
 export type ArticleRouteQueryVariables = {
   id?: number | null,
 };
 
 export type ArticleRouteQuery = {
-  articleById:  {
+  content:  Array< {
     id: number,
     title: string,
     pubDate: string,
     lastUpdated: string | null,
-    content: string,
+    content: string | null,
     image:  {
       url: string,
     } | null,
-  } | null,
+    video:  {
+      url: string | null,
+    } | null,
+    audio:  {
+      url: string | null,
+    } | null,
+    type: ContentType | null,
+  } | null > | null,
 };
 
 export type CategorySettingsQuery = {
@@ -26,7 +41,7 @@ export type CategorySettingsQuery = {
 };
 
 export type HomeRouteQuery = {
-  articles:  Array< {
+  content:  Array< {
     id: number,
     title: string,
     introduction: string,

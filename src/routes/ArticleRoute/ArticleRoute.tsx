@@ -35,7 +35,7 @@ class HomeRouteBase extends React.Component<Props> {
   }
 
   renderImage () {
-    const { image } = this.props.data.articleById
+    const { image } = this.props.data.content[0]
     if (!image || !image.url) {
       return null
     }
@@ -44,7 +44,7 @@ class HomeRouteBase extends React.Component<Props> {
   }
 
   renderHeading () {
-    const { title, pubDate } = this.props.data.articleById
+    const { title, pubDate } = this.props.data.content[0]
     const authorNames = [] // authors
       .map(auth => auth.name)
       .map(name => `${name.first} ${name.last}`)
@@ -64,7 +64,7 @@ class HomeRouteBase extends React.Component<Props> {
   }
 
   renderUpdatedDate () {
-    const { lastUpdated, pubDate } = this.props.data.articleById
+    const { lastUpdated, pubDate } = this.props.data.content[0]
     const published = moment(pubDate)
     const updated = moment(lastUpdated)
 
@@ -81,7 +81,7 @@ class HomeRouteBase extends React.Component<Props> {
 
   renderArticle () {
     const { data } = this.props
-    const article = data.articleById
+    const article = data.content[0]
     if (!article) {
       return null
     }
