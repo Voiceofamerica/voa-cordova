@@ -8,7 +8,7 @@ jobs:
       - restore_cache:
           key: v3-voa-cordova-npm-{{ checksum "package-lock.json" }}
       - run: yarn global add npm@5
-      - run: npm install --unsafe-perm --no-save
+      - run: npm install --unsafe-perm
       - save_cache:
           key: v3-voa-cordova-npm-{{ checksum "package-lock.json" }}
           paths:
@@ -22,22 +22,19 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v3-voa-cordova-android-{{ checksum "package-lock.json" }}-{{ checksum "_cordova/package-lock.json" }}
+          key: v3-voa-cordova-android-{{ checksum "package-lock.json" }}-{{ checksum "config.xml" }}
       - run: bash scripts/setupAndroid.sh
-      - run: npm install --unsafe-perm --no-save
-      - run: npm run cordova:prepare:project android
-      - run: git checkout -- _cordova/package-lock.json
-      - run: npm run www
+      - run: npm install --unsafe-perm
+      - run: npx cordova prepare
       - run: bash scripts/buildAndroid.sh
       - save_cache:
-          key: v3-voa-cordova-android-{{ checksum "package-lock.json" }}-{{ checksum "_cordova/package-lock.json" }}
+          key: v3-voa-cordova-android-{{ checksum "package-lock.json" }}-{{ checksum "config.xml" }}
           paths:
             - "~/.npm"
             - "~/.android"
             - "node_modules"
-            - "_cordova/node_modules"
-            - "_cordova/plugins"
-            - "_cordova/platforms"
+            - "plugins"
+            - "platforms"
       - store_artifacts:
           path: _cordova/platforms/android/build/outputs/apk/android-local.apk
           destination: local.apk
@@ -55,13 +52,13 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v3-voa-cordova-ios-{{ checksum "package-lock.json" }}-{{ checksum "_cordova/package-lock.json" }}
+          key: v3-voa-cordova-ios-{{ checksum "package-lock.json" }}-{{ checksum "config.xml" }}
       - run: bash scripts/setupiOS.sh
-      - run: npm install --unsafe-perm --no-save
+      - run: npm install --unsafe-perm
       - run: npm run cordova:prepare
       - run: git checkout -- _cordova/package-lock.json
       - save_cache:
-          key: v3-voa-cordova-ios-{{ checksum "package-lock.json" }}-{{ checksum "_cordova/package-lock.json" }}
+          key: v3-voa-cordova-ios-{{ checksum "package-lock.json" }}-{{ checksum "config.xml" }}
           paths:
             - "~/.npm"
             - "node_modules"
