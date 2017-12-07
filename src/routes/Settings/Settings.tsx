@@ -2,7 +2,7 @@
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
 
-import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
+import BottomNav, { IconItem } from '@voiceofamerica/voa-shared/components/BottomNav'
 import { settings, topNav, buttons, settingsButton, buttonIcon } from './Settings.scss'
 
 export default class HomeRoute extends React.Component<RouteComponentProps<void>> {

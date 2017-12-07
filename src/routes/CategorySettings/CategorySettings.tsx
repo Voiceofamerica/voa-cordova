@@ -6,11 +6,6 @@ import { connect, Dispatch } from 'react-redux'
 import { DragDropContext } from 'react-dnd'
 import TouchBackend from 'react-dnd-touch-backend'
 
-import { ready } from '@voiceofamerica/voa-shared/helpers/startup'
-import Card from '@voiceofamerica/voa-shared/components/Card'
-import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
-import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
-
 import setCategoryOrder from 'redux-store/actions/setCategoryOrder'
 import AppState from 'types/AppState'
 import Category from 'types/Category'
@@ -38,12 +33,12 @@ interface LocalState {
   draggingIndex: number
 }
 
-interface SortableUpdate<T> {
-  draggingIndex: number
-  items?: T[]
-}
+// interface SortableUpdate<T> {
+//   draggingIndex: number
+//   items?: T[]
+// }
 
-class CategorySettingsBase extends React.Component<Props> {
+class CategorySettingsBase extends React.Component<Props, LocalState> {
   render () {
     const { data, categories } = this.props
     const { zones = [] } = data

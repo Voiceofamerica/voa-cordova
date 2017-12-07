@@ -1,6 +1,5 @@
 
 import * as React from 'react'
-import { findDOMNode } from 'react-dom'
 import {
   DragSource,
   DropTarget,

@@ -3,13 +3,11 @@ import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
 import { graphql, ChildProps } from 'react-apollo'
 
-import { ready } from '@voiceofamerica/voa-shared/helpers/startup'
 import Card from '@voiceofamerica/voa-shared/components/Card'
 import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
 import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
-import ArticleBlurb from '@voiceofamerica/voa-shared/types/ArticleBlurb'
 
-import { homeRoute, row, loadMore, content, contentLoading, topNav } from './HomeRoute.scss'
+import { homeRoute, row, content, contentLoading, topNav } from './HomeRoute.scss'
 import * as Query from './HomeRoute.graphql'
 import { HomeRouteQuery } from 'helpers/graphql-types'
 import analytics from 'helpers/analytics'
@@ -94,8 +92,6 @@ class HomeRouteBase extends React.Component<Props> {
   }
 
   renderTopNav () {
-    const { history } = this.props
-
     return (
       <div className={topNav}>
       </div>

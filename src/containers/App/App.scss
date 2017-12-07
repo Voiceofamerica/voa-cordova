@@ -3,20 +3,4 @@
 
 .app {
 
-  .topNav {
-    display: flex;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: $menu-height;
-    padding-left: 5vw;
-    background: #EEE;
-    font-size: $menu-font-size;
-    font-weight: bold;
-    align-items: center;
-    z-index: 10000;
-    border-bottom: 1px solid $border-grey;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-  }
 }

@@ -11,7 +11,7 @@ import store from 'redux-store'
 import Router from 'containers/Router'
 import client from 'helpers/graphql-client'
 
-import { app, topNav } from './App.scss'
+import { app } from './App.scss'
 
 export default class App extends React.Component<void, { appReady: boolean }> {
   state = {
@@ -19,7 +19,11 @@ export default class App extends React.Component<void, { appReady: boolean }> {
   }
 
   componentDidMount () {
-    ready().then(() => this.setState({ appReady: true }))
+    ready()
+      .then(() => this.setState({ appReady: true }))
+      .catch((err) => {
+        console.error(err)
+      })
   }
 
   render () {
