@@ -26,7 +26,6 @@ jobs:
       - run: bash scripts/setupAndroid.sh
       - run: npm install --unsafe-perm
       - run: npx cordova prepare
-      - run: bash scripts/buildAndroid.sh
       - save_cache:
           key: v3-voa-cordova-android-{{ checksum "package-lock.json" }}-{{ checksum "config.xml" }}
           paths:
@@ -35,6 +34,7 @@ jobs:
             - "node_modules"
             - "plugins"
             - "platforms"
+      - run: bash scripts/buildAndroid.sh
       - store_artifacts:
           path: _cordova/platforms/android/build/outputs/apk/android-local.apk
           destination: local.apk
@@ -90,4 +90,3 @@ workflows:
       #    filters:
       #      branches:
       #        only: master
-      
