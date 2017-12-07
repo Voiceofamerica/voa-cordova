@@ -34,6 +34,8 @@ jobs:
             - "node_modules"
             - "plugins"
             - "platforms"
+      - run: unzip -P "$PROTECTED_PASS" protected.zip
+      - run: npm run build:webpack
       - run: bash scripts/buildAndroid.sh
       - store_artifacts:
           path: platforms/android/build/outputs/apk/debug/android-local.apk
@@ -64,7 +66,8 @@ jobs:
             - "node_modules"
             - "plugins"
             - "platforms"
-      - run: npm run www
+      - run: unzip -P "$PROTECTED_PASS" protected.zip
+      - run: npm run build:webpack
       - run: bash scripts/buildiOS.sh
       - store_artifacts:
           path: builds/local/voa-cordova.ipa
