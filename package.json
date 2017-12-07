@@ -41,7 +41,6 @@
     "@types/react-router-redux": "^5.0.10",
     "@types/redux": "^3.6.0",
     "@types/webpack-env": "^1.13.2",
-    "@voiceofamerica/psiphon-cordova-plugin": "^0.1.1",
     "@voiceofamerica/voa-core-shared": "^1.25.0",
     "@voiceofamerica/voa-shared": "^1.6.0",
     "adobe-mobile-services": "^4.13.1-cor",
@@ -97,7 +96,7 @@
     "typescript": "^2.5.3",
     "url-loader": "^0.6.2",
     "webpack": "^3.8.1",
-    "psiphon-cordova-plugin": "@voiceofamerica/psiphon-cordova-plugin@~0.1.1"
+    "psiphon-cordova-plugin": "^0.1.1"
   },
   "cordova": {
     "plugins": {

@@ -29,5 +29,5 @@
     <plugin name="cordova-hot-code-push-local-dev-addon" spec="^0.4.2" />
     <plugin name="cordova-wheel-selector-plugin" spec="^1.0.9" />
     <plugin name="adobe-mobile-services" spec="^4.13.1-cor" />
-    <plugin name="psiphon-cordova-plugin" spec="@voiceofamerica/psiphon-cordova-plugin@~0.1.1" />
+    <plugin name="psiphon-cordova-plugin" spec="^0.1.1" />
 </widget>
