@@ -22,7 +22,7 @@ interface Props extends React.Props<any> {
   isDragging?: boolean
 }
 
-interface PillItem {
+export interface PillItem {
   id: number
   type: string
   index: number
@@ -77,7 +77,7 @@ const dropArea = DropTarget(
         return
       }
 
-      item.draggedOver(item, getItem(props))
+      props.draggedOver(getItem(props), item)
     },
   },
   connect => ({

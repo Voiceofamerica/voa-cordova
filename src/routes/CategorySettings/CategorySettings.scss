@@ -11,6 +11,7 @@
   bottom: 0;
   background: white;
   overflow: scroll;
+  user-select: none;
 
   .pillContainer {
     display: grid;
