@@ -11,6 +11,8 @@ import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
 import AppState from 'types/AppState'
 import Category from 'types/Category'
 
+import { centerIcon, iconText } from './MainLayout.scss'
+
 interface StateProps {
   categories: Category[]
 }
@@ -56,18 +58,23 @@ function MainLayout ({ component: Component, categories, toggleMediaPlayer, ...r
           <BottomNav>
             <IconItem active>
               <i className='mdi mdi-home-outline' />
+              <div className={iconText}>首页</div>
             </IconItem>
             <IconItem>
               <i className='mdi mdi-flash-outline' />
+              <div className={iconText}>突发新闻</div>
             </IconItem>
             <RoundItem onClick={() => toggleMediaPlayer()}>
-              <i className='mdi mdi-play-circle-outline' />
+              <i className={`mdi mdi-play-circle-outline ${centerIcon}`} />
+              <div className={iconText}>多媒体</div>
             </RoundItem>
             <IconItem>
               <i className='mdi mdi-radio-tower' />
+              <div className={iconText}>直播</div>
             </IconItem>
             <IconItem onClick={() => goTo('/settings')}>
               <i className='mdi mdi-account-outline' />
+              <div className={iconText}>我的</div>
             </IconItem>
           </BottomNav>
         </div>

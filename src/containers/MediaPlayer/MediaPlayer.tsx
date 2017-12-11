@@ -29,7 +29,7 @@ class MediaPlayerBase extends React.Component<Props> {
 
     return (
       <div className={player}>
-        <MediaPlayer src={mediaUrl} playbackRate={mediaPlaybackRate} />
+        <MediaPlayer src={mediaUrl} playbackRate={mediaPlaybackRate} autoPlay />
       </div>
     )
   }

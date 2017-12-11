@@ -1,17 +1,13 @@
-query HomeRoute {
-  content(source: zhcn, type: [Article, Video, PhotoGallery, Clip]) {
+query LiveStream {
+  program(source:zhcn) {
     id
-    title
-    introduction
-    pubDate
+    date
+    timeLeft
+    programTitle
+    programDescription
     image {
       url
     }
-    video {
-      url
-    }
-    audio {
-      url
-    }
+    url
   }
 }

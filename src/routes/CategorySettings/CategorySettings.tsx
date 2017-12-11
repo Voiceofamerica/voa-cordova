@@ -15,7 +15,7 @@ import Category from 'types/Category'
 import * as Query from './CategorySettings.graphql'
 import { CategorySettingsQuery } from 'helpers/graphql-types'
 
-import { categorySettings, pillContainer } from './CategorySettings.scss'
+import { categorySettings, pillContainer, topNav } from './CategorySettings.scss'
 
 import CategoryPill, { PillItem } from './CategoryPill'
 
@@ -100,7 +100,10 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
   renderCategory = ({ id, name, chosen, separator }: Category & { chosen: boolean, separator: boolean }, index: number) => {
     if (separator) {
       return (
-        <div style={{ gridColumnStart: 1, gridColumnEnd: 3 }}>-------------</div>
+        <div style={{ gridColumnStart: 1, gridColumnEnd: 3, fontWeight: 'bold', fontSize: '1.5em', marginLeft: 5, marginRight: 5 }}>
+          全部频道
+          <span style={{ float: 'right', fontSize: '0.8em', fontWeight: 'normal' }}>长按拖动调整频道</span>
+        </div>
       )
     } else {
       const dragHandler = chosen ? this.hoverOverChosen : this.hoverOverUnchosen
@@ -130,7 +133,11 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
 
     return (
       <div className={categorySettings}>
+        <div className={topNav}>排列分类</div>
         <div className={pillContainer}>
+          <div style={{ fontWeight: 'bold', gridColumnStart: 1, gridColumnEnd: 3, fontSize: '1.5em', marginLeft: 5, marginRight: 5 }}>
+            我的频道
+          </div>
           {
             allCategoriesWithSeparator.map(this.renderCategory)
           }

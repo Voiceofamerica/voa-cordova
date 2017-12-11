@@ -93,7 +93,7 @@ class HomeRouteBase extends React.Component<Props> {
       <Row>
         {
           content.slice(1, 3).map((blurb, idx) => (
-            <Card key={idx} onPress={() => this.goToArticle(blurb.id)} blurb={blurb} factor={2} />
+            <Card key={blurb.id} onPress={() => this.goToArticle(blurb.id)} blurb={blurb} factor={2} />
           ))
         }
       </Row>
@@ -110,7 +110,7 @@ class HomeRouteBase extends React.Component<Props> {
 
     return (
       content.slice(3).map((blurb, idx) => (
-        <Row key={idx}>
+        <Row key={blurb.id}>
           <Ticket onPress={() => this.goToArticle(blurb.id)} blurb={blurb} />
         </Row>
       ))

@@ -104,7 +104,7 @@ class HomeRouteBase extends React.Component<Props> {
         image: { url: video.thumbnail },
         title: '',
         pubDate: article.pubDate,
-      }} />
+      }} factor={3} />
     )
   }
 

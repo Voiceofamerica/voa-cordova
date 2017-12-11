@@ -105,3 +105,17 @@ export type HomeRouteQuery = {
     } | null,
   } | null > | null,
 };
+
+export type LiveStreamQuery = {
+  program:  Array< {
+    id: number,
+    date: string | null,
+    timeLeft: number | null,
+    programTitle: string | null,
+    programDescription: string | null,
+    image:  {
+      url: string,
+    } | null,
+    url: string | null,
+  } | null > | null,
+};
