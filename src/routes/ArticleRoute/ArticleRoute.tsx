@@ -81,10 +81,11 @@ class HomeRouteBase extends React.Component<Props> {
 
   renderArticle () {
     const { data } = this.props
-    const article = data.content[0]
-    if (!article) {
+    if (!(data.content && data.content[0])) {
       return null
     }
+
+    const article = data.content[0]
 
     const paragraphs = article.content.split(/\n/g)
 
