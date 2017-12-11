@@ -1,16 +1,22 @@
 
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
 import { graphql, ChildProps } from 'react-apollo'
 
 import Card from '@voiceofamerica/voa-shared/components/Card'
 import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
 import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
+import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav'
 
 import { homeRoute, row, content, contentLoading, topNav } from './HomeRoute.scss'
 import * as Query from './HomeRoute.graphql'
 import { HomeRouteQuery } from 'helpers/graphql-types'
 import analytics from 'helpers/analytics'
+
+import AppState from 'types/AppState'
+import Category from 'types/Category'
 
 const Row = ({ children }: React.Props<any>) => (
   <div className={row}>
@@ -18,11 +24,30 @@ const Row = ({ children }: React.Props<any>) => (
   </div>
 )
 
-type Props = ChildProps<RouteComponentProps<void>, HomeRouteQuery>
+interface StateProps {
+  categories: Category[]
+}
+
+type QueryProps = ChildProps<RouteComponentProps<void>, HomeRouteQuery>
+
+type Props = QueryProps & StateProps
 
 class HomeRouteBase extends React.Component<Props> {
   componentDidMount () {
     analytics.trackHome()
+  }
+
+  goTo (route: string) {
+    const { history } = this.props
+    history.push(route)
+  }
+
+  goToArticle (id: number) {
+    this.goTo(`/article/${id}`)
+  }
+
+  goToSettings () {
+    this.goTo('/settings')
   }
 
   renderLoading () {
@@ -41,7 +66,7 @@ class HomeRouteBase extends React.Component<Props> {
   }
 
   renderHero () {
-    const { history, data } = this.props
+    const { data } = this.props
     const { loading, content } = data
     if (loading || content.length < 1) {
       return null
@@ -51,13 +76,13 @@ class HomeRouteBase extends React.Component<Props> {
 
     return (
       <Row>
-        <Card onPress={() => history.push(`/article/${blurb.id}`)} blurb={blurb} factor={1} />
+        <Card onPress={() => this.goToArticle(blurb.id)} blurb={blurb} factor={1} />
       </Row>
     )
   }
 
   renderSecondary () {
-    const { history, data } = this.props
+    const { data } = this.props
     const { loading, content } = data
     if (loading || content.length < 2) {
       return null
@@ -67,7 +92,7 @@ class HomeRouteBase extends React.Component<Props> {
       <Row>
         {
           content.slice(1, 3).map((blurb, idx) => (
-            <Card key={idx} onPress={() => history.push(`/article/${blurb.id}`)} blurb={blurb} factor={2} />
+            <Card key={idx} onPress={() => this.goToArticle(blurb.id)} blurb={blurb} factor={2} />
           ))
         }
       </Row>
@@ -75,7 +100,7 @@ class HomeRouteBase extends React.Component<Props> {
   }
 
   renderRest () {
-    const { history, data } = this.props
+    const { data } = this.props
     const { loading, content } = data
 
     if (loading || content.length < 4) {
@@ -85,22 +110,32 @@ class HomeRouteBase extends React.Component<Props> {
     return (
       content.slice(3).map((blurb, idx) => (
         <Row key={idx}>
-          <Ticket onPress={() => history.push(`/article/${blurb.id}`)} blurb={blurb} />
+          <Ticket onPress={() => this.goToArticle(blurb.id)} blurb={blurb} />
         </Row>
       ))
     )
   }
 
   renderTopNav () {
+    const { categories } = this.props
+
     return (
-      <div className={topNav}>
-      </div>
+      <TopNav>
+        <TopNavItem selected>
+          要闻
+        </TopNavItem>
+        {
+          categories.map((category, index) => (
+            <TopNavItem key={category.id}>
+              { category.name }
+            </TopNavItem>
+          ))
+        }
+      </TopNav>
     )
   }
 
   renderBottomNav () {
-    const { history } = this.props
-
     return (
       <BottomNav>
         <IconItem active>
@@ -115,7 +150,7 @@ class HomeRouteBase extends React.Component<Props> {
         <IconItem>
           <i className='mdi mdi-radio-tower' />
         </IconItem>
-        <IconItem onClick={() => history.push(`/settings`)}>
+        <IconItem onClick={() => this.goToSettings()}>
           <i className='mdi mdi-account-outline' />
         </IconItem>
       </BottomNav>
@@ -147,6 +182,19 @@ class HomeRouteBase extends React.Component<Props> {
   }
 }
 
-export default graphql(
+const mapStateToProps = ({ settings: { categories } }: AppState): StateProps => ({
+  categories,
+})
+
+const withRedux = connect(
+  mapStateToProps,
+)
+
+const withHomeQuery = graphql(
   Query,
+)
+
+export default compose(
+  withRedux,
+  withHomeQuery,
 )(HomeRouteBase)
