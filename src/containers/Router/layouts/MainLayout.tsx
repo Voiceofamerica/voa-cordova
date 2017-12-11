@@ -18,15 +18,23 @@ type Props = StateProps & RouteProps
 function MainLayout ({ component: Component, categories, ...rest }: Props) {
   return (
     <Route {...rest} render={props => {
+      function replace (route: string) {
+        props.history.replace(route)
+      }
+
+      const { category: categoryIdStr } = props.match.params
+      const isHeadlines = categoryIdStr === null || categoryIdStr === undefined
+      const categoryId = isHeadlines ? 1 : parseInt(categoryIdStr, 10)
+
       return (
         <div>
           <TopNav>
-            <TopNavItem selected>
+            <TopNavItem selected={isHeadlines} onClick={() => replace('/')}>
               要闻
             </TopNavItem>
             {
               categories.map((category, index) => (
-                <TopNavItem key={category.id}>
+                <TopNavItem key={category.id} selected={categoryId === category.id} onClick={() => replace(`/articles/${category.id}`)}>
                   { category.name }
                 </TopNavItem>
               ))

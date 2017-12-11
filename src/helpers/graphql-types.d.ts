@@ -33,6 +33,22 @@ export type ArticleRouteQuery = {
   } | null > | null,
 };
 
+export type CategoryRouteQueryVariables = {
+  category?: number | null,
+};
+
+export type CategoryRouteQuery = {
+  content:  Array< {
+    id: number,
+    title: string,
+    introduction: string,
+    pubDate: string,
+    image:  {
+      url: string,
+    } | null,
+  } | null > | null,
+};
+
 export type CategorySettingsQuery = {
   zones:  Array< {
     id: number,

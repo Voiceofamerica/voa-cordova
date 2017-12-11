@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
 
 import HomeRoute from 'routes/HomeRoute'
+import CategoryRoute from 'routes/CategoryRoute'
 import ArticleRoute from 'routes/ArticleRoute'
 import Settings from 'routes/Settings'
 import CategorySettings from 'routes/CategorySettings'
@@ -20,6 +21,7 @@ export default () => (
       <Route path='/settings/categories' component={CategorySettings}/>
       <Route path='/settings/media' component={MediaSettings}/>
       <Route path='/settings' component={Settings}/>
+      <MainLayout path='/articles/:category' component={CategoryRoute}/>
       <MainLayout path='/' component={HomeRoute}/>
     </Switch>
   </ConnectedRouter>

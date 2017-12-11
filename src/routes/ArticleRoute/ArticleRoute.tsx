@@ -28,7 +28,7 @@ class HomeRouteBase extends React.Component<Props> {
     return (
       <div style={{ display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center', height: '100%', zIndex: 1 }}>
         <div style={{ alignContent: 'center', color: '#FFF', fontSize: '10vw', backgroundColor: 'transparent', textAlign: 'center' }}>
-          Loading...
+          装载...
         </div>
       </div>
     )
@@ -74,7 +74,7 @@ class HomeRouteBase extends React.Component<Props> {
 
     return (
       <div style={{ fontWeight: 'bold' }}>
-        Updated {updated.format('lll')}
+        {updated.format('lll')}更新
       </div>
     )
   }

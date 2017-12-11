@@ -1,0 +1,11 @@
+query CategoryRoute($category: Int) {
+  content(source: zhcn, zoneId: $category, type: [Article, Video, PhotoGallery, Clip]) {
+    id
+    title
+    introduction
+    pubDate
+    image {
+      url
+    }
+  }
+}
