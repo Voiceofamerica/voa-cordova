@@ -59,7 +59,7 @@ class HomeRouteBase extends React.Component<Props> {
 
     return (
       <div style={{ display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center', height: '100%', zIndex: 1 }}>
-        <div style={{ alignContent: 'center', color: '#FFF', fontSize: '10vw', backgroundColor: 'transparent', textAlign: 'center' }}>
+        <div style={{ alignContent: 'center', fontSize: '10vw', backgroundColor: 'transparent', textAlign: 'center' }}>
           装载...
         </div>
       </div>
@@ -163,7 +163,7 @@ const withHomeQuery = graphql(
     props: ({ data }) => {
       let outputData = data as (typeof data) & CategoryRouteQuery
       if (!data.loading) {
-        outputData.content = outputData.content.map(c => {
+        outputData.content = outputData.content.filter(c => c).map(c => {
           return {
             ...c,
             image: c.image && {

@@ -20,15 +20,41 @@ export type ArticleRouteQuery = {
     pubDate: string,
     lastUpdated: string | null,
     content: string | null,
+    authors:  Array< {
+      name:  {
+        first: string,
+        last: string | null,
+      },
+    } | null > | null,
     image:  {
       url: string,
     } | null,
     video:  {
       url: string | null,
+      thumbnail: string | null,
+      videoDescription: string | null,
     } | null,
     audio:  {
       url: string | null,
+      audioTitle: string,
+      audioDescription: string | null,
     } | null,
+    photoGallery:  Array< {
+      photoGalleryTitle: string | null,
+      photoGalleryDescription: string | null,
+      photo:  Array< {
+        photoTitle: string | null,
+        photoDescription: string | null,
+        url: string | null,
+        order: number | null,
+      } | null > | null,
+    } | null > | null,
+    relatedStories:  Array< {
+      id: number,
+      storyTitle: string,
+      thumbnailUrl: string | null,
+      pubDate: string,
+    } | null > | null,
     type: ContentType | null,
   } | null > | null,
 };
@@ -45,6 +71,12 @@ export type CategoryRouteQuery = {
     pubDate: string,
     image:  {
       url: string,
+    } | null,
+    video:  {
+      url: string | null,
+    } | null,
+    audio:  {
+      url: string | null,
     } | null,
   } | null > | null,
 };
@@ -64,6 +96,12 @@ export type HomeRouteQuery = {
     pubDate: string,
     image:  {
       url: string,
+    } | null,
+    video:  {
+      url: string | null,
+    } | null,
+    audio:  {
+      url: string | null,
     } | null,
   } | null > | null,
 };

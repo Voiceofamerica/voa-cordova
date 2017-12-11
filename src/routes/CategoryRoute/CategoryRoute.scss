@@ -3,7 +3,7 @@
 
 .homeRoute {
   display: flex;
-  position: absolute;
+  position: fixed;
   flex-direction: column;
   top: 0;
   left: 0;
@@ -14,23 +14,6 @@
   .row {
     display: flex;
     flex-direction: row;
-  }
-
-  .loadMore {
-    justify-content: center;
-    align-content: center;
-    border-radius: 2vw;
-    background-color: #408;
-    color: #FFF;
-    font-size: 7vw;
-    width: 100%;
-    padding: 2vw;
-    border: none;
-    outline: none;
-
-    &:active {
-      
-    }
   }
 
   .content {

@@ -1,2 +1,8 @@
 
 @import '~mdi/scss/materialdesignicons.scss';
+
+html, body {
+  overflow: hidden;
+  height: 100vh;
+  position: fixed;
+}

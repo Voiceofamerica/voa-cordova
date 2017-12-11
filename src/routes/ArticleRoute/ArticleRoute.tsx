@@ -1,22 +1,32 @@
 
 import * as React from 'react'
+import { compose } from 'redux'
+import { connect, Dispatch } from 'react-redux'
 import { RouteComponentProps } from 'react-router'
 import { graphql, ChildProps, QueryOpts } from 'react-apollo'
 import * as moment from 'moment'
 
 import ResilientImage from '@voiceofamerica/voa-shared/components/ResilientImage'
 import BottomNav, { IconItem } from '@voiceofamerica/voa-shared/components/BottomNav'
+import Card from '@voiceofamerica/voa-shared/components/Card'
+
+import { ArticleRouteQuery, ArticleRouteQueryVariables } from 'helpers/graphql-types'
+import playMedia from 'redux-store/actions/playMedia'
 
 import { articleRoute, container, heading, articleText } from './ArticleRoute.scss'
 import * as Query from './ArticleRoute.graphql'
-import { ArticleRouteQuery, ArticleRouteQueryVariables } from 'helpers/graphql-types'
 
 export interface Params {
   id: string
 }
 
+interface DispatchProps {
+  playMedia: (url: string, title: string, description: string) => void
+}
+
 type OwnProps = RouteComponentProps<Params>
-type Props = ChildProps<OwnProps, ArticleRouteQuery>
+type QueryProps = ChildProps<OwnProps, ArticleRouteQuery>
+type Props = QueryProps & DispatchProps
 
 class HomeRouteBase extends React.Component<Props> {
   renderLoading () {
@@ -44,8 +54,8 @@ class HomeRouteBase extends React.Component<Props> {
   }
 
   renderHeading () {
-    const { title, pubDate } = this.props.data.content[0]
-    const authorNames = [] // authors
+    const { title, pubDate, authors } = this.props.data.content[0]
+    const authorNames = authors
       .map(auth => auth.name)
       .map(name => `${name.first} ${name.last}`)
 
@@ -79,6 +89,33 @@ class HomeRouteBase extends React.Component<Props> {
     )
   }
 
+  renderVideo () {
+    const { data, playMedia } = this.props
+    const article = data.content[0]
+    const { video } = article
+
+    if (!video || !video.url) {
+      return null
+    }
+
+    return (
+      <Card onPress={() => playMedia(video.url, article.title, video.videoDescription)} blurb={{
+        id: null,
+        image: { url: video.thumbnail },
+        title: '',
+        pubDate: article.pubDate,
+      }} />
+    )
+  }
+
+  renderMedia () {
+    return (
+      <div style={{ display: 'block', float: 'left', width: '33vw', marginRight: 10 }}>
+        {this.renderVideo()}
+      </div>
+    )
+  }
+
   renderArticle () {
     const { data } = this.props
     if (!(data.content && data.content[0])) {
@@ -96,7 +133,10 @@ class HomeRouteBase extends React.Component<Props> {
         <div className={articleText}>
           {
             paragraphs.map((text, index) => (
-              <p key={index}>{text}</p>
+              <p key={index}>
+                {index === 0 ? this.renderMedia() : null}
+                {text}
+              </p>
             ))
           }
           {this.renderUpdatedDate()}
@@ -140,7 +180,13 @@ class HomeRouteBase extends React.Component<Props> {
   }
 }
 
-export default graphql(
+const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => {
+  return {
+    playMedia: (mediaUrl, mediaTitle, mediaDescription) => dispatch(playMedia({ mediaUrl, mediaTitle, mediaDescription })),
+  }
+}
+
+const withQuery = graphql(
   Query,
   {
     options: (ownProps: OwnProps): QueryOpts<ArticleRouteQueryVariables> => ({
@@ -149,4 +195,11 @@ export default graphql(
       },
     }),
   },
+)
+
+const withRedux = connect(null, mapDispatchToProps)
+
+export default compose(
+  withQuery,
+  withRedux,
 )(HomeRouteBase)

@@ -9,6 +9,7 @@ import { ready } from '@voiceofamerica/voa-shared/helpers/startup'
 
 import store from 'redux-store'
 import Router from 'containers/Router'
+import MediaPlayer from 'containers/MediaPlayer'
 import client from 'helpers/graphql-client'
 
 import { app } from './App.scss'
@@ -33,9 +34,9 @@ export default class App extends React.Component<void, { appReady: boolean }> {
       <ApolloProvider client={client}>
         <Provider store={store}>
           <div className={app}>
-            <Backdrop imgSrc={require('res/images/Default.jpg')} blur={appReady} />
+            <Backdrop imgSrc={require('res/images/Default.png')} blur={appReady} />
             <Router />
-            <OfflineIndicator />
+            <MediaPlayer />
           </div>
         </Provider>
       </ApolloProvider>

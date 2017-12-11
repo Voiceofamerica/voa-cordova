@@ -1,10 +1,12 @@
 
 import * as React from 'react'
 import { Route, RouteProps } from 'react-router'
-import { connect } from 'react-redux'
+import { connect, Dispatch } from 'react-redux'
 
 import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
 import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav'
+
+import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
 
 import AppState from 'types/AppState'
 import Category from 'types/Category'
@@ -13,13 +15,21 @@ interface StateProps {
   categories: Category[]
 }
 
-type Props = StateProps & RouteProps
+interface DispatchProps {
+  toggleMediaPlayer: () => void
+}
 
-function MainLayout ({ component: Component, categories, ...rest }: Props) {
+type Props = StateProps & RouteProps & DispatchProps
+
+function MainLayout ({ component: Component, categories, toggleMediaPlayer, ...rest }: Props) {
   return (
     <Route {...rest} render={props => {
       function replace (route: string) {
         props.history.replace(route)
+      }
+
+      function goTo (route: string) {
+        props.history.push(route)
       }
 
       const { category: categoryIdStr } = props.match.params
@@ -50,13 +60,13 @@ function MainLayout ({ component: Component, categories, ...rest }: Props) {
             <IconItem>
               <i className='mdi mdi-flash-outline' />
             </IconItem>
-            <RoundItem>
+            <RoundItem onClick={() => toggleMediaPlayer()}>
               <i className='mdi mdi-play-circle-outline' />
             </RoundItem>
             <IconItem>
               <i className='mdi mdi-radio-tower' />
             </IconItem>
-            <IconItem onClick={() => this.goToSettings()}>
+            <IconItem onClick={() => goTo('/settings')}>
               <i className='mdi mdi-account-outline' />
             </IconItem>
           </BottomNav>
@@ -70,8 +80,13 @@ const mapStateToProps = ({ settings: { categories } }: AppState, ownProps: Route
   categories,
 })
 
+const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => ({
+  toggleMediaPlayer: () => dispatch(toggleMediaDrawer({})),
+})
+
 const withRedux = connect(
   mapStateToProps,
+  mapDispatchToProps,
 )
 
 export default withRedux(MainLayout)
