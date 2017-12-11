@@ -9,6 +9,8 @@ import Settings from 'routes/Settings'
 import CategorySettings from 'routes/CategorySettings'
 import MediaSettings from 'routes/MediaSettings'
 
+import MainLayout from './layouts/MainLayout'
+
 import history from './history'
 
 export default () => (
@@ -18,7 +20,7 @@ export default () => (
       <Route path='/settings/categories' component={CategorySettings}/>
       <Route path='/settings/media' component={MediaSettings}/>
       <Route path='/settings' component={Settings}/>
-      <Route path='/' component={HomeRoute}/>
+      <MainLayout path='/' component={HomeRoute}/>
     </Switch>
   </ConnectedRouter>
 )

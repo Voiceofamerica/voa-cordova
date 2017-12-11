@@ -116,47 +116,6 @@ class HomeRouteBase extends React.Component<Props> {
     )
   }
 
-  renderTopNav () {
-    const { categories } = this.props
-
-    return (
-      <TopNav>
-        <TopNavItem selected>
-          要闻
-        </TopNavItem>
-        {
-          categories.map((category, index) => (
-            <TopNavItem key={category.id}>
-              { category.name }
-            </TopNavItem>
-          ))
-        }
-      </TopNav>
-    )
-  }
-
-  renderBottomNav () {
-    return (
-      <BottomNav>
-        <IconItem active>
-          <i className='mdi mdi-home-outline' />
-        </IconItem>
-        <IconItem>
-          <i className='mdi mdi-flash-outline' />
-        </IconItem>
-        <RoundItem>
-          <i className='mdi mdi-play-circle-outline' />
-        </RoundItem>
-        <IconItem>
-          <i className='mdi mdi-radio-tower' />
-        </IconItem>
-        <IconItem onClick={() => this.goToSettings()}>
-          <i className='mdi mdi-account-outline' />
-        </IconItem>
-      </BottomNav>
-    )
-  }
-
   renderContent () {
     const { data } = this.props
     const className = data.loading ? `${content} ${contentLoading}` : content
@@ -166,8 +125,6 @@ class HomeRouteBase extends React.Component<Props> {
         { this.renderHero() }
         { this.renderSecondary() }
         { this.renderRest() }
-        { this.renderTopNav() }
-        { this.renderBottomNav() }
       </div>
     )
   }
@@ -182,19 +139,38 @@ class HomeRouteBase extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = ({ settings: { categories } }: AppState): StateProps => ({
-  categories,
-})
-
-const withRedux = connect(
-  mapStateToProps,
-)
+const pathRgx = /\/(.{36})((?:_tv)?)[^\.]*\.(.*)/
+const mapImageUrl = (url: string, params: string = 'w300') => {
+  const parsedUrl = new URL(url)
+  const pathParts = pathRgx.exec(parsedUrl.pathname)
+  const guid = pathParts[1]
+  const tv = pathParts[2]
+  const ext = pathParts[3]
+  console.log(parsedUrl.pathname)
+  parsedUrl.pathname = `${guid}${tv}_${params}.${ext}`
+  return parsedUrl.toString()
+}
 
 const withHomeQuery = graphql(
   Query,
+  {
+    props: ({ data }) => {
+      let outputData = data as (typeof data) & HomeRouteQuery
+      if (!data.loading) {
+        outputData.content = outputData.content.map(c => {
+          return {
+            ...c,
+            image: c.image && {
+              ...c.image,
+              url: mapImageUrl(c.image.url),
+            },
+          }
+        })
+      }
+
+      return { data: outputData }
+    },
+  },
 )
 
-export default compose(
-  withRedux,
-  withHomeQuery,
-)(HomeRouteBase)
+export default withHomeQuery(HomeRouteBase)
