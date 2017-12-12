@@ -38,6 +38,9 @@ function MainLayout ({ component: Component, categories, toggleMediaPlayer, ...r
       const isHeadlines = categoryIdStr === null || categoryIdStr === undefined
       const categoryId = isHeadlines ? 1 : parseInt(categoryIdStr, 10)
 
+      const liveStreamActive = props.history.location.pathname.indexOf('liveStream') >= 0
+      const homeActive = !liveStreamActive
+
       return (
         <div>
           <TopNav>
@@ -56,7 +59,7 @@ function MainLayout ({ component: Component, categories, toggleMediaPlayer, ...r
           <Component {...props as any} />
 
           <BottomNav>
-            <IconItem active>
+            <IconItem active={homeActive} onClick={() => replace('/')}>
               <i className='mdi mdi-home-outline' />
               <div className={iconText}>首页</div>
             </IconItem>
@@ -68,7 +71,7 @@ function MainLayout ({ component: Component, categories, toggleMediaPlayer, ...r
               <i className={`mdi mdi-play-circle-outline ${centerIcon}`} />
               <div className={iconText}>多媒体</div>
             </RoundItem>
-            <IconItem>
+            <IconItem active={liveStreamActive} onClick={() => replace('/liveStream')}>
               <i className='mdi mdi-radio-tower' />
               <div className={iconText}>直播</div>
             </IconItem>

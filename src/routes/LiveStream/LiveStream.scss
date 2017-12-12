@@ -3,11 +3,61 @@
 
 .liveStream {
   display: flex;
-  position: absolute;
+  position: fixed;
   flex-direction: column;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background: transparent;
+  overflow-y: scroll;
+
+  .content {
+
+    .liveStreamItem {
+      
+      .collapser {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background: $voa-grey;
+        color: white;
+        height: $menu-height;
+        padding: 0 10px;
+
+        .programTime {
+          padding-right: 15px;
+        }
+
+        .collapserIconContainer {
+          flex: 1;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-end;
+        }
+        
+        .collapserIcon {
+          font-size: 2em;
+          transition: transform 0.3s;
+        }
+      }
+
+      .drawer {
+        background: white;
+        height: 0;
+        transition: height 0.3s;
+        overflow-y: scroll;
+      }
+
+      &.open {
+        .drawer {
+          height: 100px;
+        }
+
+        .collapserIcon {
+          transform: rotate(-180deg);
+        }
+      }
+    }
+  }
 }

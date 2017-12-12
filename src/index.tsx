@@ -42,3 +42,9 @@ start().then(() => {
 }).catch((err) => {
   rootElement.innerHTML += err.message || err
 })
+
+document.addEventListener(
+  'backbutton',
+  (ev) => { ev.preventDefault() },
+  false,
+)
