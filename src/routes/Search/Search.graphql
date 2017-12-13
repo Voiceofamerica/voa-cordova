@@ -1,0 +1,17 @@
+query Search($query: String!, $zoneId: Int) {
+  search(source: zhcn, keywords: $query, zoneId: $zoneId) {
+    id
+    title
+    introduction
+    pubDate
+    image {
+      url
+    }
+    video {
+      url
+    }
+    audio {
+      url
+    }
+  }
+}

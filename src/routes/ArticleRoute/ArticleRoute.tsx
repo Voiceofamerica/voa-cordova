@@ -11,9 +11,9 @@ import BottomNav, { IconItem } from '@voiceofamerica/voa-shared/components/Botto
 import Card from '@voiceofamerica/voa-shared/components/Card'
 
 import { ArticleRouteQuery, ArticleRouteQueryVariables } from 'helpers/graphql-types'
-import playMedia from 'redux-store/actions/playMedia'
+import playMedia from 'redux-store/thunks/playMediaFromBlob'
 
-import { articleRoute, container, heading, articleText } from './ArticleRoute.scss'
+import { articleRoute, container, heading, articleText, contentIcon } from './ArticleRoute.scss'
 import * as Query from './ArticleRoute.graphql'
 
 export interface Params {
@@ -21,7 +21,7 @@ export interface Params {
 }
 
 interface DispatchProps {
-  playMedia: (url: string, title: string, description: string) => void
+  playMedia: (url: string, title: string, description: string, imageUrl?: string) => void
 }
 
 type OwnProps = RouteComponentProps<Params>
@@ -37,7 +37,7 @@ class HomeRouteBase extends React.Component<Props> {
 
     return (
       <div style={{ display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center', height: '100%', zIndex: 1 }}>
-        <div style={{ alignContent: 'center', color: '#FFF', fontSize: '10vw', backgroundColor: 'transparent', textAlign: 'center' }}>
+        <div style={{ alignContent: 'center', fontSize: '10vw', backgroundColor: 'transparent', textAlign: 'center' }}>
           装载...
         </div>
       </div>
@@ -99,19 +99,47 @@ class HomeRouteBase extends React.Component<Props> {
     }
 
     return (
-      <Card onPress={() => playMedia(video.url, article.title, video.videoDescription)} blurb={{
-        id: null,
-        image: { url: video.thumbnail },
-        title: '',
-        pubDate: article.pubDate,
-      }} factor={3} />
+      <Card
+        style={{ display: 'inline-block', width: '30vw' }}
+        onPress={() => playMedia(video.url, article.title, video.videoDescription)}
+        title=''
+        imageUrl={video.thumbnail}
+        minorText=''
+        factor={3}
+        icon={<i className={`mdi mdi-monitor ${contentIcon}`} />}
+      />
+    )
+  }
+
+  renderAudio () {
+    const { data, playMedia } = this.props
+    const article = data.content[0]
+    const { audio } = article
+
+    if (!audio || !audio.url) {
+      return null
+    }
+
+    const imgUrl = article.image && article.image.url
+
+    return (
+      <Card
+        style={{ display: 'inline-block', width: '30vw' }}
+        onPress={() => playMedia(audio.url, audio.audioTitle, audio.audioDescription, imgUrl)}
+        title=''
+        imageUrl={imgUrl}
+        minorText=''
+        factor={3}
+        icon={<i className={`mdi mdi-headphones ${contentIcon}`} />}
+      />
     )
   }
 
   renderMedia () {
     return (
-      <div style={{ display: 'block', float: 'left', width: '33vw', marginRight: 10 }}>
+      <div style={{ display: 'inline-block', float: 'left', marginRight: 10 }}>
         {this.renderVideo()}
+        {this.renderAudio()}
       </div>
     )
   }
@@ -172,8 +200,8 @@ class HomeRouteBase extends React.Component<Props> {
   render () {
     return (
       <div className={articleRoute}>
-        { this.renderArticle() }
         { this.renderLoading() }
+        { this.renderArticle() }
         { this.renderBottomNav() }
       </div>
     )
@@ -182,7 +210,8 @@ class HomeRouteBase extends React.Component<Props> {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => {
   return {
-    playMedia: (mediaUrl, mediaTitle, mediaDescription) => dispatch(playMedia({ mediaUrl, mediaTitle, mediaDescription })),
+    playMedia: (mediaUrl, mediaTitle, mediaDescription, imageUrl?) =>
+      dispatch(playMedia({ mediaUrl, mediaTitle, mediaDescription, imageUrl })),
   }
 }
 

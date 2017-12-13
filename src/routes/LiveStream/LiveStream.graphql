@@ -1,5 +1,5 @@
 query LiveStream {
-  program(source:zhcn) {
+  program(source:zhcn, type: [Video, Clip]) {
     id
     date
     timeLeft

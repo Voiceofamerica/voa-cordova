@@ -13,11 +13,13 @@ import { ActorMap, buildReducer } from '../actorMap'
 import MediaState from 'types/MediaState'
 
 const actors: ActorMap<MediaState> = {
-  [playMediaType]: (prev, { mediaUrl, mediaTitle, mediaDescription }: PlayMediaAction) => ({
+  [playMediaType]: (prev, { mediaUrl, originalMediaUrl, mediaTitle, mediaDescription, imageUrl = null }: PlayMediaAction) => ({
     ...prev,
     mediaUrl,
+    originalMediaUrl,
     mediaTitle,
     mediaDescription,
+    imageUrl,
     mediaOpen: true,
   }),
   [toggleMediaDrawerType]: (prev, { open: mediaOpen = !prev.mediaOpen }: ToggleMediaDrawerAction) => ({

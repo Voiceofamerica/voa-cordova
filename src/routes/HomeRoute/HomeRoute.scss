@@ -16,23 +16,6 @@
     flex-direction: row;
   }
 
-  .loadMore {
-    justify-content: center;
-    align-content: center;
-    border-radius: 2vw;
-    background-color: #408;
-    color: #FFF;
-    font-size: 7vw;
-    width: 100%;
-    padding: 2vw;
-    border: none;
-    outline: none;
-
-    &:active {
-      
-    }
-  }
-
   .content {
     position: absolute;
     top: 0;
@@ -48,6 +31,26 @@
     &.contentLoading {
       opacity: 0;
     }
+
+    .searchButton {
+      @include touchable();
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2em;
+      margin: 2vw 1.5vw;
+      padding: 0.15em;
+      background: $voa-grey;
+      color: white;
+      border-radius: 100px;
+    }
+  }
+  
+  .ticketIcon {
+    font-size: 2.4em;
+    color: white;
+    text-shadow: 0 0 0.2em #000;
   }
 
   .topNav {

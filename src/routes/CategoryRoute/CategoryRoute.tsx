@@ -4,13 +4,14 @@ import { RouteComponentProps } from 'react-router'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { graphql, ChildProps, QueryOpts } from 'react-apollo'
+import * as moment from 'moment'
 
 import Card from '@voiceofamerica/voa-shared/components/Card'
 import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
 import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
 import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav'
 
-import { homeRoute, row, content, contentLoading, topNav } from './CategoryRoute.scss'
+import { homeRoute, row, content, contentLoading, searchButton, ticketIcon, topNav } from './CategoryRoute.scss'
 import * as Query from './CategoryRoute.graphql'
 import { CategoryRouteQuery, CategoryRouteQueryVariables } from 'helpers/graphql-types'
 import analytics from 'helpers/analytics'
@@ -66,6 +67,16 @@ class HomeRouteBase extends React.Component<Props> {
     )
   }
 
+  renderIcon = (blurb, className?: string) => {
+    if (blurb.video && blurb.video.url) {
+      return <i className={`mdi mdi-monitor ${className}`} />
+    } else if (blurb.audio && blurb.audio.url) {
+      return <i className={`mdi mdi-headphones ${className}`} />
+    } else {
+      return null
+    }
+  }
+
   renderHero () {
     const { data } = this.props
     const { loading, content } = data
@@ -77,7 +88,13 @@ class HomeRouteBase extends React.Component<Props> {
 
     return (
       <Row>
-        <Card onPress={() => this.goToArticle(blurb.id)} blurb={blurb} factor={1} />
+        <Card
+          onPress={() => this.goToArticle(blurb.id)}
+          title={<span>{this.renderIcon(blurb)} {blurb.title}</span>}
+          minorText={moment(blurb.pubDate).fromNow()}
+          imageUrl={blurb.image && blurb.image.url}
+          factor={1}
+        />
       </Row>
     )
   }
@@ -93,7 +110,14 @@ class HomeRouteBase extends React.Component<Props> {
       <Row>
         {
           content.slice(1, 3).map((blurb, idx) => (
-            <Card key={blurb.id} onPress={() => this.goToArticle(blurb.id)} blurb={blurb} factor={2} />
+            <Card
+              key={blurb.id}
+              onPress={() => this.goToArticle(blurb.id)}
+              title={<span>{this.renderIcon(blurb)} {blurb.title}</span>}
+              minorText={moment(blurb.pubDate).fromNow()}
+              imageUrl={blurb.image && blurb.image.url}
+              factor={2}
+            />
           ))
         }
       </Row>
@@ -111,9 +135,24 @@ class HomeRouteBase extends React.Component<Props> {
     return (
       content.slice(3).map((blurb, idx) => (
         <Row key={blurb.id}>
-          <Ticket onPress={() => this.goToArticle(blurb.id)} blurb={blurb} />
+          <Ticket
+            onPress={() => this.goToArticle(blurb.id)}
+            title={blurb.title}
+            minorText={moment(blurb.pubDate).fromNow()}
+            imageUrl={blurb.image && blurb.image.url}
+            icon={this.renderIcon(blurb, ticketIcon)}
+          />
         </Row>
       ))
+    )
+  }
+
+  renderSearchButton () {
+    return (
+      <div className={searchButton} onClick={() => this.goTo('/search')}>
+        <i className='mdi mdi-magnify' />
+        搜索
+      </div>
     )
   }
 
@@ -123,6 +162,7 @@ class HomeRouteBase extends React.Component<Props> {
 
     return (
       <div className={className}>
+      { this.renderSearchButton() }
         { this.renderHero() }
         { this.renderSecondary() }
         { this.renderRest() }

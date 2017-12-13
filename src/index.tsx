@@ -15,6 +15,9 @@ const rootElement = document.getElementById('app')
 moment.locale('zh-cn')
 
 start().then(() => {
+  const afsm = (window as any).AndroidFullScreen
+  afsm && afsm.immersiveMode()
+
   let render = Component => {
     console.log('here')
     ReactDOM.render(

@@ -5,9 +5,11 @@ import Category from 'types/Category'
 export const type = 'PLAY_MEDIA'
 
 interface PlayMediaOptions {
-  mediaUrl: string
+  mediaUrl?: string
+  originalMediaUrl: string
   mediaTitle: string
   mediaDescription: string
+  imageUrl?: string
 }
 
 export type PlayMediaAction = PlayMediaOptions & Action

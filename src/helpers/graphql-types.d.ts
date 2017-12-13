@@ -119,3 +119,26 @@ export type LiveStreamQuery = {
     url: string | null,
   } | null > | null,
 };
+
+export type SearchQueryVariables = {
+  query: string,
+  zoneId?: number | null,
+};
+
+export type SearchQuery = {
+  search:  Array< {
+    id: number,
+    title: string,
+    introduction: string,
+    pubDate: string,
+    image:  {
+      url: string,
+    } | null,
+    video:  {
+      url: string | null,
+    } | null,
+    audio:  {
+      url: string | null,
+    } | null,
+  } | null > | null,
+};

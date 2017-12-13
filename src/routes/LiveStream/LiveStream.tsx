@@ -13,7 +13,7 @@ import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav
 
 import { LiveStreamQuery } from 'helpers/graphql-types'
 import analytics from 'helpers/analytics'
-import playMedia from 'redux-store/actions/playMedia'
+import playMedia from 'redux-store/thunks/playMediaFromBlob'
 
 import AppState from 'types/AppState'
 import Category from 'types/Category'
@@ -98,7 +98,6 @@ class LiveStreamBase extends React.Component<Props, State> {
   }
 
   render () {
-
     return (
       <div className={liveStream}>
         {this.renderLoading()}

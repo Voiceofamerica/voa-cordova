@@ -3,11 +3,12 @@ import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
 
 import MediaPlayer from '@voiceofamerica/voa-shared/components/MediaPlayer'
+import ResilientImage from '@voiceofamerica/voa-shared/components/ResilientImage'
 
 import AppState from 'types/AppState'
 import MediaState from 'types/MediaState'
 import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
-import { mediaPlayer, player, textContent, open, closePlayer, overlay } from './MediaPlayer.scss'
+import { mediaPlayer, playerWrapper, player, backgroundImage, textContent, open, closePlayer, overlay } from './MediaPlayer.scss'
 
 interface StateProps {
   media: MediaState
@@ -28,10 +29,17 @@ class MediaPlayerBase extends React.Component<Props> {
     }
 
     return (
-      <div className={player}>
-        <MediaPlayer src={mediaUrl} playbackRate={mediaPlaybackRate} autoPlay />
+      <div className={playerWrapper}>
+        {this.renderImage()}
+        <MediaPlayer className={player} src={mediaUrl} playbackRate={mediaPlaybackRate} autoPlay style={{ }} />
       </div>
     )
+  }
+
+  renderImage () {
+    const { media: { imageUrl }, mediaPlaybackRate } = this.props
+
+    return <ResilientImage src={imageUrl} defaultSrc={require('res/images/imagedefault.gif')} className={backgroundImage} />
   }
 
   render () {

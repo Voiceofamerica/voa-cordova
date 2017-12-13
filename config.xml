@@ -7,7 +7,7 @@
     <author email="dev@cordova.apache.org" href="http://cordova.io">
         Apache Cordova Team
     </author>
-    <preference name="Fullscreen" value="true" />
+    <preference name="Orientation" value="portrait" />
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -31,4 +31,6 @@
     <plugin name="cordova-wheel-selector-plugin" spec="^1.0.9" />
     <plugin name="adobe-mobile-services" spec="^4.13.1-cor" />
     <plugin name="psiphon-cordova-plugin" spec="^0.1.1" />
+    <plugin name="cordova-plugin-fullscreen" spec="^1.2.0" />
+    <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
 </widget>
