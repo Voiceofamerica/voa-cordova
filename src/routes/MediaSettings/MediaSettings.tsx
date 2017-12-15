@@ -16,11 +16,11 @@ export default class HomeRoute extends React.Component<RouteComponentProps<void>
 
     return (
       <div className={mediaSettings}>
-        <div className={topNav}>媒体设置</div>
+        <div className={topNav}>视频设置</div>
         <div className={buttons}>
           <button className={settingsButton} onClick={this.changeMediaPlaybackRate}>
-            回放速度
-            <span className={buttonIcon}>1x</span>
+            播放速度
+            <span className={buttonIcon}>常速</span>
           </button>
         </div>
         <BottomNav>

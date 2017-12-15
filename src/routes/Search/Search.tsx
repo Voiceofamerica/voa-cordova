@@ -117,11 +117,11 @@ class SearchBase extends React.Component<Props, State> {
 
     return (
       <div ref={el => this.inputHeight = el && el.clientHeight || 0 } className={inputs} style={{ bottom: this.state.keyboardHeight }}>
-        <div onClick={() => history.goBack()} className={backButton}><i className='mdi mdi-chevron-left' /></div>
+        <div onClick={() => history.goBack()} className={backButton}>取消</div>
         <div className={inputsPill}>
           <div className={dropdownPill}>
             <select value={parseInt(zoneId, 10)} className={dropdown} onChange={ev => this.setZoneId(parseInt(ev.currentTarget.value, 10))}>
-              <option value={0}>所有</option>
+              <option value={0}>全部</option>
               {
                 categories.map(cat => (
                   <option key={cat.id} value={cat.id}>{cat.name}</option>

@@ -19,7 +19,7 @@ import AppState from 'types/AppState'
 import Category from 'types/Category'
 
 import * as Query from './LiveStream.graphql'
-import { liveStream, content, programTime, liveStreamItem, collapser, collapserIconContainer, collapserIcon, drawer, open } from './LiveStream.scss'
+import { liveStream, content, programTime, liveStreamItem, programTitle, collapser, collapserIconContainer, collapserIcon, drawer, open } from './LiveStream.scss'
 
 interface DispatchProps {
   playMedia: (url: string, title: string, description: string) => void
@@ -73,14 +73,14 @@ class LiveStreamBase extends React.Component<Props, State> {
     return (
       <div className={content}>
         {
-          program.map(prog => {
+          program.filter(p => p && p.url).map(prog => {
             const drawerOpen = drawerStates[prog.id]
             const itemClass = drawerOpen ? `${liveStreamItem} ${open}` : liveStreamItem
             return (
               <div className={itemClass} key={prog.id}>
                 <div className={collapser} onClick={() => this.toggleDrawer(prog.id)}>
                   <div className={programTime}>{moment(prog.date).format('l LT')}</div>
-                  {prog.programTitle}
+                  <div className={programTitle}>{prog.programTitle}</div>
                   <div className={collapserIconContainer}><i className={`mdi mdi-chevron-down ${collapserIcon}`} /></div>
                 </div>
                 <div

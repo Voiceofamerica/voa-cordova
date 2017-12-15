@@ -101,8 +101,8 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
     if (separator) {
       return (
         <div style={{ gridColumnStart: 1, gridColumnEnd: 3, fontWeight: 'bold', fontSize: '1.5em', marginLeft: 5, marginRight: 5 }}>
-          全部频道
-          <span style={{ float: 'right', fontSize: '0.8em', fontWeight: 'normal' }}>长按拖动调整频道</span>
+          所有分类
+          <span style={{ float: 'right', fontSize: '0.8em', fontWeight: 'normal' }}>长按拖动调整分类</span>
         </div>
       )
     } else {
@@ -133,10 +133,10 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
 
     return (
       <div className={categorySettings}>
-        <div className={topNav}>排列分类</div>
+        <div className={topNav}>新闻分类排序</div>
         <div className={pillContainer}>
           <div style={{ fontWeight: 'bold', gridColumnStart: 1, gridColumnEnd: 3, fontSize: '1.5em', marginLeft: 5, marginRight: 5 }}>
-            我的频道
+            我的分类
           </div>
           {
             allCategoriesWithSeparator.map(this.renderCategory)

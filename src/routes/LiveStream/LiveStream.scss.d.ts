@@ -3,6 +3,7 @@ export const content: string;
 export const liveStreamItem: string;
 export const collapser: string;
 export const programTime: string;
+export const programTitle: string;
 export const collapserIconContainer: string;
 export const collapserIcon: string;
 export const drawer: string;

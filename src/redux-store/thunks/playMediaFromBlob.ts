@@ -26,24 +26,25 @@ export default (options: PlayMediaOptions) =>
 
     const state = getState()
     if (state.media.originalMediaUrl === originalMediaUrl) {
-      return Promise.resolve()
+      return
     }
 
     dispatch(playMedia({
+      mediaUrl: originalMediaUrl,
       originalMediaUrl,
       mediaTitle,
       mediaDescription,
       imageUrl,
     }))
 
-    return fetch(originalMediaUrl)
-      .then(res => res.blob())
-      .then(blob => URL.createObjectURL(blob))
-      .then(mediaUrl => {
-        dispatch(playMedia({
-          ...options,
-          mediaUrl,
-          originalMediaUrl,
-        }))
-      })
+    // return fetch(originalMediaUrl)
+    //   .then(res => res.blob())
+    //   .then(blob => URL.createObjectURL(blob))
+    //   .then(mediaUrl => {
+    //     dispatch(playMedia({
+    //       ...options,
+    //       mediaUrl,
+    //       originalMediaUrl,
+    //     }))
+    //   })
   }

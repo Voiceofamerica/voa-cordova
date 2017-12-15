@@ -148,8 +148,9 @@ class HomeRouteBase extends React.Component<Props> {
   }
 
   renderSearchButton () {
+    const { category } = this.props.match.params
     return (
-      <div className={searchButton} onClick={() => this.goTo('/search')}>
+      <div className={searchButton} onClick={() => this.goTo(`/search/${category}`)}>
         <i className='mdi mdi-magnify' />
         搜索
       </div>
