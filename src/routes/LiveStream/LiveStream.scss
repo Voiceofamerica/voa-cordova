@@ -49,10 +49,27 @@
       }
 
       .drawer {
+        display: flex;
         background: white;
         height: 0;
         transition: height 0.3s;
-        overflow-y: scroll;
+        overflow-y: hidden;
+
+        .drawerImage {
+          flex: 2;
+          display: flex;
+
+          .imageIcon {
+            color: white;
+            font-size: 3em;
+          }
+        }
+
+        .drawerContent {
+          padding: 8px;
+          flex: 5;
+          overflow-y: scroll;
+        }
       }
 
       &.open {

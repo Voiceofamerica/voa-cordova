@@ -6,12 +6,12 @@ import { compose } from 'redux'
 import { graphql, ChildProps } from 'react-apollo'
 import * as moment from 'moment'
 
-import Card from '@voiceofamerica/voa-shared/components/Card'
+import ResilientImage from '@voiceofamerica/voa-shared/components/ResilientImage'
 import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
 import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
 import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav'
 
-import { LiveStreamQuery } from 'helpers/graphql-types'
+import { LiveStreamQuery, ProgramType } from 'helpers/graphql-types'
 import analytics from 'helpers/analytics'
 import playMedia from 'redux-store/thunks/playMediaFromBlob'
 
@@ -19,7 +19,7 @@ import AppState from 'types/AppState'
 import Category from 'types/Category'
 
 import * as Query from './LiveStream.graphql'
-import { liveStream, content, programTime, liveStreamItem, programTitle, collapser, collapserIconContainer, collapserIcon, drawer, open } from './LiveStream.scss'
+import { liveStream, content, programTime, liveStreamItem, programTitle, collapser, collapserIconContainer, collapserIcon, drawer, drawerImage, imageIcon, drawerContent, open } from './LiveStream.scss'
 
 interface DispatchProps {
   playMedia: (url: string, title: string, description: string) => void
@@ -61,8 +61,31 @@ class LiveStreamBase extends React.Component<Props, State> {
     )
   }
 
+  renderIconFromType = () => {
+    return <i className={`mdi mdi-monitor ${imageIcon}`} />
+  }
+
+  renderDrawer = (prog: { url: string, programTitle: string, programDescription: string, image?: { url: string } }) => {
+    const { playMedia } = this.props
+
+    const onClick = prog.url
+                  ? () => playMedia(prog.url, prog.programTitle, prog.programDescription)
+                  : null
+
+    return (
+      <div className={drawer}>
+        <div onClick={onClick} className={drawerImage}>
+          <ResilientImage src={prog.image && prog.image.url}>
+            {this.renderIconFromType()}
+          </ResilientImage>
+        </div>
+        <div className={drawerContent}>{prog.programDescription}</div>
+      </div>
+    )
+  }
+
   renderContent () {
-    const { data, playMedia } = this.props
+    const { data } = this.props
     const { loading, program } = data
     const { drawerStates } = this.state
 
@@ -83,12 +106,7 @@ class LiveStreamBase extends React.Component<Props, State> {
                   <div className={programTitle}>{prog.programTitle}</div>
                   <div className={collapserIconContainer}><i className={`mdi mdi-chevron-down ${collapserIcon}`} /></div>
                 </div>
-                <div
-                  className={drawer}
-                  onClick={prog.url ? () => playMedia(prog.url, prog.programTitle, prog.programDescription) : null}
-                >
-                  {prog.programDescription}
-                </div>
+                {this.renderDrawer(prog)}
               </div>
             )
           })

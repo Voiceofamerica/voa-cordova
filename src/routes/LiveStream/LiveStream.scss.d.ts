@@ -7,4 +7,7 @@ export const programTitle: string;
 export const collapserIconContainer: string;
 export const collapserIcon: string;
 export const drawer: string;
+export const drawerImage: string;
+export const imageIcon: string;
+export const drawerContent: string;
 export const open: string;

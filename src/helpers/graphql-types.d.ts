@@ -9,6 +9,14 @@ export enum ContentType {
 }
 
 
+export enum ProgramType {
+  Clip = "Clip",
+  Feature = "Feature",
+  BroadcastProgram = "BroadcastProgram",
+  Video = "Video",
+}
+
+
 export type ArticleRouteQueryVariables = {
   id?: number | null,
 };
@@ -109,6 +117,7 @@ export type HomeRouteQuery = {
 export type LiveStreamQuery = {
   program:  Array< {
     id: number,
+    type: ProgramType | null,
     date: string | null,
     timeLeft: number | null,
     programTitle: string | null,
