@@ -8,6 +8,8 @@ import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav
 
 import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
 
+import ErrorBoundary from 'components/ErrorBoundary'
+import MainBottomNav from 'containers/MainBottomNav'
 import AppState from 'types/AppState'
 import Category from 'types/Category'
 
@@ -56,30 +58,32 @@ function MainLayout ({ component: Component, categories, toggleMediaPlayer, ...r
             }
           </TopNav>
 
-          <Component {...props as any} />
+          <ErrorBoundary>
+            <Component {...props as any} />
+          </ErrorBoundary>
 
-          <BottomNav>
-            <IconItem active={homeActive} onClick={() => replace('/')}>
-              <i className='mdi mdi-home-outline' />
-              <div className={iconText}>首页</div>
-            </IconItem>
-            <IconItem>
-              <i className='mdi mdi-flash-outline' />
-              <div className={iconText}>突发新闻</div>
-            </IconItem>
-            <RoundItem onClick={() => toggleMediaPlayer()}>
-              <i className={`mdi mdi-play-circle-outline ${centerIcon}`} />
-              <div className={iconText}>多媒体</div>
-            </RoundItem>
-            <IconItem active={liveStreamActive} onClick={() => replace('/liveStream')}>
-              <i className='mdi mdi-radio-tower' />
-              <div className={iconText}>直播</div>
-            </IconItem>
-            <IconItem onClick={() => goTo('/settings')}>
-              <i className='mdi mdi-account-outline' />
-              <div className={iconText}>我的</div>
-            </IconItem>
-          </BottomNav>
+          <MainBottomNav
+            left={[
+              <IconItem active={homeActive} onClick={() => replace('/')}>
+                <i className='mdi mdi-home-outline' />
+                <div className={iconText}>首页</div>
+              </IconItem>,
+              <IconItem>
+                <i className='mdi mdi-flash-outline' />
+                <div className={iconText}>突发新闻</div>
+              </IconItem>,
+            ]}
+            right={[
+              <IconItem active={liveStreamActive} onClick={() => replace('/liveStream')}>
+                <i className='mdi mdi-radio-tower' />
+                <div className={iconText}>直播</div>
+              </IconItem>,
+              <IconItem onClick={() => goTo('/settings')}>
+                <i className='mdi mdi-account-outline' />
+                <div className={iconText}>我的</div>
+              </IconItem>,
+            ]}
+          />
         </div>
       )
     }} />

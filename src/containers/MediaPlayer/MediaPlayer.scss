@@ -15,7 +15,7 @@
   background: white;
   overflow: scroll;
   border-radius: 10px 10px 0 0;
-  z-index: 1002;
+  z-index: $menu-z-max;
 
   .playerWrapper {
     position: relative;
@@ -26,7 +26,7 @@
     .player {
       flex: 1;
       max-width: 100vw;
-      z-index: 1003;
+      z-index: $menu-z-max + 1;
     }
   }
   
@@ -60,7 +60,7 @@
 
 .overlay {
   background: transparent;
-  z-index: 1002;
+  z-index: $menu-z-max;
 
   &.open{
     position: fixed;

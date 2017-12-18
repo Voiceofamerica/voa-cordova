@@ -44,7 +44,7 @@
     "@types/redux-thunk": "^2.1.0",
     "@types/webpack-env": "^1.13.2",
     "@voiceofamerica/voa-core-shared": "^1.46.0",
-    "@voiceofamerica/voa-shared": "^1.11.3",
+    "@voiceofamerica/voa-shared": "^1.12.8",
     "adobe-mobile-services": "^4.13.1-cor",
     "android-versions": "^1.2.1",
     "apollo-cache-inmemory": "^1.1.1",
@@ -107,6 +107,9 @@
     "webpack": "^3.8.1"
   },
   "cordova": {
+    "platforms": [
+      "android"
+    ],
     "plugins": {
       "cordova-plugin-whitelist": {},
       "cordova-plugin-splashscreen": {},
@@ -122,12 +125,9 @@
         "XWALK_LITEVERSION": "xwalk_core_library_canary:17+",
         "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
         "XWALK_MODE": "embedded",
-        "XWALK_MULTIPLEAPK": "true"
+        "XWALK_MULTIPLEAPK": "false"
       }
-    },
-    "platforms": [
-      "android"
-    ]
+    }
   },
   "devDependencies": {
     "@playlyfe/gql": "^2.3.2",

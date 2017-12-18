@@ -11,7 +11,7 @@ import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
 import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
 import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav'
 
-import { homeRoute, row, content, contentLoading, searchButton, ticketIcon, topNav } from './CategoryRoute.scss'
+import { homeRoute, row, content, contentLoading, searchButton, ticketIcon, topNav, loadingText } from './CategoryRoute.scss'
 import * as Query from './CategoryRoute.graphql'
 import { CategoryRouteQuery, CategoryRouteQueryVariables } from 'helpers/graphql-types'
 import analytics from 'helpers/analytics'
@@ -52,17 +52,17 @@ class HomeRouteBase extends React.Component<Props> {
     this.goTo('/settings')
   }
 
-  renderLoading () {
+  renderLoadingOrError () {
     const { data } = this.props
-    if (!data.loading) {
+    if (!data.loading && !data.error) {
       return null
     }
 
+    const content = data.error ? '发生错误' : '装载...'
+
     return (
-      <div style={{ display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center', height: '100%', zIndex: 1 }}>
-        <div style={{ alignContent: 'center', fontSize: '10vw', backgroundColor: 'transparent', textAlign: 'center' }}>
-          装载...
-        </div>
+      <div className={loadingText}>
+        {content}
       </div>
     )
   }
@@ -79,8 +79,9 @@ class HomeRouteBase extends React.Component<Props> {
 
   renderHero () {
     const { data } = this.props
-    const { loading, content } = data
-    if (loading || content.length < 1) {
+    const { loading, error, content } = data
+
+    if (loading || error || content.length < 1) {
       return null
     }
 
@@ -101,8 +102,9 @@ class HomeRouteBase extends React.Component<Props> {
 
   renderSecondary () {
     const { data } = this.props
-    const { loading, content } = data
-    if (loading || content.length < 2) {
+    const { loading, error, content } = data
+
+    if (loading || error || content.length < 2) {
       return null
     }
 
@@ -126,9 +128,9 @@ class HomeRouteBase extends React.Component<Props> {
 
   renderRest () {
     const { data } = this.props
-    const { loading, content } = data
+    const { loading, error, content } = data
 
-    if (loading || content.length < 4) {
+    if (loading || error || content.length < 4) {
       return null
     }
 
@@ -175,7 +177,7 @@ class HomeRouteBase extends React.Component<Props> {
     return (
       <div className={homeRoute}>
         { this.renderContent() }
-        { this.renderLoading() }
+        { this.renderLoadingOrError() }
       </div>
     )
   }
@@ -203,7 +205,7 @@ const withHomeQuery = graphql(
     }),
     props: ({ data }) => {
       let outputData = data as (typeof data) & CategoryRouteQuery
-      if (!data.loading) {
+      if (!data.loading && !data.error) {
         outputData.content = outputData.content.filter(c => c).map(c => {
           return {
             ...c,

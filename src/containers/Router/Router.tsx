@@ -12,6 +12,7 @@ import CategorySettings from 'routes/CategorySettings'
 import MediaSettings from 'routes/MediaSettings'
 import Search from 'routes/Search'
 
+import HeadingLayout from './layouts/HeadingLayout'
 import MainLayout from './layouts/MainLayout'
 
 import history from './history'
@@ -26,7 +27,7 @@ export default () => (
       <Route path='/search/:zoneId/:query' component={Search}/>
       <Route path='/search/:zoneId' component={Search}/>
       <Route path='/search' component={Search}/>
-      <MainLayout path='/liveStream' component={LiveStream}/>
+      <HeadingLayout path='/liveStream' component={LiveStream} heading='直播时间表'/>
       <MainLayout path='/articles/:category' component={CategoryRoute}/>
       <MainLayout path='/' component={HomeRoute}/>
     </Switch>

@@ -46,6 +46,16 @@
       border-radius: 100px;
     }
   }
+
+  .loadingText {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-content: flex-start;
+    font-size: 10vw;
+    padding-top: 100px;
+    transition: color 0.3s;
+  }
   
   .ticketIcon {
     font-size: 2.4em;
@@ -55,7 +65,7 @@
 
   .topNav {
     position: fixed;
-    z-index: 1000;
+    z-index: $menu-z;
     top: 0;
     left: 0;
     right: 0;

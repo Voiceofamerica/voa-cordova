@@ -33,6 +33,7 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json', '.scss', '.d.ts'],
     alias: {
+      components: path.join(srcDir, 'components'),
       containers: path.join(srcDir, 'containers'),
       helpers: path.join(srcDir, 'helpers'),
       'redux-store': path.join(srcDir, 'redux-store'),

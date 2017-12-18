@@ -22,7 +22,7 @@ import * as Query from './LiveStream.graphql'
 import { liveStream, content, programTime, liveStreamItem, programTitle, collapser, collapserIconContainer, collapserIcon, drawer, drawerImage, imageIcon, drawerContent, open } from './LiveStream.scss'
 
 interface DispatchProps {
-  playMedia: (url: string, title: string, description: string) => void
+  playMedia: (url: string, title: string, description: string, imageUrl: string) => void
 }
 
 type Props = ChildProps<RouteComponentProps<void>, LiveStreamQuery> & DispatchProps
@@ -69,7 +69,7 @@ class LiveStreamBase extends React.Component<Props, State> {
     const { playMedia } = this.props
 
     const onClick = prog.url
-                  ? () => playMedia(prog.url, prog.programTitle, prog.programDescription)
+                  ? () => playMedia(prog.url, prog.programTitle, prog.programDescription, prog.image && prog.image.url)
                   : null
 
     return (
@@ -130,7 +130,7 @@ const withHomeQuery = graphql(
 )
 
 const mapDispatchToProps = (dispatch: Dispatch<AppState>): DispatchProps => ({
-  playMedia: (mediaUrl, mediaTitle, mediaDescription) => dispatch(playMedia({ mediaUrl, mediaTitle, mediaDescription })),
+  playMedia: (mediaUrl, mediaTitle, mediaDescription, imageUrl) => dispatch(playMedia({ mediaUrl, mediaTitle, mediaDescription, imageUrl })),
 })
 
 const withRedux = connect(null, mapDispatchToProps)
