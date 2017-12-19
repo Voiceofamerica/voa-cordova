@@ -190,7 +190,6 @@ const mapImageUrl = (url: string, params: string = 'w300') => {
   const guid = pathParts[1]
   const tv = pathParts[2]
   const ext = pathParts[3]
-  console.log(parsedUrl.pathname)
   parsedUrl.pathname = `${guid}${tv}_${params}.${ext}`
   return parsedUrl.toString()
 }

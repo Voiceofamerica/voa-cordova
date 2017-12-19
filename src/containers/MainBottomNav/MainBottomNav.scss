@@ -21,6 +21,7 @@ $button-rise: 15px;
       right: 0;
       bottom: 0;
       display: flex;
+      overflow: hidden;
 
       .overlay {
         background: rgba(0, 0, 0, 0.2);

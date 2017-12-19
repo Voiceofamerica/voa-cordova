@@ -73,7 +73,6 @@ class SearchBase extends React.Component<Props, State> {
   }
 
   onKeyboard = ({ keyboardHeight }: any) => {
-    console.log(keyboardHeight)
     this.setState({ keyboardHeight: keyboardHeight + this.inputHeight })
   }
 

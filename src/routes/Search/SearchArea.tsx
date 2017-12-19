@@ -104,7 +104,6 @@ const mapImageUrl = (url: string, params: string = 'w100') => {
   const guid = pathParts[1]
   const tv = pathParts[2]
   const ext = pathParts[3]
-  console.log(parsedUrl.pathname)
   parsedUrl.pathname = `${guid}${tv}_${params}.${ext}`
   return parsedUrl.toString()
 }
@@ -119,7 +118,7 @@ const withSearchQuery = graphql(
       let outputData = data as (typeof data) & SearchQuery
       const { search = [] } = outputData
       if (!data.loading) {
-        outputData.search = search.filter(c => c).map(c => {
+        outputData.search = search.map(c => {
           return {
             ...c,
             image: c.image && {

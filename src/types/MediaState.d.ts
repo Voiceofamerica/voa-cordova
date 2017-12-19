@@ -5,5 +5,7 @@ export default interface MediaState {
   mediaTitle?: string
   mediaDescription?: string
   imageUrl?: string
+  isVideo?: boolean
+  playing: boolean
   mediaOpen: boolean
 }

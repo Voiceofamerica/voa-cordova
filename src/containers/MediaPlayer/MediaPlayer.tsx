@@ -8,6 +8,7 @@ import ResilientImage from '@voiceofamerica/voa-shared/components/ResilientImage
 import AppState from 'types/AppState'
 import MediaState from 'types/MediaState'
 import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
+import toggleMediaPlaying from 'redux-store/actions/toggleMediaPlaying'
 import { mediaPlayer, playerWrapper, player, backgroundImage, textContent, open, closePlayer, overlay } from './MediaPlayer.scss'
 
 interface StateProps {
@@ -17,13 +18,22 @@ interface StateProps {
 
 interface DispatchProps {
   closeMedia: () => void
+  toggleMediaPlaying: (playing: boolean) => void
 }
 
 type Props = StateProps & DispatchProps
 
 class MediaPlayerBase extends React.Component<Props> {
+  private player: MediaPlayer
+
+  componentWillReceiveProps (nextProps: Props) {
+    if (this.props.media.playing !== nextProps.media.playing && this.player) {
+      this.player.togglePlay(nextProps.media.playing)
+    }
+  }
+
   renderPlayer () {
-    const { media: { mediaUrl }, mediaPlaybackRate } = this.props
+    const { media: { mediaUrl, playing }, mediaPlaybackRate, toggleMediaPlaying } = this.props
     if (!mediaUrl) {
       return null
     }
@@ -31,15 +41,21 @@ class MediaPlayerBase extends React.Component<Props> {
     return (
       <div className={playerWrapper}>
         {this.renderImage()}
-        <MediaPlayer className={player} src={mediaUrl} playbackRate={mediaPlaybackRate} autoPlay style={{ }} />
+        <MediaPlayer ref={this.setPlayer} className={player} src={mediaUrl} playbackRate={mediaPlaybackRate} autoPlay={playing} onTogglePlay={toggleMediaPlaying} />
       </div>
     )
   }
 
   renderImage () {
-    const { media: { imageUrl }, mediaPlaybackRate } = this.props
+    const { media: { imageUrl, isVideo }, mediaPlaybackRate } = this.props
 
-    return <ResilientImage src={imageUrl} defaultSrc={require('res/images/imagedefault.gif')} className={backgroundImage} />
+    if (isVideo) {
+      return null
+    }
+
+    return (
+      <ResilientImage src={imageUrl} defaultSrc={require('res/images/imagedefault.gif')} className={backgroundImage} />
+    )
   }
 
   render () {
@@ -60,6 +76,10 @@ class MediaPlayerBase extends React.Component<Props> {
       </div>
     )
   }
+
+  private setPlayer = (player: MediaPlayer) => {
+    this.player = player
+  }
 }
 
 const mapStateToProps = ({ settings: { mediaPlaybackRate }, media }: AppState): StateProps => {
@@ -72,6 +92,7 @@ const mapStateToProps = ({ settings: { mediaPlaybackRate }, media }: AppState): 
 const mapDispatchToProps = (dispatch: Dispatch<AppState>): DispatchProps => {
   return {
     closeMedia: () => dispatch(toggleMediaDrawer({ open: false })),
+    toggleMediaPlaying: (playing) => dispatch(toggleMediaPlaying({ playing })),
   }
 }
 

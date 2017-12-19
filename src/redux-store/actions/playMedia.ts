@@ -9,6 +9,7 @@ interface PlayMediaOptions {
   originalMediaUrl: string
   mediaTitle: string
   mediaDescription: string
+  isVideo: boolean
   imageUrl?: string
 }
 

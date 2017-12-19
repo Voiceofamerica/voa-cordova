@@ -19,7 +19,6 @@ start().then(() => {
   afsm && afsm.immersiveMode()
 
   let render = Component => {
-    console.log('here')
     ReactDOM.render(
       <Component />,
       rootElement,

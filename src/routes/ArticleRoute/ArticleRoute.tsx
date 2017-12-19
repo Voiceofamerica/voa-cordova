@@ -24,7 +24,7 @@ export interface Params {
 }
 
 interface DispatchProps {
-  playMedia: (url: string, title: string, description: string, imageUrl?: string) => void
+  playMedia: (url: string, title: string, description: string, isVideo: boolean, imageUrl?: string) => void
   toggleMediaPlayer: () => void
 }
 
@@ -103,7 +103,7 @@ class ArticleRouteBase extends React.Component<Props> {
     return (
       <Card
         style={{ display: 'inline-block', width: '30vw' }}
-        onPress={() => playMedia(video.url, article.title, video.videoDescription, video.thumbnail)}
+        onPress={() => playMedia(video.url, article.title, video.videoDescription, true, video.thumbnail)}
         title=''
         imageUrl={video.thumbnail}
         minorText=''
@@ -127,7 +127,7 @@ class ArticleRouteBase extends React.Component<Props> {
     return (
       <Card
         style={{ display: 'inline-block', width: '30vw' }}
-        onPress={() => playMedia(audio.url, audio.audioTitle, audio.audioDescription, imgUrl)}
+        onPress={() => playMedia(audio.url, audio.audioTitle, audio.audioDescription, false, imgUrl)}
         title=''
         imageUrl={imgUrl}
         minorText=''
@@ -213,8 +213,8 @@ class ArticleRouteBase extends React.Component<Props> {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => {
   return {
-    playMedia: (mediaUrl, mediaTitle, mediaDescription, imageUrl?) =>
-      dispatch(playMedia({ mediaUrl, mediaTitle, mediaDescription, imageUrl })),
+    playMedia: (mediaUrl, mediaTitle, mediaDescription, isVideo, imageUrl?) =>
+      dispatch(playMedia({ mediaUrl, mediaTitle, mediaDescription, isVideo, imageUrl })),
     toggleMediaPlayer: () => dispatch(toggleMediaDrawer({})),
   }
 }

@@ -11,6 +11,7 @@ interface PlayMediaOptions {
   mediaUrl: string
   mediaTitle: string
   mediaDescription: string
+  isVideo: boolean
   imageUrl?: string
 }
 export default (options: PlayMediaOptions) =>
@@ -22,6 +23,7 @@ export default (options: PlayMediaOptions) =>
       mediaTitle,
       mediaDescription,
       imageUrl,
+      isVideo,
     } = options
 
     const state = getState()
@@ -34,6 +36,7 @@ export default (options: PlayMediaOptions) =>
       originalMediaUrl,
       mediaTitle,
       mediaDescription,
+      isVideo,
       imageUrl,
     }))
 
