@@ -19,6 +19,7 @@ import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
 
 import { mapImageUrl } from 'helpers/image'
 import MainBottomNav from 'containers/MainBottomNav'
+import ErrorBoundary from 'components/ErrorBoundary'
 import Loader from 'components/Loader'
 
 import {
@@ -214,7 +215,7 @@ class ArticleRouteBase extends React.Component<Props> {
             <div key={gal.id} className={gallery}>
               <Carousel dots>
                 {
-                  gal.photo.sort((a, b) => a.order - b.order).map(photo => (
+                  gal.photo.slice().sort((a, b) => a.order - b.order).map(photo => (
                     <div key={photo.id} className={photoContent}>
                       <div className={photoContainer}>
                         <ResilientImage src={photo.url} className={photoItem} contain />
@@ -300,7 +301,9 @@ class ArticleRouteBase extends React.Component<Props> {
     return (
       <div className={articleRoute}>
         <Loader data={this.props.data}>
-          { this.renderArticle() }
+          <ErrorBoundary>
+            { this.renderArticle() }
+          </ErrorBoundary>
         </Loader>
         { this.renderBottomNav() }
       </div>

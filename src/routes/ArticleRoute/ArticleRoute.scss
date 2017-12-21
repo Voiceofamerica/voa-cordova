@@ -7,7 +7,6 @@
   left: 0;
   right: 0;
   bottom: 0;
-  overflow: scroll;
   display: flex;
   flex-direction: column;
   
@@ -17,6 +16,7 @@
     flex-direction: column;
     background: white;
     overflow-y: scroll;
+    overflow-x: hidden;
     padding-bottom: $menu-height;
     margin-bottom: 30px;
   }

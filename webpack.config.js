@@ -93,7 +93,7 @@ module.exports = {
         loaders: [{
           loader: 'url-loader',
           options: {
-            limit: 16384,
+            limit: 1024 * 1024, // 1 MB
             fallback: 'file-loader'
           }
         }]
