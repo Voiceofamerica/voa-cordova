@@ -105,7 +105,7 @@
         .photoItem {
           max-height: 98vw;
           overflow: hidden;
-          object-fit: contain;
+          display: flex;
         }
       }
       

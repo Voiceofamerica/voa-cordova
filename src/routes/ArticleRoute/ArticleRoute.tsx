@@ -36,7 +36,7 @@ import {
   photoContainer,
   photoText,
   photoTitle,
-  photoItem
+  photoItem,
 } from './ArticleRoute.scss'
 import * as Query from './ArticleRoute.graphql'
 
@@ -215,7 +215,7 @@ class ArticleRouteBase extends React.Component<Props> {
                   gal.photo.sort((a, b) => a.order - b.order).map(photo => (
                     <div className={photoContent}>
                       <div className={photoContainer}>
-                        <ResilientImage src={photo.url} className={photoItem} />
+                        <ResilientImage src={photo.url} className={photoItem} contain />
                       </div>
                       <div className={photoText}>
                         <div className={photoTitle}>
