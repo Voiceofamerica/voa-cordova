@@ -11,5 +11,7 @@ export const gallery: string;
 export const photoContent: string;
 export const photoContainer: string;
 export const photoItem: string;
+export const photoTextContainer: string;
 export const photoText: string;
 export const photoTitle: string;
+export const fadeOut: string;

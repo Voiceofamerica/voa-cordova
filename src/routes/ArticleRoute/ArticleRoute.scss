@@ -109,16 +109,32 @@
         }
       }
       
-      .photoText {
+      .photoTextContainer {
         margin: 10px;
-        padding: 5px;
+        position: relative;
         border-radius: 5px;
-        background: white;
-        min-height: 8em;
+        overflow: hidden;
 
-        .photoTitle {
-          font-weight: bold;
-          font-size: 1.2em;
+        .photoText {
+          padding: 5px;
+          background: white;
+          height: 8em;
+          overflow-y: scroll;
+          padding-bottom: 20px;
+  
+          .photoTitle {
+            font-weight: bold;
+            font-size: 1.2em;
+          }
+        }
+
+        .fadeOut {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 20px;
+          background: linear-gradient(transparent, white)
         }
       }
     }

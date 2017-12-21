@@ -40,9 +40,11 @@ export type ArticleRouteQuery = {
       audioDescription: string | null,
     } | null,
     photoGallery:  Array< {
+      id: number,
       photoGalleryTitle: string | null,
       photoGalleryDescription: string | null,
       photo:  Array< {
+        id: number | null,
         photoTitle: string | null,
         photoDescription: string | null,
         url: string | null,

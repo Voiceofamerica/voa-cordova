@@ -26,9 +26,11 @@ query ArticleRoute($id: Int) {
       audioDescription
     }
     photoGallery {
+      id
       photoGalleryTitle
       photoGalleryDescription
       photo {
+        id
         photoTitle
         photoDescription
         url

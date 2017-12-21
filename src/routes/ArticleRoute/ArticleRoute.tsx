@@ -37,6 +37,8 @@ import {
   photoText,
   photoTitle,
   photoItem,
+  photoTextContainer,
+  fadeOut,
 } from './ArticleRoute.scss'
 import * as Query from './ArticleRoute.graphql'
 
@@ -209,19 +211,22 @@ class ArticleRouteBase extends React.Component<Props> {
       <div>
         {
           article.photoGallery.map(gal => (
-            <div className={gallery}>
+            <div key={gal.id} className={gallery}>
               <Carousel dots>
                 {
                   gal.photo.sort((a, b) => a.order - b.order).map(photo => (
-                    <div className={photoContent}>
+                    <div key={photo.id} className={photoContent}>
                       <div className={photoContainer}>
                         <ResilientImage src={photo.url} className={photoItem} contain />
                       </div>
-                      <div className={photoText}>
-                        <div className={photoTitle}>
-                          {photo.photoTitle}
+                      <div className={photoTextContainer}>
+                        <div className={photoText}>
+                          <div className={photoTitle}>
+                            {photo.photoTitle}
+                          </div>
+                          {photo.photoDescription}
                         </div>
-                        {photo.photoDescription}
+                        <div className={fadeOut} />
                       </div>
                     </div>
                   ))
