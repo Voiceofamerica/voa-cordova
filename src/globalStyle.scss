@@ -1,4 +1,6 @@
 
+$primary-color: #333;
+@import '~loaders.css/src/animations/pacman.scss';
 @import '~mdi/scss/materialdesignicons.scss';
 
 html, body {
@@ -6,4 +8,12 @@ html, body {
   height: 100vh;
   width: 100vw;
   position: fixed;
+}
+
+.loader-hidden {
+  display: none;
+}
+
+.loader-active {
+  display: block;
 }

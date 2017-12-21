@@ -10,7 +10,7 @@ $button-rise: 15px;
 
   .centerButton {
     position: relative;
-    transition: top 0.3s;
+    transition: top 0.5s;
     top: 0;
     overflow: hidden;
 
@@ -20,6 +20,7 @@ $button-rise: 15px;
       left: 0;
       right: 0;
       bottom: 0;
+      border-radius: 100px;
       display: flex;
       overflow: hidden;
 
@@ -30,6 +31,7 @@ $button-rise: 15px;
         left: 0;
         right: 0;
         bottom: 0;
+        border-radius: 100px;
       }
       
       & ~ .centerIcon, & ~ .iconText {
@@ -59,6 +61,7 @@ $button-rise: 15px;
     bottom: -$nav-drop;
 
     .centerButton {
+      transition: top 0.3s;
       top: -($nav-drop + $button-rise);
     }
 

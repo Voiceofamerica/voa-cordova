@@ -1,0 +1,11 @@
+
+@import "'~@voiceofamerica/voa-shared/commonStyles/index";
+
+.psiphonIndicator {
+  position: fixed;
+  z-index: 100;
+  top: $menu-border-size;
+  left: $menu-border-size;
+  width: $menu-font-size;
+  height: $menu-font-size;
+}

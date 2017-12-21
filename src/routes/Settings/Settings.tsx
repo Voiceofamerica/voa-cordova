@@ -3,6 +3,9 @@ import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
 
 import BottomNav, { IconItem } from '@voiceofamerica/voa-shared/components/BottomNav'
+
+import DefaultBottomNav from 'containers/DefaultBottomNav'
+
 import { settings, topNav, buttons, settingsButton, buttonIcon } from './Settings.scss'
 
 export default class HomeRoute extends React.Component<RouteComponentProps<void>> {
@@ -22,11 +25,7 @@ export default class HomeRoute extends React.Component<RouteComponentProps<void>
             <i className={`mdi mdi-chevron-right ${buttonIcon}`} />
           </button>
         </div>
-        <BottomNav>
-          <IconItem onClick={() => history.goBack()}>
-            <i className={`mdi mdi-arrow-left`} />
-          </IconItem>
-        </BottomNav>
+        <DefaultBottomNav history={history} />
       </div>
     )
   }

@@ -7,10 +7,12 @@ import { graphql, ChildProps } from 'react-apollo'
 import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
 import BottomNav, { IconItem } from '@voiceofamerica/voa-shared/components/BottomNav'
 
+import Loader from 'components/Loader'
+
 import { SearchQuery, SearchQueryVariables } from 'helpers/graphql-types'
 import * as Query from './Search.graphql'
 
-import { searchArea, row, ticketIcon, inputs, searchInput } from './Search.scss'
+import { searchArea, row, ticketIcon, inputs, searchInput, loadingText } from './Search.scss'
 
 interface OwnProps extends SearchQueryVariables {
   goTo: (route: string) => void
@@ -23,27 +25,10 @@ class SearchAreaBase extends React.Component<Props> {
     this.props.goTo(`/article/${id}`)
   }
 
-  renderLoading () {
-    const { data } = this.props
-    if (!data.loading) {
-      return null
-    }
-
-    return (
-      <div style={{ display: 'flex', flex: 1, justifyContent: 'center', height: '100%', zIndex: 1 }}>
-        <div style={{ alignContent: 'center', fontSize: '10vw', backgroundColor: 'transparent', textAlign: 'center' }}>
-          装载...
-        </div>
-      </div>
-    )
-  }
-
   renderEmpty () {
     return (
-      <div style={{ display: 'flex', flex: 1, justifyContent: 'center', height: '100%', zIndex: 1 }}>
-        <div style={{ alignContent: 'center', fontSize: '10vw', backgroundColor: 'transparent', textAlign: 'center' }}>
-          没有
-        </div>
+      <div className={loadingText}>
+        没有
       </div>
     )
   }
@@ -59,10 +44,10 @@ class SearchAreaBase extends React.Component<Props> {
   }
 
   renderContent () {
-    const { search = [], loading } = this.props.data
+    const { search = [], loading, error } = this.props.data
     const filteredSearch = search.filter(b => b)
 
-    if (loading) {
+    if (loading || error) {
       return null
     }
 
@@ -90,8 +75,9 @@ class SearchAreaBase extends React.Component<Props> {
 
     return (
       <div className={searchArea}>
-        {this.renderLoading()}
-        {this.renderContent()}
+        <Loader className={loadingText} data={this.props.data}>
+          {this.renderContent()}
+        </Loader>
       </div>
     )
   }
@@ -117,8 +103,8 @@ const withSearchQuery = graphql(
     props: ({ data }) => {
       let outputData = data as (typeof data) & SearchQuery
       const { search = [] } = outputData
-      if (!data.loading) {
-        outputData.search = search.map(c => {
+      if (!data.loading && !data.error && search) {
+        outputData.search = search.filter(c => c).map(c => {
           return {
             ...c,
             image: c.image && {

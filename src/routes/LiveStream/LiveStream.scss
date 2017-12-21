@@ -84,4 +84,14 @@
       }
     }
   }
+
+  .loadingText {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-content: flex-start;
+    font-size: 10vw;
+    padding-top: 100px;
+    transition: color 0.3s;
+  }
 }

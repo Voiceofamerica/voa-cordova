@@ -5,4 +5,5 @@ export const contentIcon: string;
 export const articleText: string;
 export const centerIcon: string;
 export const iconText: string;
-export const loadingText: string;
+export const relatedArticles: string;
+export const relatedContentHeading: string;

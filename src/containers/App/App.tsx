@@ -8,6 +8,7 @@ import OfflineIndicator from '@voiceofamerica/voa-shared/components/OfflineIndic
 import { ready } from '@voiceofamerica/voa-shared/helpers/startup'
 
 import store from 'redux-store'
+import PsiphonIndicator from 'components/PsiphonIndicator'
 import Router from 'containers/Router'
 import MediaPlayer from 'containers/MediaPlayer'
 import client from 'helpers/graphql-client'
@@ -34,6 +35,7 @@ export default class App extends React.Component<void, { appReady: boolean }> {
       <ApolloProvider client={client}>
         <Provider store={store}>
           <div className={app}>
+            <PsiphonIndicator />
             <Backdrop imgSrc={require('res/images/Default.png')} blur={appReady} />
             <Router />
             <MediaPlayer />

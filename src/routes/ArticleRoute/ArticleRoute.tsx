@@ -9,14 +9,16 @@ import * as moment from 'moment'
 import ResilientImage from '@voiceofamerica/voa-shared/components/ResilientImage'
 import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
 import Card from '@voiceofamerica/voa-shared/components/Card'
+import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
 
 import { ArticleRouteQuery, ArticleRouteQueryVariables } from 'helpers/graphql-types'
 import playMedia from 'redux-store/thunks/playMediaFromBlob'
 import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
 
 import MainBottomNav from 'containers/MainBottomNav'
+import Loader from 'components/Loader'
 
-import { articleRoute, container, heading, articleText, contentIcon, centerIcon, iconText, loadingText } from './ArticleRoute.scss'
+import { articleRoute, container, heading, articleText, contentIcon, centerIcon, iconText, relatedArticles, relatedContentHeading } from './ArticleRoute.scss'
 import * as Query from './ArticleRoute.graphql'
 
 export interface Params {
@@ -33,19 +35,6 @@ type QueryProps = ChildProps<OwnProps, ArticleRouteQuery>
 type Props = QueryProps & DispatchProps
 
 class ArticleRouteBase extends React.Component<Props> {
-  renderLoadingOrError () {
-    const { data } = this.props
-    if (!data.loading && !data.error) {
-      return null
-    }
-
-    return (
-      <div className={loadingText}>
-        装载...
-      </div>
-    )
-  }
-
   renderImage () {
     const { image } = this.props.data.content[0]
     if (!image || !image.url) {
@@ -102,7 +91,7 @@ class ArticleRouteBase extends React.Component<Props> {
 
     return (
       <Card
-        style={{ display: 'inline-block', width: '30vw' }}
+        style={{ display: 'inline-block', width: '30vw', marginRight: '1.5vw' }}
         onPress={() => playMedia(video.url, article.title, video.videoDescription, true, video.thumbnail)}
         title=''
         imageUrl={video.thumbnail}
@@ -171,6 +160,39 @@ class ArticleRouteBase extends React.Component<Props> {
           }
           {this.renderUpdatedDate()}
         </div>
+        {this.renderRelatedArticles()}
+      </div>
+    )
+  }
+
+  renderRelatedArticles () {
+    const { data, history } = this.props
+    if (data.loading || data.error || !(data.content && data.content[0])) {
+      return null
+    }
+
+    const article = data.content[0]
+    if (article.relatedStories.length === 0) {
+      return null
+    }
+
+    return (
+      <div className={relatedArticles}>
+        <span className={relatedContentHeading}>
+          相关内容
+        </span>
+        {
+          article.relatedStories.map(related => (
+            <div key={related.id}>
+              <Ticket
+                onPress={() => history.push(`/article/${related.id}`)}
+                title={related.storyTitle}
+                imageUrl={related.thumbnailUrl}
+                minorText={moment(related.pubDate).fromNow()}
+              />
+            </div>
+          ))
+        }
       </div>
     )
   }
@@ -181,18 +203,18 @@ class ArticleRouteBase extends React.Component<Props> {
     return (
       <MainBottomNav
         left={[
-          <IconItem onClick={() => history.goBack()}>
+          <IconItem key={0} onClick={() => history.goBack()}>
             <i className='mdi mdi-chevron-left' />
           </IconItem>,
-          <IconItem>
+          <IconItem key={1}>
             <i className='mdi mdi-share' />
           </IconItem>,
         ]}
         right={[
-          <IconItem>
+          <IconItem key={0}>
             <i className='mdi mdi-star-outline' />
           </IconItem>,
-          <IconItem>
+          <IconItem key={1}>
             <i className='mdi mdi-download' />
           </IconItem>,
         ]}
@@ -203,8 +225,9 @@ class ArticleRouteBase extends React.Component<Props> {
   render () {
     return (
       <div className={articleRoute}>
-        { this.renderLoadingOrError() }
-        { this.renderArticle() }
+        <Loader data={this.props.data}>
+          { this.renderArticle() }
+        </Loader>
         { this.renderBottomNav() }
       </div>
     )

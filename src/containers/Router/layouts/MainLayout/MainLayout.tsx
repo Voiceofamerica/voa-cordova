@@ -9,7 +9,7 @@ import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav
 import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
 
 import ErrorBoundary from 'components/ErrorBoundary'
-import MainBottomNav from 'containers/MainBottomNav'
+import DefaultBottomNav from 'containers/DefaultBottomNav'
 import AppState from 'types/AppState'
 import Category from 'types/Category'
 
@@ -62,28 +62,7 @@ function MainLayout ({ component: Component, categories, toggleMediaPlayer, ...r
             <Component {...props as any} />
           </ErrorBoundary>
 
-          <MainBottomNav
-            left={[
-              <IconItem active={homeActive} onClick={() => replace('/')}>
-                <i className='mdi mdi-home-outline' />
-                <div className={iconText}>首页</div>
-              </IconItem>,
-              <IconItem>
-                <i className='mdi mdi-flash-outline' />
-                <div className={iconText}>突发新闻</div>
-              </IconItem>,
-            ]}
-            right={[
-              <IconItem active={liveStreamActive} onClick={() => replace('/liveStream')}>
-                <i className='mdi mdi-radio-tower' />
-                <div className={iconText}>直播</div>
-              </IconItem>,
-              <IconItem onClick={() => goTo('/settings')}>
-                <i className='mdi mdi-account-outline' />
-                <div className={iconText}>我的</div>
-              </IconItem>,
-            ]}
-          />
+          <DefaultBottomNav history={props.history} />
         </div>
       )
     }} />

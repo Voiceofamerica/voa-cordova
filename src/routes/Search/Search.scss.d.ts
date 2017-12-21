@@ -11,3 +11,4 @@ export const emptyText: string;
 export const searchArea: string;
 export const row: string;
 export const ticketIcon: string;
+export const loadingText: string;

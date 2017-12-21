@@ -9,7 +9,17 @@ import AppState from 'types/AppState'
 import MediaState from 'types/MediaState'
 import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
 import toggleMediaPlaying from 'redux-store/actions/toggleMediaPlaying'
-import { mediaPlayer, playerWrapper, player, backgroundImage, textContent, open, closePlayer, overlay } from './MediaPlayer.scss'
+import {
+  mediaPlayer,
+  playerWrapper,
+  player,
+  backgroundImage,
+  textContent,
+  content,
+  open,
+  closePlayer,
+  overlay,
+} from './MediaPlayer.scss'
 
 interface StateProps {
   media: MediaState
@@ -33,7 +43,7 @@ class MediaPlayerBase extends React.Component<Props> {
   }
 
   renderPlayer () {
-    const { media: { mediaUrl, playing }, mediaPlaybackRate, toggleMediaPlaying } = this.props
+    const { media: { mediaUrl, playing, mediaOpen }, mediaPlaybackRate, toggleMediaPlaying } = this.props
     if (!mediaUrl) {
       return null
     }
@@ -41,7 +51,15 @@ class MediaPlayerBase extends React.Component<Props> {
     return (
       <div className={playerWrapper}>
         {this.renderImage()}
-        <MediaPlayer ref={this.setPlayer} className={player} src={mediaUrl} playbackRate={mediaPlaybackRate} autoPlay={playing} onTogglePlay={toggleMediaPlaying} />
+        <MediaPlayer
+          ref={this.setPlayer}
+          className={player}
+          src={mediaUrl}
+          controls={mediaOpen}
+          playbackRate={mediaPlaybackRate}
+          autoPlay={playing}
+          onTogglePlay={toggleMediaPlaying}
+        />
       </div>
     )
   }
@@ -54,7 +72,11 @@ class MediaPlayerBase extends React.Component<Props> {
     }
 
     return (
-      <ResilientImage src={imageUrl} defaultSrc={require('res/images/imagedefault.gif')} className={backgroundImage} />
+      <ResilientImage
+        src={imageUrl}
+        defaultSrc={require('res/images/imagedefault.gif')}
+        className={backgroundImage}
+      />
     )
   }
 
@@ -66,11 +88,15 @@ class MediaPlayerBase extends React.Component<Props> {
       <div>
         <div className={mediaOpen ? `${overlay} ${open}` : overlay} />
         <div className={className}>
-          <div className={closePlayer} onClick={() => closeMedia()}><i className='mdi mdi-chevron-down' /></div>
-          {this.renderPlayer()}
-          <div className={textContent}>
-            <h1>{mediaTitle}</h1>
-            <div>{mediaDescription}</div>
+          <div className={content}>
+            <div className={closePlayer} onClick={() => closeMedia()}>
+              <i className='mdi mdi-chevron-down' />
+            </div>
+            {this.renderPlayer()}
+            <div className={textContent}>
+              <h1>{mediaTitle}</h1>
+              <div>{mediaDescription}</div>
+            </div>
           </div>
         </div>
       </div>

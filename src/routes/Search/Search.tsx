@@ -4,10 +4,10 @@ import * as moment from 'moment'
 import { throttle } from 'lodash'
 import { RouteComponentProps } from 'react-router'
 import { connect } from 'react-redux'
-import { graphql, ChildProps } from 'react-apollo'
 import shallowCompare from 'shallow-compare'
 
 import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
+import TopNav, { CenterText } from '@voiceofamerica/voa-shared/components/TopNav'
 import BottomNav, { IconItem } from '@voiceofamerica/voa-shared/components/BottomNav'
 
 import AppState from 'types/AppState'
@@ -146,6 +146,11 @@ class SearchBase extends React.Component<Props, State> {
 
     return (
       <div className={searchScreen} style={{ marginBottom }}>
+        <TopNav>
+          <CenterText>
+            搜索结果
+          </CenterText>
+        </TopNav>
         <SearchArea goTo={this.goTo} query={debouncedQuery} zoneId={parseInt(zoneId, 10)} />
         {this.renderInputs()}
       </div>

@@ -74,7 +74,7 @@ module.exports = {
           'resolve-url-loader',
           'sass-loader?sourceMap'
         ],
-        include: /globalStyle\.scss|node_modules\/mdi/
+        include: /globalStyle\.scss|node_modules\/mdi|node_modules\/loaders.css/
       },
       {
         test: /\.s?css$/,
@@ -84,7 +84,7 @@ module.exports = {
           'resolve-url-loader',
           'sass-loader?sourceMap'
         ],
-        exclude: /globalStyle\.scss|node_modules\/mdi/
+        exclude: /globalStyle\.scss|node_modules\/mdi|node_modules\/loaders.css/
       },
       {
         test: /\.(jpg|png|gif|woff|woff2|eot|ttf|svg)$/,

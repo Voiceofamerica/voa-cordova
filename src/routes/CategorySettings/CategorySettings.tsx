@@ -14,6 +14,7 @@ import Category from 'types/Category'
 
 import * as Query from './CategorySettings.graphql'
 import { CategorySettingsQuery } from 'helpers/graphql-types'
+import Loader from 'components/Loader'
 
 import { categorySettings, pillContainer, topNav } from './CategorySettings.scss'
 
@@ -36,11 +37,6 @@ type Props = ChildProps<OwnProps & StateProps & DispatchProps, CategorySettingsQ
 interface LocalState {
   draggingIndex: number
 }
-
-// interface SortableUpdate<T> {
-//   draggingIndex: number
-//   items?: T[]
-// }
 
 class CategorySettingsBase extends React.Component<Props, LocalState> {
   hoverOverChosen = (at: PillItem, chosenItem: PillItem) => {
@@ -133,15 +129,17 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
 
     return (
       <div className={categorySettings}>
-        <div className={topNav}>新闻分类排序</div>
-        <div className={pillContainer}>
-          <div style={{ fontWeight: 'bold', gridColumnStart: 1, gridColumnEnd: 3, fontSize: '1.5em', marginLeft: 5, marginRight: 5 }}>
-            我的分类
+        <Loader data={data}>
+          <div className={topNav}>新闻分类排序</div>
+          <div className={pillContainer}>
+            <div style={{ fontWeight: 'bold', gridColumnStart: 1, gridColumnEnd: 3, fontSize: '1.5em', marginLeft: 5, marginRight: 5 }}>
+              我的分类
+            </div>
+            {
+              allCategoriesWithSeparator.map(this.renderCategory)
+            }
           </div>
-          {
-            allCategoriesWithSeparator.map(this.renderCategory)
-          }
-        </div>
+        </Loader>
         <BottomNav>
           <IconItem onClick={() => history.goBack()}>
             <i className={`mdi mdi-arrow-left`} />

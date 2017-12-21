@@ -7,23 +7,20 @@ import { graphql, ChildProps, QueryOpts } from 'react-apollo'
 import * as moment from 'moment'
 
 import Card from '@voiceofamerica/voa-shared/components/Card'
+import SecondaryCard from '@voiceofamerica/voa-shared/components/SecondaryCard'
 import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
 import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
 import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav'
 
-import { homeRoute, row, content, contentLoading, searchButton, ticketIcon, topNav, loadingText } from './CategoryRoute.scss'
+import Loader from 'components/Loader'
+
+import { homeRoute, row, content, contentLoading, searchButton, ticketIcon, topNav } from './CategoryRoute.scss'
 import * as Query from './CategoryRoute.graphql'
 import { CategoryRouteQuery, CategoryRouteQueryVariables } from 'helpers/graphql-types'
 import analytics from 'helpers/analytics'
 
 import AppState from 'types/AppState'
 import Category from 'types/Category'
-
-const Row = ({ children }: React.Props<any>) => (
-  <div className={row}>
-    { children }
-  </div>
-)
 
 export interface Params {
   category: string
@@ -52,21 +49,6 @@ class HomeRouteBase extends React.Component<Props> {
     this.goTo('/settings')
   }
 
-  renderLoadingOrError () {
-    const { data } = this.props
-    if (!data.loading && !data.error) {
-      return null
-    }
-
-    const content = data.error ? '发生错误' : '装载...'
-
-    return (
-      <div className={loadingText}>
-        {content}
-      </div>
-    )
-  }
-
   renderIcon = (blurb, className?: string) => {
     if (blurb.video && blurb.video.url) {
       return <i className={`mdi mdi-monitor ${className}`} />
@@ -88,7 +70,7 @@ class HomeRouteBase extends React.Component<Props> {
     const blurb = content[0]
 
     return (
-      <Row>
+      <div className={row} style={{ marginBottom: '1.5vw' }}>
         <Card
           onPress={() => this.goToArticle(blurb.id)}
           title={<span>{this.renderIcon(blurb)} {blurb.title}</span>}
@@ -96,7 +78,7 @@ class HomeRouteBase extends React.Component<Props> {
           imageUrl={blurb.image && blurb.image.url}
           factor={1}
         />
-      </Row>
+      </div>
     )
   }
 
@@ -109,10 +91,10 @@ class HomeRouteBase extends React.Component<Props> {
     }
 
     return (
-      <Row>
+      <div className={row}>
         {
           content.slice(1, 3).map((blurb, idx) => (
-            <Card
+            <SecondaryCard
               key={blurb.id}
               onPress={() => this.goToArticle(blurb.id)}
               title={<span>{this.renderIcon(blurb)} {blurb.title}</span>}
@@ -122,7 +104,7 @@ class HomeRouteBase extends React.Component<Props> {
             />
           ))
         }
-      </Row>
+      </div>
     )
   }
 
@@ -136,7 +118,7 @@ class HomeRouteBase extends React.Component<Props> {
 
     return (
       content.slice(3).map((blurb, idx) => (
-        <Row key={blurb.id}>
+        <div className={row} key={blurb.id}>
           <Ticket
             onPress={() => this.goToArticle(blurb.id)}
             title={blurb.title}
@@ -144,7 +126,7 @@ class HomeRouteBase extends React.Component<Props> {
             imageUrl={blurb.image && blurb.image.url}
             icon={this.renderIcon(blurb, ticketIcon)}
           />
-        </Row>
+        </div>
       ))
     )
   }
@@ -176,8 +158,9 @@ class HomeRouteBase extends React.Component<Props> {
   render () {
     return (
       <div className={homeRoute}>
-        { this.renderContent() }
-        { this.renderLoadingOrError() }
+        <Loader data={this.props.data}>
+          { this.renderContent() }
+        </Loader>
       </div>
     )
   }

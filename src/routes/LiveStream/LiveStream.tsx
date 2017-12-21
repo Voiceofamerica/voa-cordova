@@ -18,8 +18,10 @@ import playMedia from 'redux-store/thunks/playMediaFromBlob'
 import AppState from 'types/AppState'
 import Category from 'types/Category'
 
+import Loader from 'components/Loader'
+
 import * as Query from './LiveStream.graphql'
-import { liveStream, content, programTime, liveStreamItem, programTitle, collapser, collapserIconContainer, collapserIcon, drawer, drawerImage, imageIcon, drawerContent, open } from './LiveStream.scss'
+import { liveStream, content, programTime, liveStreamItem, programTitle, collapser, collapserIconContainer, collapserIcon, drawer, drawerImage, imageIcon, drawerContent, open, loadingText } from './LiveStream.scss'
 
 interface DispatchProps {
   playMedia: (url: string, title: string, description: string, isVideo: boolean, imageUrl: string) => void
@@ -118,8 +120,10 @@ class LiveStreamBase extends React.Component<Props, State> {
   render () {
     return (
       <div className={liveStream}>
-        {this.renderLoading()}
-        {this.renderContent()}
+        <Loader className={loadingText} data={this.props.data}>
+          {this.renderLoading()}
+          {this.renderContent()}
+        </Loader>
       </div>
     )
   }

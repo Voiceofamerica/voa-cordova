@@ -5,15 +5,15 @@
   display: flex;
   position: fixed;
   flex-direction: column;
-  top: 2vh;
+  top: 1vh;
   left: 0;
   right: 0;
   bottom: 0;
+  overflow: hidden;
   background: transparent;
   transform: translateY(100vh);
   transition: transform 0.3s;
   background: white;
-  overflow: scroll;
   border-radius: 10px 10px 0 0;
   z-index: $menu-z-max;
 
@@ -44,16 +44,27 @@
   }
 
   .closePlayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     text-align: center;
-    font-size: 2em;
+    font-size: 30px;
+    height: 40px;
     color: #888;
-    margin: 3 0 -5px 0;
+    background: white;
+    z-index: $menu-z + 5;
 
     i::before {
       transform: scale(2, 1)
     }
   }
 
+  .content {
+    overflow: scroll;
+    padding: 40px 0;
+  }
+  
   &.open {
     transform: translateY(0);
   }

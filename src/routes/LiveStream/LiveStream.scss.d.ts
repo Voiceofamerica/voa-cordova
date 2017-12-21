@@ -11,3 +11,4 @@ export const drawerImage: string;
 export const imageIcon: string;
 export const drawerContent: string;
 export const open: string;
+export const loadingText: string;

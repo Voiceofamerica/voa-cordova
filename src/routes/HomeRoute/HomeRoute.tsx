@@ -7,6 +7,7 @@ import { graphql, ChildProps } from 'react-apollo'
 import * as moment from 'moment'
 
 import Card from '@voiceofamerica/voa-shared/components/Card'
+import SecondaryCard from '@voiceofamerica/voa-shared/components/SecondaryCard'
 import { ready } from '@voiceofamerica/voa-shared/helpers/startup'
 import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
 import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
@@ -17,15 +18,11 @@ import * as Query from './HomeRoute.graphql'
 import { HomeRouteQuery } from 'helpers/graphql-types'
 import analytics from 'helpers/analytics'
 
+import Loader from 'components/Loader'
+
 import AppState from 'types/AppState'
 import Category from 'types/Category'
 import ArticleBlurb from '@voiceofamerica/voa-shared/types/ArticleBlurb'
-
-const Row = ({ children }: React.Props<any>) => (
-  <div className={row}>
-    { children }
-  </div>
-)
 
 interface StateProps {
   categories: Category[]
@@ -62,23 +59,6 @@ class HomeRouteBase extends React.Component<Props, State> {
     this.goTo('/settings')
   }
 
-  renderLoadingOrError () {
-    const { data } = this.props
-    const { startupDone } = this.state
-    if (!data.loading && startupDone && !data.error) {
-      return null
-    }
-
-    const className = startupDone ? loadingText : `${loadingText} ${startup}`
-    const content = data.error ? '发生错误' : '装载...'
-
-    return (
-      <div className={className}>
-        {content}
-      </div>
-    )
-  }
-
   renderIcon = (blurb, className?: string) => {
     if (blurb.video && blurb.video.url) {
       return <i className={`mdi mdi-monitor ${className}`} />
@@ -100,7 +80,7 @@ class HomeRouteBase extends React.Component<Props, State> {
     const blurb = content[0]
 
     return (
-      <Row>
+      <div className={row} style={{ marginBottom: '1.5vw' }}>
         <Card
           onPress={() => this.goToArticle(blurb.id)}
           title={<span>{this.renderIcon(blurb)} {blurb.title}</span>}
@@ -108,7 +88,7 @@ class HomeRouteBase extends React.Component<Props, State> {
           imageUrl={blurb.image && blurb.image.url}
           factor={1}
         />
-      </Row>
+      </div>
     )
   }
 
@@ -121,10 +101,10 @@ class HomeRouteBase extends React.Component<Props, State> {
     }
 
     return (
-      <Row>
+      <div className={row}>
         {
           content.slice(1, 3).map((blurb, idx) => (
-            <Card
+            <SecondaryCard
               key={blurb.id}
               onPress={() => this.goToArticle(blurb.id)}
               title={<span>{this.renderIcon(blurb)} {blurb.title}</span>}
@@ -134,7 +114,7 @@ class HomeRouteBase extends React.Component<Props, State> {
             />
           ))
         }
-      </Row>
+      </div>
     )
   }
 
@@ -149,15 +129,16 @@ class HomeRouteBase extends React.Component<Props, State> {
 
     return (
       content.slice(3).map((blurb, idx) => (
-        <Row key={blurb.id}>
+        <div className={row} key={blurb.id}>
           <Ticket
             onPress={() => this.goToArticle(blurb.id)}
             title={blurb.title}
             minorText={moment(blurb.pubDate).fromNow()}
             imageUrl={blurb.image && blurb.image.url}
             icon={this.renderIcon(blurb, ticketIcon)}
+            description={blurb.introduction}
           />
-        </Row>
+        </div>
       ))
     )
   }
@@ -186,11 +167,32 @@ class HomeRouteBase extends React.Component<Props, State> {
     )
   }
 
+  renderLoadingOrError () {
+    const { data } = this.props
+    const { startupDone } = this.state
+    if (!data.loading && startupDone && !data.error) {
+      return null
+    }
+
+    const className = startupDone ? undefined : startup
+    const content = data.error ? '发生错误' : '装载...'
+
+    return (
+      <div className={className}>
+        {content}
+      </div>
+    )
+  }
+
   render () {
+    const { startupDone } = this.state
+
     return (
       <div className={homeRoute}>
-        { this.renderContent() }
-        { this.renderLoadingOrError() }
+        <Loader className={startupDone ? undefined : startup} data={this.props.data}>
+          { this.renderContent() }
+          { this.renderLoadingOrError() }
+        </Loader>
       </div>
     )
   }
