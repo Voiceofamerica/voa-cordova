@@ -15,28 +15,14 @@ import client from 'helpers/graphql-client'
 
 import { app } from './App.scss'
 
-export default class App extends React.Component<void, { appReady: boolean }> {
-  state = {
-    appReady: false,
-  }
-
-  componentDidMount () {
-    ready()
-      .then(() => this.setState({ appReady: true }))
-      .catch((err) => {
-        console.error(err)
-      })
-  }
+export default class App extends React.Component {
 
   render () {
-    const { appReady } = this.state
-
     return (
       <ApolloProvider client={client}>
         <Provider store={store}>
           <div className={app}>
             <PsiphonIndicator />
-            <Backdrop imgSrc={require('res/images/Default.png')} blur={appReady} />
             <Router />
             <MediaPlayer />
           </div>

@@ -15,6 +15,8 @@ const __HOST__ = env === ENV_HOST
 
 const srcDir = path.join(__dirname, 'src')
 
+const GLOBAL_CSS = /globalStyle\.scss|node_modules\/mdi|node_modules\/slick-carousel/
+
 module.exports = {
   entry: [
     'react-hot-loader/patch',
@@ -74,7 +76,7 @@ module.exports = {
           'resolve-url-loader',
           'sass-loader?sourceMap'
         ],
-        include: /globalStyle\.scss|node_modules\/mdi|node_modules\/loaders.css/
+        include: GLOBAL_CSS
       },
       {
         test: /\.s?css$/,
@@ -84,7 +86,7 @@ module.exports = {
           'resolve-url-loader',
           'sass-loader?sourceMap'
         ],
-        exclude: /globalStyle\.scss|node_modules\/mdi|node_modules\/loaders.css/
+        exclude: GLOBAL_CSS
       },
       {
         test: /\.(jpg|png|gif|woff|woff2|eot|ttf|svg)$/,

@@ -16,6 +16,7 @@ import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav
 import { homeRoute, row, content, contentLoading, searchButton, topNav, ticketIcon, loadingText, startup } from './HomeRoute.scss'
 import * as Query from './HomeRoute.graphql'
 import { HomeRouteQuery } from 'helpers/graphql-types'
+import { mapImageUrl } from 'helpers/image'
 import analytics from 'helpers/analytics'
 
 import Loader from 'components/Loader'
@@ -33,12 +34,10 @@ type QueryProps = ChildProps<RouteComponentProps<void>, HomeRouteQuery>
 type Props = QueryProps & StateProps
 
 interface State {
-  startupDone: boolean
 }
 
 class HomeRouteBase extends React.Component<Props, State> {
   state: State = {
-    startupDone: false,
   }
 
   componentDidMount () {
@@ -59,11 +58,16 @@ class HomeRouteBase extends React.Component<Props, State> {
     this.goTo('/settings')
   }
 
-  renderIcon = (blurb, className?: string) => {
+  renderIcon = (blurb: HomeRouteQuery['content'][0], className?: string) => {
     if (blurb.video && blurb.video.url) {
       return <i className={`mdi mdi-monitor ${className}`} />
     } else if (blurb.audio && blurb.audio.url) {
       return <i className={`mdi mdi-headphones ${className}`} />
+    } else if (blurb.photoGallery && blurb.photoGallery.length > 0) {
+      const { photoGallery } = blurb
+      const countNumber = photoGallery.reduce((total, gallery) => total + gallery.photo.length, 0)
+      const count = countNumber < 9 ? `${countNumber}` : '9-plus'
+      return <i className={`mdi mdi-numeric-${count}-box-multiple-outline ${className}`} />
     } else {
       return null
     }
@@ -71,9 +75,8 @@ class HomeRouteBase extends React.Component<Props, State> {
 
   renderHero () {
     const { data } = this.props
-    const { startupDone } = this.state
-    const { loading, content, error } = data
-    if (loading || error || !startupDone || content.length < 1) {
+    const { content } = data
+    if (!content || content.length < 1) {
       return null
     }
 
@@ -94,9 +97,8 @@ class HomeRouteBase extends React.Component<Props, State> {
 
   renderSecondary () {
     const { data } = this.props
-    const { startupDone } = this.state
-    const { loading, content, error } = data
-    if (loading || error || !startupDone || content.length < 2) {
+    const { content } = data
+    if (!content || content.length < 2) {
       return null
     }
 
@@ -120,10 +122,9 @@ class HomeRouteBase extends React.Component<Props, State> {
 
   renderRest () {
     const { data } = this.props
-    const { startupDone } = this.state
-    const { loading, content, error } = data
+    const { content } = data
 
-    if (loading || error || !startupDone || content.length < 4) {
+    if (!content || content.length < 4) {
       return null
     }
 
@@ -154,11 +155,9 @@ class HomeRouteBase extends React.Component<Props, State> {
 
   renderContent () {
     const { data } = this.props
-    const { startupDone } = this.state
-    const className = (data.loading || !startupDone) ? `${content} ${contentLoading}` : content
 
     return (
-      <div className={className}>
+      <div className={content}>
         { this.renderSearchButton() }
         { this.renderHero() }
         { this.renderSecondary() }
@@ -167,46 +166,15 @@ class HomeRouteBase extends React.Component<Props, State> {
     )
   }
 
-  renderLoadingOrError () {
-    const { data } = this.props
-    const { startupDone } = this.state
-    if (!data.loading && startupDone && !data.error) {
-      return null
-    }
-
-    const className = startupDone ? undefined : startup
-    const content = data.error ? '发生错误' : '装载...'
-
-    return (
-      <div className={className}>
-        {content}
-      </div>
-    )
-  }
-
   render () {
-    const { startupDone } = this.state
-
     return (
       <div className={homeRoute}>
-        <Loader className={startupDone ? undefined : startup} data={this.props.data}>
+        <Loader data={this.props.data}>
           { this.renderContent() }
-          { this.renderLoadingOrError() }
         </Loader>
       </div>
     )
   }
-}
-
-const pathRgx = /\/(.{36})((?:_tv)?)[^\.]*\.(.*)/
-const mapImageUrl = (url: string, params: string = 'w300') => {
-  const parsedUrl = new URL(url)
-  const pathParts = pathRgx.exec(parsedUrl.pathname)
-  const guid = pathParts[1]
-  const tv = pathParts[2]
-  const ext = pathParts[3]
-  parsedUrl.pathname = `${guid}${tv}_${params}.${ext}`
-  return parsedUrl.toString()
 }
 
 const withHomeQuery = graphql(
@@ -220,7 +188,7 @@ const withHomeQuery = graphql(
             ...c,
             image: c.image && {
               ...c.image,
-              url: mapImageUrl(c.image.url),
+              url: mapImageUrl(c.image.url, 'w300'),
             },
           }
         })

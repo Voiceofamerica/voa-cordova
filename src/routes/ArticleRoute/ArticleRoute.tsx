@@ -3,6 +3,8 @@ import * as React from 'react'
 import { compose } from 'redux'
 import { connect, Dispatch } from 'react-redux'
 import { RouteComponentProps } from 'react-router'
+import Carousel from 'react-slick'
+
 import { graphql, ChildProps, QueryOpts } from 'react-apollo'
 import * as moment from 'moment'
 
@@ -15,10 +17,27 @@ import { ArticleRouteQuery, ArticleRouteQueryVariables } from 'helpers/graphql-t
 import playMedia from 'redux-store/thunks/playMediaFromBlob'
 import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
 
+import { mapImageUrl } from 'helpers/image'
 import MainBottomNav from 'containers/MainBottomNav'
 import Loader from 'components/Loader'
 
-import { articleRoute, container, heading, articleText, contentIcon, centerIcon, iconText, relatedArticles, relatedContentHeading } from './ArticleRoute.scss'
+import {
+  articleRoute,
+  container,
+  heading,
+  articleText,
+  contentIcon,
+  centerIcon,
+  iconText,
+  relatedArticles,
+  relatedContentHeading,
+  gallery,
+  photoContent,
+  photoContainer,
+  photoText,
+  photoTitle,
+  photoItem
+} from './ArticleRoute.scss'
 import * as Query from './ArticleRoute.graphql'
 
 export interface Params {
@@ -160,7 +179,57 @@ class ArticleRouteBase extends React.Component<Props> {
           }
           {this.renderUpdatedDate()}
         </div>
+        {this.renderGallery()}
         {this.renderRelatedArticles()}
+      </div>
+    )
+  }
+
+  renderGallery () {
+    const { data } = this.props
+    const article = data.content[0]
+
+    if (!article.photoGallery || article.photoGallery.length === 0) {
+      return null
+    }
+
+    const settings = {
+      dots: true,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+    }
+
+    // gallery,
+    // photoContent,
+    // photoContainer,
+    // photoText,
+    // photoTitle,
+
+    return (
+      <div>
+        {
+          article.photoGallery.map(gal => (
+            <div className={gallery}>
+              <Carousel dots>
+                {
+                  gal.photo.sort((a, b) => a.order - b.order).map(photo => (
+                    <div className={photoContent}>
+                      <div className={photoContainer}>
+                        <ResilientImage src={photo.url} className={photoItem} />
+                      </div>
+                      <div className={photoText}>
+                        <div className={photoTitle}>
+                          {photo.photoTitle}
+                        </div>
+                        {photo.photoDescription}
+                      </div>
+                    </div>
+                  ))
+                }
+              </Carousel>
+            </div>
+          ))
+        }
       </div>
     )
   }
@@ -250,6 +319,23 @@ const withQuery = graphql(
         id: parseInt(ownProps.match.params.id, 10),
       },
     }),
+
+    props: ({ data }) => {
+      let outputData = data as (typeof data) & ArticleRouteQuery
+      if (!data.loading && !data.error) {
+        outputData.content = outputData.content.filter(c => c).map(c => {
+          return {
+            ...c,
+            image: c.image && {
+              ...c.image,
+              url: mapImageUrl(c.image.url, 'w600'),
+            },
+          }
+        })
+      }
+
+      return { data: outputData }
+    },
   },
 )
 

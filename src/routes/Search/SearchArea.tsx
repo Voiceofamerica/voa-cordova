@@ -10,6 +10,8 @@ import BottomNav, { IconItem } from '@voiceofamerica/voa-shared/components/Botto
 import Loader from 'components/Loader'
 
 import { SearchQuery, SearchQueryVariables } from 'helpers/graphql-types'
+import { mapImageUrl } from 'helpers/image'
+
 import * as Query from './Search.graphql'
 
 import { searchArea, row, ticketIcon, inputs, searchInput, loadingText } from './Search.scss'
@@ -83,17 +85,6 @@ class SearchAreaBase extends React.Component<Props> {
   }
 }
 
-const pathRgx = /\/(.{36})((?:_tv)?)[^\.]*\.(.*)/
-const mapImageUrl = (url: string, params: string = 'w100') => {
-  const parsedUrl = new URL(url)
-  const pathParts = pathRgx.exec(parsedUrl.pathname)
-  const guid = pathParts[1]
-  const tv = pathParts[2]
-  const ext = pathParts[3]
-  parsedUrl.pathname = `${guid}${tv}_${params}.${ext}`
-  return parsedUrl.toString()
-}
-
 const withSearchQuery = graphql(
   Query,
   {
@@ -109,7 +100,7 @@ const withSearchQuery = graphql(
             ...c,
             image: c.image && {
               ...c.image,
-              url: mapImageUrl(c.image.url),
+              url: mapImageUrl(c.image.url, 'w100'),
             },
           }
         })

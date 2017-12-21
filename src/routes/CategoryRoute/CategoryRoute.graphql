@@ -13,5 +13,10 @@ query CategoryRoute($category: Int) {
     audio {
       url
     }
+    photoGallery {
+      photo {
+        id
+      }
+    }
   }
 }

@@ -18,6 +18,7 @@ import { homeRoute, row, content, contentLoading, searchButton, ticketIcon, topN
 import * as Query from './CategoryRoute.graphql'
 import { CategoryRouteQuery, CategoryRouteQueryVariables } from 'helpers/graphql-types'
 import analytics from 'helpers/analytics'
+import { mapImageUrl } from 'helpers/image'
 
 import AppState from 'types/AppState'
 import Category from 'types/Category'
@@ -49,11 +50,16 @@ class HomeRouteBase extends React.Component<Props> {
     this.goTo('/settings')
   }
 
-  renderIcon = (blurb, className?: string) => {
+  renderIcon = (blurb: CategoryRouteQuery['content'][0], className?: string) => {
     if (blurb.video && blurb.video.url) {
       return <i className={`mdi mdi-monitor ${className}`} />
     } else if (blurb.audio && blurb.audio.url) {
       return <i className={`mdi mdi-headphones ${className}`} />
+    } else if (blurb.photoGallery && blurb.photoGallery.length > 0) {
+      const { photoGallery } = blurb
+      const countNumber = photoGallery.reduce((total, gallery) => total + gallery.photo.length, 0)
+      const count = countNumber < 9 ? `${countNumber}` : '9-plus'
+      return <i className={`mdi mdi-numeric-${count}-box-multiple-outline ${className}`} />
     } else {
       return null
     }
@@ -166,17 +172,6 @@ class HomeRouteBase extends React.Component<Props> {
   }
 }
 
-const pathRgx = /\/(.{36})((?:_tv)?)[^\.]*\.(.*)/
-const mapImageUrl = (url: string, params: string = 'w300') => {
-  const parsedUrl = new URL(url)
-  const pathParts = pathRgx.exec(parsedUrl.pathname)
-  const guid = pathParts[1]
-  const tv = pathParts[2]
-  const ext = pathParts[3]
-  parsedUrl.pathname = `${guid}${tv}_${params}.${ext}`
-  return parsedUrl.toString()
-}
-
 const withHomeQuery = graphql(
   Query,
   {
@@ -193,7 +188,7 @@ const withHomeQuery = graphql(
             ...c,
             image: c.image && {
               ...c.image,
-              url: mapImageUrl(c.image.url),
+              url: mapImageUrl(c.image.url, 'w300'),
             },
           }
         })

@@ -9,14 +9,6 @@ export enum ContentType {
 }
 
 
-export enum ProgramType {
-  Clip = "Clip",
-  Feature = "Feature",
-  BroadcastProgram = "BroadcastProgram",
-  Video = "Video",
-}
-
-
 export type ArticleRouteQueryVariables = {
   id?: number | null,
 };
@@ -44,7 +36,7 @@ export type ArticleRouteQuery = {
     } | null,
     audio:  {
       url: string | null,
-      audioTitle: string,
+      audioTitle: string | null,
       audioDescription: string | null,
     } | null,
     photoGallery:  Array< {
@@ -86,6 +78,11 @@ export type CategoryRouteQuery = {
     audio:  {
       url: string | null,
     } | null,
+    photoGallery:  Array< {
+      photo:  Array< {
+        id: number | null,
+      } | null > | null,
+    } | null > | null,
   } | null > | null,
 };
 
@@ -111,13 +108,17 @@ export type HomeRouteQuery = {
     audio:  {
       url: string | null,
     } | null,
+    photoGallery:  Array< {
+      photo:  Array< {
+        id: number | null,
+      } | null > | null,
+    } | null > | null,
   } | null > | null,
 };
 
 export type LiveStreamQuery = {
   program:  Array< {
     id: number,
-    type: ProgramType | null,
     date: string | null,
     timeLeft: number | null,
     programTitle: string | null,

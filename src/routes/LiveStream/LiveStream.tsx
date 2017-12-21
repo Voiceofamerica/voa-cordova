@@ -11,7 +11,7 @@ import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
 import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
 import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav'
 
-import { LiveStreamQuery, ProgramType } from 'helpers/graphql-types'
+import { LiveStreamQuery } from 'helpers/graphql-types'
 import analytics from 'helpers/analytics'
 import playMedia from 'redux-store/thunks/playMediaFromBlob'
 

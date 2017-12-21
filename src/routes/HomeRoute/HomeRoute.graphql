@@ -13,5 +13,10 @@ query HomeRoute {
     audio {
       url
     }
+    photoGallery {
+      photo {
+        id
+      }
+    }
   }
 }
