@@ -35,23 +35,31 @@
 
     .settingsButton {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       background: rgba($voa-blue, 0.2);
       margin-top: 5px;
-      height: $menu-height;
+      min-height: $menu-height;
       font-size: $menu-font-size;
       border: none;
       border-radius: 0;
       outline: none;
 
-      &:active {
-        background: rgba($voa-blue, 0.5);
-      }
-
-      .buttonIcon {
+      .items {
         display: flex;
-        flex-grow: 1;
-        justify-content: flex-end;
+        flex-direction: row;
+        justify-content: space-around;
+        font-size: 0.6em;
+
+        .item {
+          font-weight: bold;
+          border-radius: 5px;
+          padding: 5px;
+          margin: 5px;
+
+          &.active {
+            background: rgba($voa-blue, 0.3);
+          }
+        }
       }
     }
   }
