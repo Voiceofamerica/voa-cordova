@@ -16,12 +16,15 @@ import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
 import { ArticleRouteQuery, ArticleRouteQueryVariables } from 'helpers/graphql-types'
 import playMedia from 'redux-store/thunks/playMediaFromBlob'
 import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
+import toggleFavoriteContent from 'redux-store/actions/toggleFavoriteContent'
 
 import { mapImageUrl } from 'helpers/image'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
 import MainBottomNav from 'containers/MainBottomNav'
 import ErrorBoundary from 'components/ErrorBoundary'
 import Loader from 'components/Loader'
+
+import AppState from 'types/AppState'
 
 import {
   articleRoute,
@@ -48,14 +51,20 @@ export interface Params {
   id: string
 }
 
+interface StateProps {
+  isFavorite: boolean
+}
+
 interface DispatchProps {
   playMedia: (url: string, title: string, description: string, isVideo: boolean, imageUrl?: string) => void
   toggleMediaPlayer: () => void
+  toggleFavorite: (favorite?: boolean) => void
 }
 
-type OwnProps = RouteComponentProps<Params>
-type QueryProps = ChildProps<OwnProps, ArticleRouteQuery>
-type Props = QueryProps & DispatchProps & AnalyticsProps
+type BaseProps = RouteComponentProps<Params>
+type QueryProps = ChildProps<BaseProps, ArticleRouteQuery>
+type OwnProps = QueryProps
+type Props = QueryProps & DispatchProps & StateProps & AnalyticsProps
 
 class ArticleRouteBase extends React.Component<Props> {
   renderImage () {
@@ -274,7 +283,9 @@ class ArticleRouteBase extends React.Component<Props> {
   }
 
   renderBottomNav () {
-    const { history, toggleMediaPlayer } = this.props
+    const { history, toggleMediaPlayer, isFavorite, toggleFavorite } = this.props
+
+    const starIcon = isFavorite ? 'mdi-star' : 'mdi-star-outline'
 
     return (
       <MainBottomNav
@@ -287,8 +298,8 @@ class ArticleRouteBase extends React.Component<Props> {
           </IconItem>,
         ]}
         right={[
-          <IconItem key={0}>
-            <i className='mdi mdi-star-outline' />
+          <IconItem key={0} onClick={() => toggleFavorite()}>
+            <i className={`mdi ${starIcon}`} />
           </IconItem>,
           <IconItem key={1}>
             <i className='mdi mdi-download' />
@@ -312,11 +323,25 @@ class ArticleRouteBase extends React.Component<Props> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => {
+const mapStateToProps = (state: AppState, ownProps: OwnProps): StateProps => {
+  return {
+    isFavorite: !!state.favorites[ownProps.match.params.id],
+  }
+}
+
+const mapDispatchToProps = (dispatch: Dispatch<any>, ownProps: OwnProps): DispatchProps => {
   return {
     playMedia: (mediaUrl, mediaTitle, mediaDescription, isVideo, imageUrl?) =>
       dispatch(playMedia({ mediaUrl, mediaTitle, mediaDescription, isVideo, imageUrl })),
     toggleMediaPlayer: () => dispatch(toggleMediaDrawer({})),
+    toggleFavorite: (favorite?: boolean) => {
+      if (!ownProps.data || !ownProps.data.content || !ownProps.data.content[0]) {
+        return
+      }
+
+      const { id, title, content, pubDate } = ownProps.data.content[0]
+      dispatch(toggleFavoriteContent({ id, title, content, pubDate, favorite }))
+    },
   }
 }
 
@@ -366,7 +391,7 @@ const withQuery = graphql(
   },
 )
 
-const withRedux = connect(null, mapDispatchToProps)
+const withRedux = connect(mapStateToProps, mapDispatchToProps)
 
 export default compose(
   withQuery,

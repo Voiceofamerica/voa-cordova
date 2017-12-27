@@ -1,5 +1,6 @@
 
 import { Action, Reducer } from 'redux'
+import FlatMap from 'types/FlatMap'
 
 export interface ActorMap<S> {
   [name: string]: Reducer<S>
@@ -21,5 +22,32 @@ export function buildArrayReducer<S, I> (idSelector: (item: S) => I, childReduce
         return item
       }
     })
+  }
+}
+
+function getNewState<S> (prevState: FlatMap<S>, action: Action, defaultReducer?: Reducer<FlatMap<S>>): FlatMap<S> {
+  if (typeof defaultReducer === 'function') {
+    return defaultReducer(prevState, action)
+  } else {
+    return {
+      ...prevState,
+    }
+  }
+}
+
+export function buildFlatMapReducer<S> (idSelector: (item: S) => number, childReducer: Reducer<S>, defaultReducer?: Reducer<FlatMap<S>>): Reducer<FlatMap<S>> {
+  return (prevState, action: Action & { id: number }) => {
+    const newState = getNewState(prevState, action)
+
+    const prevItem = newState[action.id]
+    const newItem = childReducer(prevItem, action)
+
+    if (newItem === null || newItem === undefined) {
+      delete newState[action.id]
+    } else {
+      newState[action.id] = newItem
+    }
+
+    return newState
   }
 }
