@@ -3,6 +3,7 @@ export const container: string;
 export const heading: string;
 export const contentIcon: string;
 export const articleText: string;
+export const paragraph: string;
 export const centerIcon: string;
 export const iconText: string;
 export const relatedArticles: string;

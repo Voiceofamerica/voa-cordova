@@ -20,6 +20,7 @@ import toggleFavoriteContent from 'redux-store/actions/toggleFavoriteContent'
 
 import { mapImageUrl } from 'helpers/image'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
+import { generatePDF } from 'helpers/articlePrinter'
 import MainBottomNav from 'containers/MainBottomNav'
 import ErrorBoundary from 'components/ErrorBoundary'
 import Loader from 'components/Loader'
@@ -31,6 +32,7 @@ import {
   container,
   heading,
   articleText,
+  paragraph,
   contentIcon,
   centerIcon,
   iconText,
@@ -67,6 +69,15 @@ type OwnProps = QueryProps
 type Props = QueryProps & DispatchProps & StateProps & AnalyticsProps
 
 class ArticleRouteBase extends React.Component<Props> {
+  componentWillReceiveProps (newProps: Props) {
+    if (newProps.match.params.id !== this.props.match.params.id) {
+      const containerElement = this.refs.container as HTMLDivElement
+      if (containerElement) {
+        containerElement.scrollTop = 0
+      }
+    }
+  }
+
   share = () => {
     if (!this.props.data.content || !this.props.data.content[0]) {
       return
@@ -76,6 +87,23 @@ class ArticleRouteBase extends React.Component<Props> {
     window.plugins.socialsharing.shareWithOptions({
       message: '',
       url,
+    })
+  }
+
+  download = () => {
+    if (!this.props.data.content || !this.props.data.content[0]) {
+      return
+    }
+    const { title, authors, pubDate, content } = this.props.data.content[0]
+    const authorNames = authors
+      .map(auth => auth.name)
+      .map(name => `${name.first} ${name.last}`)
+
+    generatePDF({
+      title,
+      by: authorNames.join('; '),
+      pubDate: moment(pubDate).format('lll'),
+      content,
     })
   }
 
@@ -190,13 +218,13 @@ class ArticleRouteBase extends React.Component<Props> {
     const paragraphs = article.content.split(/\n/g)
 
     return (
-      <div className={container}>
+      <div className={container} ref='container'>
         {this.renderImage()}
         {this.renderHeading()}
         <div className={articleText}>
           {
             paragraphs.map((text, index) => (
-              <div key={index}>
+              <div key={index} className={paragraph}>
                 {index === 0 ? this.renderMedia() : null}
                 {text}
               </div>
@@ -313,7 +341,7 @@ class ArticleRouteBase extends React.Component<Props> {
           <IconItem key={0} onClick={() => toggleFavorite()}>
             <i className={`mdi ${starIcon}`} />
           </IconItem>,
-          <IconItem key={1}>
+          <IconItem key={1} onClick={this.download}>
             <i className='mdi mdi-download' />
           </IconItem>,
         ]}

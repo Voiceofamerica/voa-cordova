@@ -41,4 +41,5 @@
         <variable name="XWALK_MULTIPLEAPK" value="false" />
     </plugin>
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.2.1" />
+    <plugin name="cordova-pdf-generator" spec="^1.9.3" />
 </widget>

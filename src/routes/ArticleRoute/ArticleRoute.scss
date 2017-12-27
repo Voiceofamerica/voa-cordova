@@ -19,6 +19,7 @@
     overflow-x: hidden;
     padding-bottom: $menu-height;
     margin-bottom: 30px;
+    padding-bottom: 200px;
   }
 
   .heading {
@@ -58,6 +59,10 @@
   .articleText {
     font-size: 1em;
     margin: 10px;
+
+    .paragraph {
+      margin-bottom: 1em;
+    }
   }
 
   .centerIcon {
