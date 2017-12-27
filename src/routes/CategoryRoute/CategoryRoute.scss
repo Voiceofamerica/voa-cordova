@@ -14,6 +14,7 @@
   .row {
     display: flex;
     flex-direction: row;
+    justify-content: center;
   }
 
   .content {
@@ -23,27 +24,23 @@
     right: 0;
     left: 0;
     padding-top: $menu-height;
-    padding-bottom: $menu-height;
-    transition: opacity 0.5s;
-    overflow-y: scroll;
-    overflow-x: hidden;
-
-    &.contentLoading {
-      opacity: 0;
-    }
+    overflow: hidden;
     
     .searchButton {
       @include touchable();
 
       display: flex;
+      position: relative;
+      justify-self: center;
       justify-content: center;
       align-items: center;
       font-size: 1.2em;
       margin: 2vw 1.5vw;
-      padding: 0.15em;
+      padding: 0.15em 2em;
       background: $voa-grey;
       color: white;
-      border-radius: 100px;
+      border-radius: 0.6em;
+      border: none;
     }
   }
   

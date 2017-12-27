@@ -13,8 +13,9 @@ import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/compo
 import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav'
 
 import Loader from 'components/Loader'
+import PullToRefresh from 'components/PullToRefresh'
 
-import { homeRoute, row, content, contentLoading, searchButton, ticketIcon, topNav } from './CategoryRoute.scss'
+import { homeRoute, row, content, searchButton, ticketIcon, topNav } from './CategoryRoute.scss'
 import * as Query from './CategoryRoute.graphql'
 import { CategoryRouteQuery, CategoryRouteQueryVariables } from 'helpers/graphql-types'
 import analytics from 'helpers/analytics'
@@ -27,12 +28,20 @@ export interface Params {
   category: string
 }
 
+export interface State {
+  categoryLoaded: boolean
+}
+
 type OwnProps = RouteComponentProps<Params>
 type QueryProps = ChildProps<RouteComponentProps<void>, CategoryRouteQuery>
 
 type Props = QueryProps & OwnProps
 
-class HomeRouteBase extends React.Component<Props> {
+class HomeRouteBase extends React.Component<Props, State> {
+  state: State = {
+    categoryLoaded: false,
+  }
+
   componentDidMount () {
     analytics.trackHome()
   }
@@ -48,6 +57,16 @@ class HomeRouteBase extends React.Component<Props> {
 
   goToSettings () {
     this.goTo('/settings')
+  }
+
+  componentWillReceiveProps (nextProps: Props) {
+    const { data: { variables: { category: newCategory }, loading } } = nextProps
+    const { data: { variables: { category: oldCategory } } } = this.props
+    if (newCategory !== oldCategory) {
+      this.setState({ categoryLoaded: false })
+    } else if (!loading) {
+      this.setState({ categoryLoaded: true })
+    }
   }
 
   renderIcon = (blurb: CategoryRouteQuery['content'][0], className?: string) => {
@@ -67,9 +86,9 @@ class HomeRouteBase extends React.Component<Props> {
 
   renderHero () {
     const { data } = this.props
-    const { loading, error, content } = data
+    const { content } = data
 
-    if (loading || error || content.length < 1) {
+    if (!content || content.length < 1) {
       return null
     }
 
@@ -90,9 +109,9 @@ class HomeRouteBase extends React.Component<Props> {
 
   renderSecondary () {
     const { data } = this.props
-    const { loading, error, content } = data
+    const { content } = data
 
-    if (loading || error || content.length < 2) {
+    if (!content || content.length < 2) {
       return null
     }
 
@@ -116,9 +135,9 @@ class HomeRouteBase extends React.Component<Props> {
 
   renderRest () {
     const { data } = this.props
-    const { loading, error, content } = data
+    const { content } = data
 
-    if (loading || error || content.length < 4) {
+    if (!content || content.length < 4) {
       return null
     }
 
@@ -140,31 +159,36 @@ class HomeRouteBase extends React.Component<Props> {
   renderSearchButton () {
     const { category } = this.props.match.params
     return (
-      <div className={searchButton} onClick={() => this.goTo(`/search/${category}`)}>
-        <i className='mdi mdi-magnify' />
-        搜索
+      <div className={row}>
+        <button className={searchButton} onClick={() => this.goTo(`/search/${category}`)}>
+          <i className='mdi mdi-magnify' />
+          搜索
+        </button>
       </div>
     )
   }
 
   renderContent () {
     const { data } = this.props
-    const className = data.loading ? `${content} ${contentLoading}` : content
-
     return (
-      <div className={className}>
-      { this.renderSearchButton() }
-        { this.renderHero() }
-        { this.renderSecondary() }
-        { this.renderRest() }
+      <div className={content}>
+        <PullToRefresh data={data}>
+          { this.renderSearchButton() }
+          { this.renderHero() }
+          { this.renderSecondary() }
+          { this.renderRest() }
+        </PullToRefresh>
       </div>
     )
   }
 
   render () {
+    const { data } = this.props
+    const { categoryLoaded } = this.state
+
     return (
       <div className={homeRoute}>
-        <Loader data={this.props.data}>
+        <Loader data={data} hasContent={data.content && data.content.length > 0 && categoryLoaded}>
           { this.renderContent() }
         </Loader>
       </div>
@@ -179,6 +203,7 @@ const withHomeQuery = graphql(
       variables: {
         category: parseInt(ownProps.match.params.category, 10),
       },
+      fetchPolicy: 'cache-first',
     }),
     props: ({ data }) => {
       let outputData = data as (typeof data) & CategoryRouteQuery

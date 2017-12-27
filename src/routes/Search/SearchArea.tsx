@@ -14,7 +14,7 @@ import { mapImageUrl } from 'helpers/image'
 
 import * as Query from './Search.graphql'
 
-import { searchArea, row, ticketIcon, inputs, searchInput, loadingText } from './Search.scss'
+import { searchArea, row, ticketIcon, inputs, searchInput, loadingText, loader } from './Search.scss'
 
 interface OwnProps extends SearchQueryVariables {
   goTo: (route: string) => void
@@ -77,7 +77,7 @@ class SearchAreaBase extends React.Component<Props> {
 
     return (
       <div className={searchArea}>
-        <Loader className={loadingText} data={this.props.data}>
+        <Loader className={loader} data={this.props.data}>
           {this.renderContent()}
         </Loader>
       </div>
@@ -90,6 +90,7 @@ const withSearchQuery = graphql(
   {
     options: (props: OwnProps) => ({
       variables: props,
+      fetchPolicy: 'network-only',
     }),
     props: ({ data }) => {
       let outputData = data as (typeof data) & SearchQuery

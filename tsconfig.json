@@ -27,7 +27,8 @@
       "redux-store/*": ["redux-store/*"],
       "routes/*": ["routes/*"],
       "graqhql-types": ["graqhql-types"],
-      "types/*": ["types/*"]
+      "types/*": ["types/*"],
+      "react": ["../node_modules/@types/react"]
     }
   },
   "include": [

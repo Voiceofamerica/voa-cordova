@@ -4,11 +4,21 @@
 .loader {
   position: relative;
   display: flex;
+  flex-direction: column;
   flex: 1;
   justify-content: center;
   align-items: center;
   font-size: 10vw;
   color: $voa-blue;
+
+  .reloadButton {
+    background: $light-grey;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    padding: 5px 30px;
+    font-size: 0.5em;
+  }
 
   .backdrop {
     position: absolute;

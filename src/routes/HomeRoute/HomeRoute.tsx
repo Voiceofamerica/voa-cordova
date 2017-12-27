@@ -20,6 +20,7 @@ import { mapImageUrl } from 'helpers/image'
 import analytics from 'helpers/analytics'
 
 import Loader from 'components/Loader'
+import PullToRefresh from 'components/PullToRefresh'
 
 import AppState from 'types/AppState'
 import Category from 'types/Category'
@@ -146,9 +147,11 @@ class HomeRouteBase extends React.Component<Props, State> {
 
   renderSearchButton () {
     return (
-      <div className={searchButton} onClick={() => this.goTo('/search')}>
-        <i className='mdi mdi-magnify' />
-        搜索
+      <div className={row}>
+        <button className={searchButton} onClick={() => this.goTo('/search')}>
+          <i className='mdi mdi-magnify' />
+          搜索
+        </button>
       </div>
     )
   }
@@ -158,18 +161,22 @@ class HomeRouteBase extends React.Component<Props, State> {
 
     return (
       <div className={content}>
-        { this.renderSearchButton() }
-        { this.renderHero() }
-        { this.renderSecondary() }
-        { this.renderRest() }
+        <PullToRefresh data={data}>
+          { this.renderSearchButton() }
+          { this.renderHero() }
+          { this.renderSecondary() }
+          { this.renderRest() }
+        </PullToRefresh>
       </div>
     )
   }
 
   render () {
+    const { data } = this.props
+
     return (
       <div className={homeRoute}>
-        <Loader data={this.props.data}>
+        <Loader data={data} hasContent={data.content && data.content.length > 0}>
           { this.renderContent() }
         </Loader>
       </div>
@@ -195,6 +202,9 @@ const withHomeQuery = graphql(
       }
 
       return { data: outputData }
+    },
+    options: {
+      fetchPolicy: 'cache-first',
     },
   },
 )

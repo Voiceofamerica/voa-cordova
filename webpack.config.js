@@ -41,6 +41,7 @@ module.exports = {
       'redux-store': path.join(srcDir, 'redux-store'),
       routes: path.join(srcDir, 'routes'),
       res: path.join(__dirname, 'res'),
+      react: path.join(__dirname, './node_modules/react'),
     }
   },
   module: {

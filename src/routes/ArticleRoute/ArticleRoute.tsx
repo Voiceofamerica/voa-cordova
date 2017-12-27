@@ -326,6 +326,7 @@ const withQuery = graphql(
       variables: {
         id: parseInt(ownProps.match.params.id, 10),
       },
+      fetchPolicy: 'cache-first',
     }),
 
     props: ({ data }) => {
@@ -338,6 +339,17 @@ const withQuery = graphql(
               ...c.image,
               url: mapImageUrl(c.image.url, 'w600'),
             },
+            photoGallery: c.photoGallery && c.photoGallery.map(gallery => {
+              return {
+                ...gallery,
+                photo: gallery.photo && gallery.photo.map(photo => {
+                  return {
+                    ...photo,
+                    url: mapImageUrl(photo.url, 'w600'),
+                  }
+                }),
+              }
+            }),
           }
         })
       }
