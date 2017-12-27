@@ -96,7 +96,7 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
   renderCategory = ({ id, name, chosen, separator }: Category & { chosen: boolean, separator: boolean }, index: number) => {
     if (separator) {
       return (
-        <div style={{ gridColumnStart: 1, gridColumnEnd: 3, fontWeight: 'bold', fontSize: '1.5em', marginLeft: 5, marginRight: 5 }}>
+        <div key={'separator'} style={{ gridColumnStart: 1, gridColumnEnd: 3, fontWeight: 'bold', fontSize: '1.5em', marginLeft: 5, marginRight: 5 }}>
           所有分类
           <span style={{ float: 'right', fontSize: '0.8em', fontWeight: 'normal' }}>长按拖动调整分类</span>
         </div>
