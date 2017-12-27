@@ -5,6 +5,7 @@ query ArticleRoute($id: Int) {
     title
     pubDate
     lastUpdated
+    url
     content
     authors {
       name {

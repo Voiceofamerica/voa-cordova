@@ -19,6 +19,7 @@ export type ArticleRouteQuery = {
     title: string,
     pubDate: string,
     lastUpdated: string | null,
+    url: string | null,
     content: string | null,
     authors:  Array< {
       name:  {

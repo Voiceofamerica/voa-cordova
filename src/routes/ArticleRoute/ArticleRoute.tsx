@@ -67,6 +67,18 @@ type OwnProps = QueryProps
 type Props = QueryProps & DispatchProps & StateProps & AnalyticsProps
 
 class ArticleRouteBase extends React.Component<Props> {
+  share = () => {
+    if (!this.props.data.content || !this.props.data.content[0]) {
+      return
+    }
+    const { url } = this.props.data.content[0]
+
+    window.plugins.socialsharing.shareWithOptions({
+      message: '',
+      url,
+    })
+  }
+
   renderImage () {
     const { image } = this.props.data.content[0]
     if (!image || !image.url) {
@@ -293,7 +305,7 @@ class ArticleRouteBase extends React.Component<Props> {
           <IconItem key={0} onClick={() => history.goBack()}>
             <i className='mdi mdi-chevron-left' />
           </IconItem>,
-          <IconItem key={1}>
+          <IconItem key={1} onClick={this.share}>
             <i className='mdi mdi-share' />
           </IconItem>,
         ]}
