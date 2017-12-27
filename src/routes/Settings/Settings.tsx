@@ -5,10 +5,15 @@ import { RouteComponentProps } from 'react-router'
 import BottomNav, { IconItem } from '@voiceofamerica/voa-shared/components/BottomNav'
 
 import DefaultBottomNav from 'containers/DefaultBottomNav'
+import analytics, { AnalyticsProps } from 'helpers/analytics'
 
 import { settings, topNav, buttons, settingsButton, buttonIcon } from './Settings.scss'
 
-export default class HomeRoute extends React.Component<RouteComponentProps<void>> {
+type RouteProps = RouteComponentProps<void>
+
+type Props = RouteProps & AnalyticsProps
+
+class SettingsRoute extends React.Component<Props> {
   render () {
     const { history } = this.props
 
@@ -30,3 +35,10 @@ export default class HomeRoute extends React.Component<RouteComponentProps<void>
     )
   }
 }
+
+const withAnalytics = analytics<Props>({
+  state: 'Settings',
+  title: 'Settings',
+})
+
+export default withAnalytics(SettingsRoute)

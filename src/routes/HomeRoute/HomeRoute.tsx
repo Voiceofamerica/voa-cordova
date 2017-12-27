@@ -17,7 +17,7 @@ import { homeRoute, row, content, contentLoading, searchButton, topNav, ticketIc
 import * as Query from './HomeRoute.graphql'
 import { HomeRouteQuery } from 'helpers/graphql-types'
 import { mapImageUrl } from 'helpers/image'
-import analytics from 'helpers/analytics'
+import analytics, { AnalyticsProps } from 'helpers/analytics'
 
 import Loader from 'components/Loader'
 import PullToRefresh from 'components/PullToRefresh'
@@ -26,13 +26,9 @@ import AppState from 'types/AppState'
 import Category from 'types/Category'
 import ArticleBlurb from '@voiceofamerica/voa-shared/types/ArticleBlurb'
 
-interface StateProps {
-  categories: Category[]
-}
-
 type QueryProps = ChildProps<RouteComponentProps<void>, HomeRouteQuery>
 
-type Props = QueryProps & StateProps
+type Props = QueryProps & AnalyticsProps
 
 interface State {
 }
@@ -42,7 +38,6 @@ class HomeRouteBase extends React.Component<Props, State> {
   }
 
   componentDidMount () {
-    analytics.trackHome()
     ready().then(() => this.setState({ startupDone: true }))
   }
 
@@ -184,6 +179,12 @@ class HomeRouteBase extends React.Component<Props, State> {
   }
 }
 
+const withAnalytics = analytics<QueryProps>(({ data }) => ({
+  state: 'Home',
+  title: 'Home',
+  skip: data.loading,
+}))
+
 const withHomeQuery = graphql(
   Query,
   {
@@ -209,4 +210,4 @@ const withHomeQuery = graphql(
   },
 )
 
-export default withHomeQuery(HomeRouteBase)
+export default withHomeQuery(withAnalytics(HomeRouteBase))

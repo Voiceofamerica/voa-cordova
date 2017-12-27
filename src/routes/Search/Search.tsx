@@ -14,6 +14,7 @@ import AppState from 'types/AppState'
 import Category from 'types/Category'
 
 import { SearchQuery, SearchQueryVariables } from 'helpers/graphql-types'
+import analytics, { AnalyticsProps } from 'helpers/analytics'
 import * as Query from './Search.graphql'
 
 import SearchArea from './SearchArea'
@@ -26,7 +27,7 @@ interface StateProps {
 
 type OwnProps = RouteComponentProps<{ query: string, zoneId: string }>
 
-type Props = OwnProps & StateProps
+type Props = OwnProps & StateProps & AnalyticsProps
 
 interface State {
   keyboardHeight: number
@@ -157,6 +158,11 @@ class SearchBase extends React.Component<Props, State> {
     )
   }
 }
+
+const withAnalytics = analytics<Props>({
+  state: 'Search Results',
+  title: 'Search Results',
+})
 
 const mapStateToProps = ({ settings: { categories } }: AppState, ownProps: OwnProps): StateProps => ({
   categories,

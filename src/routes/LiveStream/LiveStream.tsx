@@ -12,7 +12,7 @@ import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/compo
 import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav'
 
 import { LiveStreamQuery } from 'helpers/graphql-types'
-import analytics from 'helpers/analytics'
+import analytics, { AnalyticsProps } from 'helpers/analytics'
 import playMedia from 'redux-store/thunks/playMediaFromBlob'
 
 import AppState from 'types/AppState'
@@ -27,7 +27,7 @@ interface DispatchProps {
   playMedia: (url: string, title: string, description: string, isVideo: boolean, imageUrl: string) => void
 }
 
-type Props = ChildProps<RouteComponentProps<void>, LiveStreamQuery> & DispatchProps
+type Props = ChildProps<RouteComponentProps<void>, LiveStreamQuery> & DispatchProps & AnalyticsProps
 
 interface State {
   drawerStates: { [id: number]: boolean }
@@ -129,6 +129,12 @@ class LiveStreamBase extends React.Component<Props, State> {
   }
 }
 
+const withAnalytics = analytics<Props>(({ data }) => ({
+  state: 'Live Stream Schedule',
+  title: 'Live Stream Schedule',
+  skip: data.loading,
+}))
+
 const withHomeQuery = graphql(
   Query,
 )
@@ -140,4 +146,4 @@ const mapDispatchToProps = (dispatch: Dispatch<AppState>): DispatchProps => ({
 
 const withRedux = connect(null, mapDispatchToProps)
 
-export default withHomeQuery(withRedux(LiveStreamBase))
+export default withHomeQuery(withRedux(withAnalytics(LiveStreamBase)))

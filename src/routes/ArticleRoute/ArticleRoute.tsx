@@ -18,6 +18,7 @@ import playMedia from 'redux-store/thunks/playMediaFromBlob'
 import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
 
 import { mapImageUrl } from 'helpers/image'
+import analytics, { AnalyticsProps } from 'helpers/analytics'
 import MainBottomNav from 'containers/MainBottomNav'
 import ErrorBoundary from 'components/ErrorBoundary'
 import Loader from 'components/Loader'
@@ -54,7 +55,7 @@ interface DispatchProps {
 
 type OwnProps = RouteComponentProps<Params>
 type QueryProps = ChildProps<OwnProps, ArticleRouteQuery>
-type Props = QueryProps & DispatchProps
+type Props = QueryProps & DispatchProps & AnalyticsProps
 
 class ArticleRouteBase extends React.Component<Props> {
   renderImage () {
@@ -319,6 +320,12 @@ const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => {
   }
 }
 
+const withAnalytics = analytics<Props>(({ data }) => ({
+  state: data.content && data.content[0] && data.content[0].title,
+  title: data.content && data.content[0] && data.content[0].title,
+  skip: data.loading || !data.content || !data.content[0],
+}))
+
 const withQuery = graphql(
   Query,
   {
@@ -364,4 +371,5 @@ const withRedux = connect(null, mapDispatchToProps)
 export default compose(
   withQuery,
   withRedux,
+  withAnalytics,
 )(ArticleRouteBase)

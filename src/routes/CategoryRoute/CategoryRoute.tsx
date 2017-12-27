@@ -18,7 +18,7 @@ import PullToRefresh from 'components/PullToRefresh'
 import { homeRoute, row, content, searchButton, ticketIcon, topNav } from './CategoryRoute.scss'
 import * as Query from './CategoryRoute.graphql'
 import { CategoryRouteQuery, CategoryRouteQueryVariables } from 'helpers/graphql-types'
-import analytics from 'helpers/analytics'
+import analytics, { AnalyticsProps } from 'helpers/analytics'
 import { mapImageUrl } from 'helpers/image'
 
 import AppState from 'types/AppState'
@@ -35,15 +35,11 @@ export interface State {
 type OwnProps = RouteComponentProps<Params>
 type QueryProps = ChildProps<RouteComponentProps<void>, CategoryRouteQuery>
 
-type Props = QueryProps & OwnProps
+type Props = QueryProps & OwnProps & AnalyticsProps
 
 class HomeRouteBase extends React.Component<Props, State> {
   state: State = {
     categoryLoaded: false,
-  }
-
-  componentDidMount () {
-    analytics.trackHome()
   }
 
   goTo (route: string) {
@@ -224,4 +220,11 @@ const withHomeQuery = graphql(
   },
 )
 
-export default withHomeQuery(HomeRouteBase)
+const withAnalytics = analytics<Props>(({ match }, { match: oldMatch }) => ({
+  state: 'Category Section',
+  title: 'Category Section',
+  section: match.params.category,
+  skip: match.params.category === (oldMatch && oldMatch.params && oldMatch.params.category),
+}))
+
+export default withHomeQuery(withAnalytics(HomeRouteBase))
