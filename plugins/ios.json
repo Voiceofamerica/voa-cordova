@@ -1,0 +1,52 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "gov.voanews.voazh"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "gov.voanews.voazh"
+    },
+    "cordova-wheel-selector-plugin": {
+      "PACKAGE_NAME": "gov.voanews.voazh"
+    },
+    "adobe-mobile-services": {
+      "PACKAGE_NAME": "gov.voanews.voazh"
+    },
+    "psiphon-cordova-plugin": {
+      "PACKAGE_NAME": "gov.voanews.voazh"
+    },
+    "cordova-plugin-fullscreen": {
+      "PACKAGE_NAME": "gov.voanews.voazh"
+    },
+    "ionic-plugin-keyboard": {
+      "PACKAGE_NAME": "gov.voanews.voazh"
+    },
+    "cordova-plugin-crosswalk-webview": {
+      "PACKAGE_NAME": "gov.voanews.voazh"
+    },
+    "cordova-plugin-x-socialsharing": {
+      "PACKAGE_NAME": "gov.voanews.voazh"
+    },
+    "cordova-pdf-generator": {
+      "PACKAGE_NAME": "gov.voanews.voazh"
+    },
+    "cordova-plugin-add-swift-support": {
+      "PACKAGE_NAME": "gov.voanews.voazh"
+    },
+    "cordova-hot-code-push-plugin": {
+      "PACKAGE_NAME": "gov.voanews.voazh"
+    }
+  },
+  "dependent_plugins": {
+    "es6-promise-plugin": {
+      "PACKAGE_NAME": "gov.voanews.voazh"
+    }
+  }
+}

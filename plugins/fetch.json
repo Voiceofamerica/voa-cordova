@@ -1,0 +1,112 @@
+{
+  "cordova-plugin-whitelist": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-splashscreen@^4.0.3"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-splashscreen": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-hot-code-push-plugin@^1.5.3"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-wheel-selector-plugin": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-wheel-selector-plugin@^1.0.9"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "adobe-mobile-services": {
+    "source": {
+      "type": "registry",
+      "id": "adobe-mobile-services@^4.13.1-cor"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "psiphon-cordova-plugin": {
+    "source": {
+      "type": "registry",
+      "id": "psiphon-cordova-plugin@^0.2.1"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-fullscreen": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-fullscreen@^1.2.0"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "ionic-plugin-keyboard": {
+    "source": {
+      "type": "registry",
+      "id": "ionic-plugin-keyboard@^2.2.1"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-crosswalk-webview": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-crosswalk-webview@^2.3.0"
+    },
+    "is_top_level": true,
+    "variables": {
+      "XWALK_VERSION": "23+",
+      "XWALK_LITEVERSION": "xwalk_core_library_canary:17+",
+      "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
+      "XWALK_MODE": "embedded",
+      "XWALK_MULTIPLEAPK": "false"
+    }
+  },
+  "cordova-plugin-x-socialsharing": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-x-socialsharing@^5.2.1"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "es6-promise-plugin": {
+    "source": {
+      "type": "registry",
+      "id": "es6-promise-plugin@4.1.0"
+    },
+    "is_top_level": false,
+    "variables": {}
+  },
+  "cordova-pdf-generator": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-pdf-generator@^1.9.3"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-add-swift-support": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-add-swift-support@^1.7.1"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-hot-code-push-plugin": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-hot-code-push-plugin@^1.5.3"
+    },
+    "is_top_level": true,
+    "variables": {}
+  }
+}

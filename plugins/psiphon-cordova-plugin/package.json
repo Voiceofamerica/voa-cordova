@@ -1,0 +1,64 @@
+{
+  "_from": "psiphon-cordova-plugin@^0.2.1",
+  "_id": "psiphon-cordova-plugin@0.2.1",
+  "_inBundle": false,
+  "_integrity": "sha512-WenyU8GvH/QH/vz+k4MedwVx+fkQPu2XcpiIMjyxpRe/rq6h1RApHR1rquGzx43GF5xn3W+M5o7NSSMACW4h4Q==",
+  "_location": "/psiphon-cordova-plugin",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "psiphon-cordova-plugin@^0.2.1",
+    "name": "psiphon-cordova-plugin",
+    "escapedName": "psiphon-cordova-plugin",
+    "rawSpec": "^0.2.1",
+    "saveSpec": null,
+    "fetchSpec": "^0.2.1"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/psiphon-cordova-plugin/-/psiphon-cordova-plugin-0.2.1.tgz",
+  "_shasum": "622be66c15121dd6be8822dc04e024d6b20114f5",
+  "_spec": "psiphon-cordova-plugin@^0.2.1",
+  "_where": "/development/_voa/voa-zh",
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/Voiceofamerica/psiphon-cordova-plugin/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "A plugin to send all traffic from cordova web view through a Psiphon tunnel",
+  "engines": [
+    {
+      "name": "cordova-ios",
+      "version": ">=3.8"
+    },
+    {
+      "name": "cordova-android",
+      "version": ">=4"
+    },
+    {
+      "name": "cordova-plugman",
+      "version": ">=4.2.0"
+    }
+  ],
+  "homepage": "https://github.com/Voiceofamerica/psiphon-cordova-plugin#readme",
+  "keywords": [
+    "cordova",
+    "psiphon",
+    "plugin"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "psiphon-cordova-plugin",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Voiceofamerica/psiphon-cordova-plugin.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\""
+  },
+  "version": "0.2.1"
+}

@@ -55,8 +55,6 @@ buck-out/
 .vscode
 
 # Cordova
-platforms/**/*
-plugins/**/*
 .chcpenv
 
 # Builds

@@ -434,7 +434,7 @@ const withQuery = graphql(
 const withRedux = connect(mapStateToProps, mapDispatchToProps)
 
 export default compose(
-  withQuery,
   withRedux,
+  withQuery,
   withAnalytics,
 )(ArticleRouteBase)

@@ -94,7 +94,7 @@ module.exports = {
         loaders: [{
           loader: 'url-loader',
           options: {
-            limit: 1024 * 1024, // 1 MB
+            limit: 8 * 1024 * 1024, // 8 MB
             fallback: 'file-loader'
           }
         }]
@@ -118,6 +118,9 @@ module.exports = {
     new CopyWebpackPlugin([
       {
         from: path.join(__dirname, 'static/ADBMobileConfig.json')
+      },
+      {
+        from: path.join(__dirname, 'splash.png')
       }
     ]),
   ]

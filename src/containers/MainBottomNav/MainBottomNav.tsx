@@ -44,7 +44,7 @@ class MainBottomNavBase extends React.Component<Props> {
 
     return (
      <div className={backgroundImage}>
-       <ResilientImage src={mediaImageUrl} style={{ overflow: 'hidden' }} />
+       <ResilientImage src={mediaImageUrl} style={{ overflow: 'hidden', borderRadius: 100 }} />
        <div className={overlay} />
       </div>
     )

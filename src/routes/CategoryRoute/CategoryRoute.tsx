@@ -227,4 +227,7 @@ const withAnalytics = analytics<Props>(({ match }, { match: oldMatch }) => ({
   skip: match.params.category === (oldMatch && oldMatch.params && oldMatch.params.category),
 }))
 
-export default withHomeQuery(withAnalytics(HomeRouteBase))
+export default compose(
+  withHomeQuery,
+  withAnalytics,
+)(HomeRouteBase)
