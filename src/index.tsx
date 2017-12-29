@@ -41,8 +41,6 @@ start().then(() => {
   }
 
   render(App)
-}).catch((err) => {
-  rootElement.innerHTML += err.message || err
 })
 
 document.addEventListener(

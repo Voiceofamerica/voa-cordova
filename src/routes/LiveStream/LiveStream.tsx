@@ -19,6 +19,7 @@ import AppState from 'types/AppState'
 import Category from 'types/Category'
 
 import Loader from 'components/Loader'
+import ErrorBoundary from 'components/ErrorBoundary'
 
 import * as Query from './LiveStream.graphql'
 import { liveStream, content, programTime, liveStreamItem, programTitle, collapser, collapserIconContainer, collapserIcon, drawer, drawerImage, imageIcon, drawerContent, open, loadingText } from './LiveStream.scss'
@@ -121,8 +122,10 @@ class LiveStreamBase extends React.Component<Props, State> {
     return (
       <div className={liveStream}>
         <Loader className={loadingText} data={this.props.data}>
-          {this.renderLoading()}
-          {this.renderContent()}
+          <ErrorBoundary>
+            {this.renderLoading()}
+            {this.renderContent()}
+          </ErrorBoundary>
         </Loader>
       </div>
     )
