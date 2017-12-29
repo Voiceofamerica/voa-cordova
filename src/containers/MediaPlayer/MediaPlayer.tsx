@@ -50,7 +50,18 @@ class MediaPlayerBase extends React.Component<Props> {
         <ResilientImage src={require('../../../res/images/MediaDefault.png')} />
         <div className={textContent}>
           <div className={defaultText}>
-            asdf<span className={hilight}>blah</span>glab
+            <p>
+              这是美国之音的<span className={hilight}>多媒体</span>播放器。 当您选择一个伴随音频或视频的故事时，它在这里播放。
+            </p>
+            <p>
+              您可以随时查看原始故事或查找新故事，而无需通过在此页面上向下滑动来停止音频或视频。
+            </p>
+            <p>
+              通过从屏幕底部的圆形蓝色<span className={hilight}>多媒体</span>按钮向上滑动来再次打开此屏幕。
+            </p>
+            <p>
+              通过点击<span className={hilight}>多媒体</span>按钮启动和停止音频或视频。
+            </p>
           </div>
         </div>
       </div>
