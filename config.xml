@@ -29,7 +29,7 @@
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="cordova-wheel-selector-plugin" spec="^1.0.9" />
     <plugin name="adobe-mobile-services" spec="^4.13.1-cor" />
-    <plugin name="psiphon-cordova-plugin" spec="^0.2.1" />
+    <plugin name="psiphon-cordova-plugin" spec="^0.3.0-2" />
     <plugin name="cordova-plugin-fullscreen" spec="^1.2.0" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="cordova-plugin-crosswalk-webview" spec="^2.3.0">

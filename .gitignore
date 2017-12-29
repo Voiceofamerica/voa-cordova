@@ -59,6 +59,8 @@ buck-out/
 
 # Builds
 www/**/*
+plugins
+platforms
 
 # Temporary files
 temp
