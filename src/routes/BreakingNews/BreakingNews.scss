@@ -25,6 +25,15 @@
     left: 0;
     padding-top: $menu-height;
     overflow: hidden;
+
+    .defaultText {
+      display: flex;
+      height: 80vh;
+      font-size: 2em;
+      font-weight: bold;
+      justify-content: center;
+      align-items: center;
+    }
     
     .searchButton {
       @include touchable();

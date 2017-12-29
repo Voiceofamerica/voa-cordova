@@ -15,7 +15,7 @@ import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav
 import Loader from 'components/Loader'
 import PullToRefresh from 'components/PullToRefresh'
 
-import { homeRoute, row, contentArea, searchButton, ticketIcon, topNav } from './BreakingNews.scss'
+import { homeRoute, row, contentArea, defaultText, searchButton, ticketIcon, topNav } from './BreakingNews.scss'
 import * as Query from './BreakingNewsRoute.graphql'
 import { BreakingNewsRouteQuery } from 'helpers/graphql-types'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
@@ -137,12 +137,25 @@ class HomeRouteBase extends React.Component<Props> {
     )
   }
 
+  renderDefault () {
+    return (
+      <div className={defaultText}>
+        目前没有重突发新闻
+      </div>
+    )
+  }
+
   renderContent () {
     const { data } = this.props
+    const { breakingNews } = data
+    const content = breakingNews && breakingNews[0]
+                  ? this.renderArticles()
+                  : this.renderDefault()
+
     return (
       <div className={contentArea}>
         <PullToRefresh data={data}>
-          { this.renderArticles() }
+          { content }
         </PullToRefresh>
       </div>
     )
