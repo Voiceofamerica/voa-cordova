@@ -24,8 +24,9 @@ jobs:
       - restore_cache:
           key: v3-voa-cordova-android-{{ checksum "package-lock.json" }}-{{ checksum "config.xml" }}
       - run: bash scripts/setupAndroid.sh
-      - run: npm install --unsafe-perm
+      - run: npm install
       - run: npx cordova prepare
+      - run: npm run generate
       - save_cache:
           key: v3-voa-cordova-android-{{ checksum "package-lock.json" }}-{{ checksum "config.xml" }}
           paths:
