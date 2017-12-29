@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00527B65DC344ADDA11BBE74 /* NSBundle+HCPExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0654EFFF9F4E4E1EB6B251B0 /* NSBundle+HCPExtension.m */; };
 		00A5305B906E4AE9B7C9028C /* HCPManifestDiff.m in Sources */ = {isa = PBXBuildFile; fileRef = D3E76AEB06654676A5567EDE /* HCPManifestDiff.m */; };
@@ -659,6 +660,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"VoaCordova/Plugins/psiphon-cordova-plugin",
@@ -696,6 +698,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"VoaCordova/Plugins/psiphon-cordova-plugin",

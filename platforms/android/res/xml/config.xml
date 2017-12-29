@@ -33,6 +33,10 @@
     <feature name="PDFService">
         <param name="android-package" value="com.pdf.generator.PDFGenerator" />
     </feature>
+    <feature name="HotCodePush">
+        <param name="android-package" value="com.nordnetab.chcp.main.HotCodePushPlugin" />
+        <param name="onload" value="true" />
+    </feature>
     <name>VoaCordova</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -57,10 +61,6 @@
     <preference name="xwalkMode" value="embedded" />
     <preference name="xwalkMultipleApk" value="false" />
     <preference name="android-minSdkVersion" value="16" />
-    <preference name="Orientation" value="portrait" />
     <preference name="loadUrlTimeoutValue" value="60000" />
-    <feature name="HotCodePush">
-        <param name="android-package" value="com.nordnetab.chcp.main.HotCodePushPlugin" />
-        <param name="onload" value="true" />
-    </feature>
+    <preference name="Orientation" value="portrait" />
 </widget>
