@@ -16,6 +16,8 @@ import {
   backgroundImage,
   textContent,
   content,
+  defaultText,
+  hilight,
   open,
   closePlayer,
   overlay,
@@ -40,6 +42,19 @@ class MediaPlayerBase extends React.Component<Props> {
     if (this.props.media.playing !== nextProps.media.playing && this.player) {
       this.player.togglePlay(nextProps.media.playing)
     }
+  }
+
+  renderDefault () {
+    return (
+      <div>
+        <ResilientImage src={require('../../../res/images/MediaDefault.png')} />
+        <div className={textContent}>
+          <div className={defaultText}>
+            asdf<span className={hilight}>blah</span>glab
+          </div>
+        </div>
+      </div>
+    )
   }
 
   renderPlayer () {
@@ -80,6 +95,23 @@ class MediaPlayerBase extends React.Component<Props> {
     )
   }
 
+  renderContent () {
+    const { media: { mediaUrl, mediaTitle, mediaDescription } } = this.props
+    if (!mediaUrl) {
+      return this.renderDefault()
+    }
+
+    return (
+      <div>
+        {this.renderPlayer()}
+        <div className={textContent}>
+          <h1>{mediaTitle}</h1>
+          <div>{mediaDescription}</div>
+        </div>
+      </div>
+    )
+  }
+
   render () {
     const { media: { mediaTitle, mediaDescription, mediaOpen }, closeMedia } = this.props
     const className = mediaOpen ? `${mediaPlayer} ${open}` : mediaPlayer
@@ -92,11 +124,7 @@ class MediaPlayerBase extends React.Component<Props> {
             <div className={closePlayer} onClick={() => closeMedia()}>
               <i className='mdi mdi-chevron-down' />
             </div>
-            {this.renderPlayer()}
-            <div className={textContent}>
-              <h1>{mediaTitle}</h1>
-              <div>{mediaDescription}</div>
-            </div>
+            {this.renderContent()}
           </div>
         </div>
       </div>

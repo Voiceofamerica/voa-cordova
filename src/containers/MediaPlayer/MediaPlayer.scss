@@ -63,6 +63,14 @@
   .content {
     overflow: scroll;
     padding: 40px 0;
+
+    .defaultText {
+      font-weight: bold;
+    }
+    
+    .hilight {
+      color: $voa-blue;
+    }
   }
   
   &.open {
