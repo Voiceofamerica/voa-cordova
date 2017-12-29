@@ -58,6 +58,7 @@ jobs:
       - run: bash scripts/setupiOS.sh
       - run: npm install --unsafe-perm
       - run: npm run cordova:prepare
+      - run: npm run generate
       - save_cache:
           key: v3-voa-cordova-ios-{{ checksum "package-lock.json" }}-{{ checksum "config.xml" }}
           paths:
