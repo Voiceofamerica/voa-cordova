@@ -46,6 +46,8 @@ import {
   photoItem,
   photoTextContainer,
   fadeOut,
+  mediaButtonContainer,
+  mediaButton,
 } from './ArticleRoute.scss'
 import * as Query from './ArticleRoute.graphql'
 
@@ -162,15 +164,13 @@ class ArticleRouteBase extends React.Component<Props> {
     }
 
     return (
-      <Card
-        style={{ display: 'inline-block', width: '30vw', marginRight: '1.5vw' }}
-        onPress={() => playMedia(video.url, article.title, video.videoDescription, true, video.thumbnail)}
-        title=''
-        imageUrl={video.thumbnail}
-        minorText=''
-        factor={3}
-        icon={<i className={`mdi mdi-monitor ${contentIcon}`} />}
-      />
+      <ResilientImage
+        className={mediaButton}
+        onClick={() => playMedia(video.url, article.title, video.videoDescription, true, video.thumbnail)}
+        src={video.thumbnail}
+      >
+        <i className={`mdi mdi-monitor ${contentIcon}`} />
+      </ResilientImage>
     )
   }
 
@@ -186,21 +186,19 @@ class ArticleRouteBase extends React.Component<Props> {
     const imgUrl = article.image && article.image.url
 
     return (
-      <Card
-        style={{ display: 'inline-block', width: '30vw' }}
-        onPress={() => playMedia(audio.url, audio.audioTitle, audio.audioDescription, false, imgUrl)}
-        title=''
-        imageUrl={imgUrl}
-        minorText=''
-        factor={3}
-        icon={<i className={`mdi mdi-headphones ${contentIcon}`} />}
-      />
+      <ResilientImage
+        className={mediaButton}
+        onClick={() => playMedia(audio.url, audio.audioTitle, audio.audioDescription, false, imgUrl)}
+        src={imgUrl}
+      >
+        <i className={`mdi mdi-headphones ${contentIcon}`} />
+      </ResilientImage>
     )
   }
 
   renderMedia () {
     return (
-      <div style={{ display: 'inline-block', float: 'left', marginRight: 10 }}>
+      <div className={mediaButtonContainer}>
         {this.renderVideo()}
         {this.renderAudio()}
       </div>

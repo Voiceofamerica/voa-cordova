@@ -129,8 +129,8 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
 
     return (
       <div className={categorySettings}>
+        <div className={topNav}>新闻分类排序</div>
         <Loader data={data}>
-          <div className={topNav}>新闻分类排序</div>
           <div className={pillContainer}>
             <div style={{ fontWeight: 'bold', gridColumnStart: 1, gridColumnEnd: 3, fontSize: '1.5em', marginLeft: 5, marginRight: 5 }}>
               我的分类

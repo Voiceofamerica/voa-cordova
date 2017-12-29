@@ -1,18 +1,28 @@
 
-import { combineReducers, Reducer } from 'redux'
+import { combineReducers, Reducer, Action } from 'redux'
 import { routerReducer } from 'react-router-redux'
 
 import AppState from 'types/AppState'
+
+import { type as clearAllType } from './actions/clearAll'
 
 import appSettingsReducer from './reducers/appSettingsReducer'
 import mediaStateReducer from './reducers/mediaStateReducer'
 import favoriteContentsReducer from './reducers/favoriteContentsReducer'
 
-const rootReducer: Reducer<AppState> = combineReducers({
+const baseRootReducer: Reducer<AppState> = combineReducers({
   settings: appSettingsReducer,
   media: mediaStateReducer,
   favorites: favoriteContentsReducer,
   router: routerReducer,
 })
+
+function rootReducer (prev: AppState, action: Action): AppState {
+  if (action.type === clearAllType) {
+    return baseRootReducer(undefined, { type: 'initialize' })
+  } else {
+    return baseRootReducer(prev, action)
+  }
+}
 
 export default rootReducer

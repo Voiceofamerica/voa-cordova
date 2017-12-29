@@ -2,6 +2,8 @@ export const articleRoute: string;
 export const container: string;
 export const heading: string;
 export const contentIcon: string;
+export const mediaButtonContainer: string;
+export const mediaButton: string;
 export const articleText: string;
 export const paragraph: string;
 export const centerIcon: string;

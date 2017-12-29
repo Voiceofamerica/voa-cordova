@@ -11,6 +11,26 @@
   bottom: 0;
   background: white;
 
+  .panicButtonHolder {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .panicButton {
+      @include touchable();
+
+      background: $voa-red;
+      color: white;
+      padding: 10px 30px;
+      font-size: 2em;
+      font-weight: bold;
+      border-radius: 20px;
+      border: none;
+      outline: none;
+    }
+  }
+
   .topNav {
     display: flex;
     color: $voa-blue;
@@ -25,7 +45,6 @@
   }
 
   .buttons {
-    flex-grow: 1;
     display: flex;
     justify-content: flex-end;
     flex-direction: column;
