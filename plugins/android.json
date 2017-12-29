@@ -8,25 +8,25 @@
   },
   "installed_plugins": {
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "gov.voanews.voazh"
+      "PACKAGE_NAME": "com.voanews.voazh"
     },
     "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "gov.voanews.voazh"
+      "PACKAGE_NAME": "com.voanews.voazh"
     },
     "cordova-wheel-selector-plugin": {
-      "PACKAGE_NAME": "gov.voanews.voazh"
+      "PACKAGE_NAME": "com.voanews.voazh"
     },
     "adobe-mobile-services": {
-      "PACKAGE_NAME": "gov.voanews.voazh"
+      "PACKAGE_NAME": "com.voanews.voazh"
     },
     "psiphon-cordova-plugin": {
-      "PACKAGE_NAME": "gov.voanews.voazh"
+      "PACKAGE_NAME": "com.voanews.voazh"
     },
     "cordova-plugin-fullscreen": {
-      "PACKAGE_NAME": "gov.voanews.voazh"
+      "PACKAGE_NAME": "com.voanews.voazh"
     },
     "ionic-plugin-keyboard": {
-      "PACKAGE_NAME": "gov.voanews.voazh"
+      "PACKAGE_NAME": "com.voanews.voazh"
     },
     "cordova-plugin-crosswalk-webview": {
       "XWALK_VERSION": "23+",
@@ -34,24 +34,24 @@
       "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
       "XWALK_MODE": "embedded",
       "XWALK_MULTIPLEAPK": "false",
-      "PACKAGE_NAME": "gov.voanews.voazh"
+      "PACKAGE_NAME": "com.voanews.voazh"
     },
     "cordova-plugin-x-socialsharing": {
-      "PACKAGE_NAME": "gov.voanews.voazh"
+      "PACKAGE_NAME": "com.voanews.voazh"
     },
     "cordova-pdf-generator": {
-      "PACKAGE_NAME": "gov.voanews.voazh"
+      "PACKAGE_NAME": "com.voanews.voazh"
     },
     "cordova-plugin-add-swift-support": {
-      "PACKAGE_NAME": "gov.voanews.voazh"
+      "PACKAGE_NAME": "com.voanews.voazh"
     },
     "cordova-hot-code-push-plugin": {
-      "PACKAGE_NAME": "gov.voanews.voazh"
+      "PACKAGE_NAME": "com.voanews.voazh"
     }
   },
   "dependent_plugins": {
     "es6-promise-plugin": {
-      "PACKAGE_NAME": "gov.voanews.voazh"
+      "PACKAGE_NAME": "com.voanews.voazh"
     }
   }
 }

@@ -17,7 +17,7 @@
        under the License.
  */
 
-package gov.voanews.voazh;
+package com.voanews.voazh;
 
 import android.os.Bundle;
 import org.apache.cordova.*;

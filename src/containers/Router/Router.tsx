@@ -8,6 +8,7 @@ import CategoryRoute from 'routes/CategoryRoute'
 import ArticleRoute from 'routes/ArticleRoute'
 import Settings from 'routes/Settings'
 import LiveStream from 'routes/LiveStream'
+import BreakingNews from 'routes/BreakingNews'
 import CategorySettings from 'routes/CategorySettings'
 import MediaSettings from 'routes/MediaSettings'
 import Search from 'routes/Search'
@@ -28,6 +29,7 @@ export default () => (
       <Route path='/search/:zoneId' component={Search}/>
       <Route path='/search' component={Search}/>
       <HeadingLayout path='/liveStream' component={LiveStream} heading='直播时间表'/>
+      <HeadingLayout path='/breakingNews' component={BreakingNews} heading='突发新闻'/>
       <MainLayout path='/articles/:category' component={CategoryRoute}/>
       <MainLayout path='/' component={HomeRoute}/>
     </Switch>

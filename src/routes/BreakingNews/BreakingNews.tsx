@@ -15,32 +15,21 @@ import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav
 import Loader from 'components/Loader'
 import PullToRefresh from 'components/PullToRefresh'
 
-import { homeRoute, row, content, searchButton, ticketIcon, topNav } from './CategoryRoute.scss'
-import * as Query from './CategoryRoute.graphql'
-import { CategoryRouteQuery, CategoryRouteQueryVariables } from 'helpers/graphql-types'
+import { homeRoute, row, contentArea, searchButton, ticketIcon, topNav } from './BreakingNews.scss'
+import * as Query from './BreakingNewsRoute.graphql'
+import { BreakingNewsRouteQuery } from 'helpers/graphql-types'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
 import { mapImageUrl } from 'helpers/image'
 
 import AppState from 'types/AppState'
 import Category from 'types/Category'
 
-export interface Params {
-  category: string
-}
-
-export interface State {
-  categoryLoaded: boolean
-}
-
-type OwnProps = RouteComponentProps<Params>
-type QueryProps = ChildProps<RouteComponentProps<void>, CategoryRouteQuery>
+type OwnProps = RouteComponentProps<void>
+type QueryProps = ChildProps<RouteComponentProps<void>, BreakingNewsRouteQuery>
 
 type Props = QueryProps & OwnProps & AnalyticsProps
 
-class HomeRouteBase extends React.Component<Props, State> {
-  state: State = {
-    categoryLoaded: false,
-  }
+class HomeRouteBase extends React.Component<Props> {
 
   goTo (route: string) {
     const { history } = this.props
@@ -50,18 +39,8 @@ class HomeRouteBase extends React.Component<Props, State> {
   goToArticle (id: number) {
     this.goTo(`/article/${id}`)
   }
-  
-  componentWillReceiveProps (nextProps: Props) {
-    const { data: { variables: { category: newCategory }, loading } } = nextProps
-    const { data: { variables: { category: oldCategory } } } = this.props
-    if (newCategory !== oldCategory) {
-      this.setState({ categoryLoaded: false })
-    } else if (!loading) {
-      this.setState({ categoryLoaded: true })
-    }
-  }
 
-  renderIcon = (blurb: CategoryRouteQuery['content'][0], className?: string) => {
+  renderIcon = (blurb: BreakingNewsRouteQuery['breakingNews'][0], className?: string) => {
     if (blurb.video && blurb.video.url) {
       return <i className={`mdi mdi-monitor ${className}`} />
     } else if (blurb.audio && blurb.audio.url) {
@@ -78,13 +57,13 @@ class HomeRouteBase extends React.Component<Props, State> {
 
   renderHero () {
     const { data } = this.props
-    const { content } = data
+    const { breakingNews } = data
 
-    if (!content || content.length < 1) {
+    if (!breakingNews || breakingNews.length < 1) {
       return null
     }
 
-    const blurb = content[0]
+    const blurb = breakingNews[0]
 
     return (
       <div className={row} style={{ marginBottom: '1.5vw' }}>
@@ -101,16 +80,16 @@ class HomeRouteBase extends React.Component<Props, State> {
 
   renderSecondary () {
     const { data } = this.props
-    const { content } = data
+    const { breakingNews } = data
 
-    if (!content || content.length < 2) {
+    if (!breakingNews || breakingNews.length < 2) {
       return null
     }
 
     return (
       <div className={row}>
         {
-          content.slice(1, 3).map((blurb, idx) => (
+          breakingNews.slice(1, 3).map((blurb, idx) => (
             <SecondaryCard
               key={blurb.id}
               onPress={() => this.goToArticle(blurb.id)}
@@ -127,14 +106,14 @@ class HomeRouteBase extends React.Component<Props, State> {
 
   renderRest () {
     const { data } = this.props
-    const { content } = data
+    const { breakingNews } = data
 
-    if (!content || content.length < 4) {
+    if (!breakingNews || breakingNews.length < 4) {
       return null
     }
 
     return (
-      content.slice(3).map((blurb, idx) => (
+      breakingNews.slice(3).map((blurb, idx) => (
         <div className={row} key={blurb.id}>
           <Ticket
             onPress={() => this.goToArticle(blurb.id)}
@@ -148,14 +127,12 @@ class HomeRouteBase extends React.Component<Props, State> {
     )
   }
 
-  renderSearchButton () {
-    const { category } = this.props.match.params
+  renderArticles () {
     return (
-      <div className={row}>
-        <button className={searchButton} onClick={() => this.goTo(`/search/${category}`)}>
-          <i className='mdi mdi-magnify' />
-          搜索
-        </button>
+      <div>
+        { this.renderHero() }
+        { this.renderSecondary() }
+        { this.renderRest() }
       </div>
     )
   }
@@ -163,12 +140,9 @@ class HomeRouteBase extends React.Component<Props, State> {
   renderContent () {
     const { data } = this.props
     return (
-      <div className={content}>
+      <div className={contentArea}>
         <PullToRefresh data={data}>
-          { this.renderSearchButton() }
-          { this.renderHero() }
-          { this.renderSecondary() }
-          { this.renderRest() }
+          { this.renderArticles() }
         </PullToRefresh>
       </div>
     )
@@ -176,11 +150,10 @@ class HomeRouteBase extends React.Component<Props, State> {
 
   render () {
     const { data } = this.props
-    const { categoryLoaded } = this.state
 
     return (
       <div className={homeRoute}>
-        <Loader data={data} hasContent={data.content && data.content.length > 0 && categoryLoaded}>
+        <Loader data={data} hasContent={data.breakingNews && data.breakingNews.length > 0}>
           { this.renderContent() }
         </Loader>
       </div>
@@ -191,16 +164,10 @@ class HomeRouteBase extends React.Component<Props, State> {
 const withHomeQuery = graphql(
   Query,
   {
-    options: (ownProps: OwnProps): QueryOpts<CategoryRouteQueryVariables> => ({
-      variables: {
-        category: parseInt(ownProps.match.params.category, 10),
-      },
-      fetchPolicy: 'cache-first',
-    }),
     props: ({ data }) => {
-      let outputData = data as (typeof data) & CategoryRouteQuery
+      let outputData = data as (typeof data) & BreakingNewsRouteQuery
       if (!data.loading && !data.error) {
-        outputData.content = outputData.content.filter(c => c).map(c => {
+        outputData.breakingNews = outputData.breakingNews.filter(c => c).map(c => {
           return {
             ...c,
             image: c.image && {
@@ -216,11 +183,10 @@ const withHomeQuery = graphql(
   },
 )
 
-const withAnalytics = analytics<Props>(({ match }, { match: oldMatch }) => ({
-  state: 'Category Section',
-  title: 'Category Section',
-  section: match.params.category,
-  skip: match.params.category === (oldMatch && oldMatch.params && oldMatch.params.category),
+const withAnalytics = analytics<Props>(({ data }, { match: oldMatch }) => ({
+  state: 'Breaking News',
+  title: 'Breaking News',
+  skip: data.loading,
 }))
 
 export default compose(

@@ -19,6 +19,7 @@ interface Props {
 }
 
 const HOME_RGX = /^\/$/
+const BREAKING_NEWS_RGX = /^\/breakingNews/
 const LIVE_STREAM_RGX = /^\/liveStream/
 const SETTINGS_RGX = /^\/settings/
 
@@ -28,13 +29,14 @@ export default class DefaultBottomNav extends React.Component<Props> {
 
     const path = history.location.pathname
     const homeActive = HOME_RGX.test(path)
+    const breakingNewsActive = BREAKING_NEWS_RGX.test(path)
 
     return [
       <IconItem key={0} active={homeActive} onClick={() => history.replace('/')}>
         <i className='mdi mdi-home-outline' />
         <div className={iconText}>首页</div>
       </IconItem>,
-      <IconItem key={1}>
+      <IconItem key={1} active={breakingNewsActive} onClick={() => history.replace('/breakingNews')}>
         <i className='mdi mdi-flash-outline' />
         <div className={iconText}>突发新闻</div>
       </IconItem>,

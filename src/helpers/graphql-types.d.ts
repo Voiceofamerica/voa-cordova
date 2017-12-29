@@ -62,6 +62,29 @@ export type ArticleRouteQuery = {
   } | null > | null,
 };
 
+export type BreakingNewsRouteQuery = {
+  breakingNews:  Array< {
+    id: number,
+    title: string,
+    introduction: string,
+    pubDate: string,
+    image:  {
+      url: string,
+    } | null,
+    video:  {
+      url: string | null,
+    } | null,
+    audio:  {
+      url: string | null,
+    } | null,
+    photoGallery:  Array< {
+      photo:  Array< {
+        id: number | null,
+      } | null > | null,
+    } | null > | null,
+  } | null > | null,
+};
+
 export type CategoryRouteQueryVariables = {
   category?: number | null,
 };

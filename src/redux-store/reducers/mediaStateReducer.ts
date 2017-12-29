@@ -35,7 +35,7 @@ const actors: ActorMap<MediaState> = {
   }),
   [toggleMediaPlayingType]: (prev, { playing = !prev.playing }: ToggleMediaPlayingAction) => ({
     ...prev,
-    playing,
+    playing: prev.mediaUrl && playing,
   }),
 }
 
