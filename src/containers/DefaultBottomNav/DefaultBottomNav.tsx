@@ -1,14 +1,8 @@
 
 import * as React from 'react'
-import { connect, Dispatch } from 'react-redux'
 import { History } from 'history'
 
-import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
-import ResilientImage from '@voiceofamerica/voa-shared/components/ResilientImage'
-
-import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
-import toggleMediaPlaying from 'redux-store/actions/toggleMediaPlaying'
-import AppState from 'types/AppState'
+import { IconItem } from '@voiceofamerica/voa-shared/components/BottomNav'
 
 import MainBottomNav from 'containers/MainBottomNav'
 

@@ -41,6 +41,8 @@ start().then(() => {
   }
 
   render(App)
+}).catch(err => {
+  console.error(err)
 })
 
 document.addEventListener(

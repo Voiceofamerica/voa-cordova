@@ -1,25 +1,21 @@
 
 import * as React from 'react'
-import * as moment from 'moment'
+import { compose } from 'redux'
 import { throttle } from 'lodash'
 import { RouteComponentProps } from 'react-router'
 import { connect } from 'react-redux'
 import shallowCompare from 'shallow-compare'
 
-import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
 import TopNav, { CenterText } from '@voiceofamerica/voa-shared/components/TopNav'
-import BottomNav, { IconItem } from '@voiceofamerica/voa-shared/components/BottomNav'
 
 import AppState from 'types/AppState'
 import Category from 'types/Category'
 
-import { SearchQuery, SearchQueryVariables } from 'helpers/graphql-types'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
-import * as Query from './Search.graphql'
 
 import SearchArea from './SearchArea'
 
-import { searchScreen, row, ticketIcon, inputs, inputsPill, backButton, dropdownPill, dropdown, dropdownArrow, searchInputContainer, searchInput, emptyText } from './Search.scss'
+import { searchScreen, inputs, inputsPill, backButton, dropdownPill, dropdown, dropdownArrow, searchInputContainer, searchInput, emptyText } from './Search.scss'
 
 interface StateProps {
   categories: Category[]
@@ -43,7 +39,6 @@ class SearchBase extends React.Component<Props, State> {
   }
 
   private inputHeight: number = 0
-  private timeout: any
 
   private setDebouncedQuery = throttle(
       (debouncedQuery: string) => {
@@ -170,4 +165,7 @@ const mapStateToProps = ({ settings: { categories } }: AppState, ownProps: OwnPr
 
 const withRedux = connect(mapStateToProps)
 
-export default withRedux(SearchBase)
+export default compose(
+  withRedux,
+  withAnalytics,
+)(SearchBase)

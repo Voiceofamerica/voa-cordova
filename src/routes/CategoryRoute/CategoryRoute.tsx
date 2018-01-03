@@ -1,7 +1,6 @@
 
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
-import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { graphql, ChildProps, QueryOpts } from 'react-apollo'
 import * as moment from 'moment'
@@ -9,20 +8,15 @@ import * as moment from 'moment'
 import Card from '@voiceofamerica/voa-shared/components/Card'
 import SecondaryCard from '@voiceofamerica/voa-shared/components/SecondaryCard'
 import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
-import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
-import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav'
 
 import Loader from 'components/Loader'
 import PullToRefresh from 'components/PullToRefresh'
 
-import { homeRoute, row, content, searchButton, ticketIcon, topNav } from './CategoryRoute.scss'
+import { homeRoute, row, content, searchButton, ticketIcon } from './CategoryRoute.scss'
 import * as Query from './CategoryRoute.graphql'
 import { CategoryRouteQuery, CategoryRouteQueryVariables } from 'helpers/graphql-types'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
 import { mapImageUrl } from 'helpers/image'
-
-import AppState from 'types/AppState'
-import Category from 'types/Category'
 
 export interface Params {
   category: string
@@ -50,7 +44,7 @@ class HomeRouteBase extends React.Component<Props, State> {
   goToArticle (id: number) {
     this.goTo(`/article/${id}`)
   }
-  
+
   componentWillReceiveProps (nextProps: Props) {
     const { data: { variables: { category: newCategory }, loading } } = nextProps
     const { data: { variables: { category: oldCategory } } } = this.props

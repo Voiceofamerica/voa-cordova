@@ -91,7 +91,7 @@ class MediaPlayerBase extends React.Component<Props> {
   }
 
   renderImage () {
-    const { media: { imageUrl, isVideo }, mediaPlaybackRate } = this.props
+    const { media: { imageUrl, isVideo } } = this.props
 
     if (isVideo) {
       return null
@@ -124,7 +124,7 @@ class MediaPlayerBase extends React.Component<Props> {
   }
 
   render () {
-    const { media: { mediaTitle, mediaDescription, mediaOpen }, closeMedia } = this.props
+    const { media: { mediaOpen }, closeMedia } = this.props
     const className = mediaOpen ? `${mediaPlayer} ${open}` : mediaPlayer
 
     return (

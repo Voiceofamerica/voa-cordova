@@ -46,7 +46,6 @@ type Props = OwnProps & StateProps & DispatchProps
 class MediaSettingsBase extends React.Component<Props> {
   render () {
     const { history, mediaPlaybackRate, setPlaybackRate } = this.props
-    const chosen = data.speed.find(item => item.value === mediaPlaybackRate)
 
     return (
       <div className={mediaSettings}>

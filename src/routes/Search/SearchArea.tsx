@@ -1,11 +1,9 @@
 
 import * as React from 'react'
 import * as moment from 'moment'
-import { RouteComponentProps } from 'react-router'
 import { graphql, ChildProps } from 'react-apollo'
 
 import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
-import BottomNav, { IconItem } from '@voiceofamerica/voa-shared/components/BottomNav'
 
 import Loader from 'components/Loader'
 
@@ -14,7 +12,7 @@ import { mapImageUrl } from 'helpers/image'
 
 import * as Query from './Search.graphql'
 
-import { searchArea, row, ticketIcon, inputs, searchInput, loadingText, loader } from './Search.scss'
+import { searchArea, row, ticketIcon, loadingText, loader } from './Search.scss'
 
 interface OwnProps extends SearchQueryVariables {
   goTo: (route: string) => void
@@ -71,10 +69,6 @@ class SearchAreaBase extends React.Component<Props> {
   }
 
   render () {
-    const { search = [], loading } = this.props.data
-
-    const filteredSearch = search.filter(b => b)
-
     return (
       <div className={searchArea}>
         <Loader className={loader} data={this.props.data}>

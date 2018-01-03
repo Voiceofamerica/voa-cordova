@@ -1,5 +1,5 @@
 
-import { Action, Dispatch } from 'redux'
+import { Dispatch } from 'redux'
 import AppState from 'types/AppState'
 
 import playMedia from '../actions/playMedia'

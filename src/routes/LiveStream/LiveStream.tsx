@@ -2,21 +2,16 @@
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
 import { connect, Dispatch } from 'react-redux'
-import { compose } from 'redux'
 import { graphql, ChildProps } from 'react-apollo'
 import * as moment from 'moment'
 
 import ResilientImage from '@voiceofamerica/voa-shared/components/ResilientImage'
-import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
-import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
-import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav'
 
 import { LiveStreamQuery } from 'helpers/graphql-types'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
 import playMedia from 'redux-store/thunks/playMediaFromBlob'
 
 import AppState from 'types/AppState'
-import Category from 'types/Category'
 
 import Loader from 'components/Loader'
 import ErrorBoundary from 'components/ErrorBoundary'

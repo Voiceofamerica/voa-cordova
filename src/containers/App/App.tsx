@@ -3,10 +3,6 @@ import * as React from 'react'
 import { Provider } from 'react-redux'
 import { ApolloProvider } from 'react-apollo'
 
-import Backdrop from '@voiceofamerica/voa-shared/components/Backdrop'
-import OfflineIndicator from '@voiceofamerica/voa-shared/components/OfflineIndicator'
-import { ready } from '@voiceofamerica/voa-shared/helpers/startup'
-
 import store from 'redux-store'
 import PsiphonIndicator from 'components/PsiphonIndicator'
 import Router from 'containers/Router'

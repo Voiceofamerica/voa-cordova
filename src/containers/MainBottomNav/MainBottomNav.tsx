@@ -2,7 +2,7 @@
 import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
 
-import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
+import BottomNav, { RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
 import ResilientImage from '@voiceofamerica/voa-shared/components/ResilientImage'
 
 import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
@@ -70,7 +70,7 @@ class MainBottomNavBase extends React.Component<Props> {
   }
 
   render () {
-    const { left, right, toggleMediaPlayer, mediaDrawerOpen, togglePlay, mediaPlaying } = this.props
+    const { left, right, mediaDrawerOpen } = this.props
 
     let className = mediaDrawerOpen ? `${bottomNav} ${mediaIsOpen}` : bottomNav
 

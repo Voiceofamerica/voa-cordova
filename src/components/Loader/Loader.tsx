@@ -5,7 +5,7 @@ import { QueryProps } from 'react-apollo'
 import Spinner from '@voiceofamerica/voa-shared/components/Spinner'
 import ResilientImage from '@voiceofamerica/voa-shared/components/ResilientImage'
 
-import { loader, spinner, backdrop, fader, reloadButton } from './Loader.scss'
+import { loader, backdrop, fader, reloadButton } from './Loader.scss'
 
 interface Props extends React.Props<HTMLDivElement> {
   data: QueryProps
@@ -23,7 +23,7 @@ export default ({ data, children, className = '', style, hasContent = false }: P
     return (
       <div className={fullClassName} style={style}>
         发生错误
-        <button className={reloadButton} onClick={() => data.refetch()}>刷新</button>
+        <button className={reloadButton} onClick={() => refetch()}>刷新</button>
       </div>
     )
   } else if (loading && !hasContent) {

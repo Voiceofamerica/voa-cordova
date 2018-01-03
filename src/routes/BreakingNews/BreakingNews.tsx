@@ -1,28 +1,22 @@
 
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
-import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { graphql, ChildProps, QueryOpts } from 'react-apollo'
+import { graphql, ChildProps } from 'react-apollo'
 import * as moment from 'moment'
 
 import Card from '@voiceofamerica/voa-shared/components/Card'
 import SecondaryCard from '@voiceofamerica/voa-shared/components/SecondaryCard'
 import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
-import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
-import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav'
 
 import Loader from 'components/Loader'
 import PullToRefresh from 'components/PullToRefresh'
 
-import { homeRoute, row, contentArea, defaultText, searchButton, ticketIcon, topNav } from './BreakingNews.scss'
+import { homeRoute, row, contentArea, defaultText, ticketIcon } from './BreakingNews.scss'
 import * as Query from './BreakingNewsRoute.graphql'
 import { BreakingNewsRouteQuery } from 'helpers/graphql-types'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
 import { mapImageUrl } from 'helpers/image'
-
-import AppState from 'types/AppState'
-import Category from 'types/Category'
 
 type OwnProps = RouteComponentProps<void>
 type QueryProps = ChildProps<RouteComponentProps<void>, BreakingNewsRouteQuery>

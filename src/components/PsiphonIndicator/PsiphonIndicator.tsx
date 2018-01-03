@@ -1,6 +1,5 @@
 
 import * as React from 'react'
-import { QueryProps } from 'react-apollo'
 
 import { psiphonIndicator } from './PsiphonIndicator.scss'
 

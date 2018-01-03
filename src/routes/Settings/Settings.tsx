@@ -4,13 +4,10 @@ import { RouteComponentProps } from 'react-router'
 import { connect, Dispatch } from 'react-redux'
 import { compose } from 'redux'
 
-import BottomNav, { IconItem } from '@voiceofamerica/voa-shared/components/BottomNav'
-
-import DefaultBottomNav from 'containers/DefaultBottomNav'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
 import clearAll from 'redux-store/actions/clearAll'
 
-import { settings, panicButtonHolder, panicButton, topNav, buttons, settingsButton, buttonIcon } from './Settings.scss'
+import { settings, panicButtonHolder, panicButton, buttons, settingsButton, buttonIcon } from './Settings.scss'
 
 interface DispatchProps {
   clearAll: () => void

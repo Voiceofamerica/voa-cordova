@@ -1,8 +1,6 @@
 
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
 import { graphql, ChildProps } from 'react-apollo'
 import * as moment from 'moment'
 
@@ -10,10 +8,8 @@ import Card from '@voiceofamerica/voa-shared/components/Card'
 import SecondaryCard from '@voiceofamerica/voa-shared/components/SecondaryCard'
 import { ready } from '@voiceofamerica/voa-shared/helpers/startup'
 import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
-import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
-import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav'
 
-import { homeRoute, row, content, contentLoading, searchButton, topNav, ticketIcon, loadingText, startup } from './HomeRoute.scss'
+import { homeRoute, row, content, searchButton, ticketIcon } from './HomeRoute.scss'
 import * as Query from './HomeRoute.graphql'
 import { HomeRouteQuery } from 'helpers/graphql-types'
 import { mapImageUrl } from 'helpers/image'
@@ -21,10 +17,6 @@ import analytics, { AnalyticsProps } from 'helpers/analytics'
 
 import Loader from 'components/Loader'
 import PullToRefresh from 'components/PullToRefresh'
-
-import AppState from 'types/AppState'
-import Category from 'types/Category'
-import ArticleBlurb from '@voiceofamerica/voa-shared/types/ArticleBlurb'
 
 type QueryProps = ChildProps<RouteComponentProps<void>, HomeRouteQuery>
 
@@ -38,7 +30,9 @@ class HomeRouteBase extends React.Component<Props, State> {
   }
 
   componentDidMount () {
-    ready().then(() => this.setState({ startupDone: true }))
+    ready()
+      .then(() => this.setState({ startupDone: true }))
+      .catch(console.error)
   }
 
   goTo (route: string) {

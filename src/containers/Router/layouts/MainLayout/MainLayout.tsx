@@ -3,7 +3,6 @@ import * as React from 'react'
 import { Route, RouteProps } from 'react-router'
 import { connect, Dispatch } from 'react-redux'
 
-import BottomNav, { IconItem, RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
 import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav'
 
 import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
@@ -12,8 +11,6 @@ import ErrorBoundary from 'components/ErrorBoundary'
 import DefaultBottomNav from 'containers/DefaultBottomNav'
 import AppState from 'types/AppState'
 import Category from 'types/Category'
-
-import { centerIcon, iconText } from './MainLayout.scss'
 
 interface StateProps {
   categories: Category[]
@@ -32,16 +29,9 @@ function MainLayout ({ component: Component, categories, toggleMediaPlayer, ...r
         props.history.replace(route)
       }
 
-      function goTo (route: string) {
-        props.history.push(route)
-      }
-
       const { category: categoryIdStr } = props.match.params
       const isHeadlines = categoryIdStr === null || categoryIdStr === undefined
       const categoryId = isHeadlines ? 1 : parseInt(categoryIdStr, 10)
-
-      const liveStreamActive = props.history.location.pathname.indexOf('liveStream') >= 0
-      const homeActive = !liveStreamActive
 
       return (
         <div>
