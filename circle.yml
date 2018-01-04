@@ -2,15 +2,15 @@ version: 2
 jobs:
   test:
     docker:
-      - image: "node:6.11.1"
+      - image: "node:8.9.4"
     steps:
       - checkout
-      - restore_cache:
+      - restore_cache: &cacheCheckKey
           key: v3-voa-cordova-npm-{{ checksum "package-lock.json" }}
       - run: yarn global add npm@5
       - run: npm install --unsafe-perm
       - save_cache:
-          key: v3-voa-cordova-npm-{{ checksum "package-lock.json" }}
+          <<: *cacheCheckKey
           paths:
             - "~/.npm"
             - "node_modules"
@@ -21,14 +21,14 @@ jobs:
       - image: bitriseio/docker-android
     steps:
       - checkout
-      - restore_cache:
+      - restore_cache: &cacheAndroidKey
           key: v3-voa-cordova-android-{{ checksum "package-lock.json" }}-{{ checksum "config.xml" }}
       - run: bash scripts/setupAndroid.sh
       - run: npm install
       - run: npx cordova prepare
       - run: npm run generate
       - save_cache:
-          key: v3-voa-cordova-android-{{ checksum "package-lock.json" }}-{{ checksum "config.xml" }}
+          <<: *cacheAndroidKey
           paths:
             - "~/.npm"
             - "~/.android"
