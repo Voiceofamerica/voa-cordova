@@ -35,7 +35,7 @@ function getNewState<S> (prevState: FlatMap<S>, action: Action, defaultReducer?:
   }
 }
 
-export function buildFlatMapReducer<S> (idSelector: (item: S) => number, childReducer: Reducer<S>, defaultReducer?: Reducer<FlatMap<S>>): Reducer<FlatMap<S>> {
+export function buildFlatMapReducer<S> (childReducer: Reducer<S>): Reducer<FlatMap<S>> {
   return (prevState, action: Action & { id: number }) => {
     const newState = getNewState(prevState, action)
 

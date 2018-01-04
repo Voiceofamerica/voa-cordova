@@ -3,11 +3,11 @@ import * as React from 'react'
 
 import { psiphonIndicator } from './PsiphonIndicator.scss'
 
-interface Props extends React.Props<HTMLDivElement> {
+interface Props extends React.Props<HTMLImageElement> {
 }
 
-export default (props: Props) => {
+export default ({ ref }: Props) => {
   return (
-    <img className={psiphonIndicator} src={require('./psiphon_on.png')} />
+    <img ref={ref} className={psiphonIndicator} src={require('./psiphon_on.png')} />
   )
 }

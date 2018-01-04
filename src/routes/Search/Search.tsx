@@ -159,7 +159,7 @@ const withAnalytics = analytics<Props>({
   title: 'Search Results',
 })
 
-const mapStateToProps = ({ settings: { categories } }: AppState, ownProps: OwnProps): StateProps => ({
+const mapStateToProps = ({ settings: { categories } }: AppState): StateProps => ({
   categories,
 })
 

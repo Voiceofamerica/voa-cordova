@@ -39,7 +39,7 @@ interface LocalState {
 }
 
 class CategorySettingsBase extends React.Component<Props, LocalState> {
-  hoverOverChosen = (at: PillItem, chosenItem: PillItem) => {
+  hoverOverChosen = (chosenItem: PillItem, at: PillItem) => {
     const { categories } = this.props
     if (categories.find(c => c.id === chosenItem.id)) {
       this.moveCard(at, chosenItem)
@@ -48,10 +48,10 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
     }
   }
 
-  hoverOverUnchosen = (at: PillItem, chosenItem: PillItem) => {
+  hoverOverUnchosen = (chosenItem: PillItem) => {
     const { categories } = this.props
     if (categories.find(c => c.id === chosenItem.id)) {
-      this.removeCard(at, chosenItem)
+      this.removeCard(chosenItem)
     }
   }
 
@@ -71,7 +71,7 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
     changeOrder(moved)
   }
 
-  removeCard (at: PillItem, chosenItem: PillItem) {
+  removeCard (chosenItem: PillItem) {
     const { categories, changeOrder } = this.props
 
     const removed = categories.filter(c => c.id !== chosenItem.id)
@@ -150,11 +150,11 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
   }
 }
 
-const mapStateToProps = (state: AppState, ownProps: OwnProps): StateProps => ({
+const mapStateToProps = (state: AppState): StateProps => ({
   categories: state.settings.categories,
 })
 
-const mapDispatchToProps = (dispatch: Dispatch<any>, own): DispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => ({
   changeOrder: (categories: Category[]) => dispatch(setCategoryOrder({ categories })),
 })
 

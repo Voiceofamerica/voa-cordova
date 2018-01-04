@@ -22,7 +22,7 @@ interface DispatchProps {
 
 type Props = StateProps & RouteProps & DispatchProps
 
-function MainLayout ({ component: Component, categories, toggleMediaPlayer, ...rest }: Props) {
+function MainLayout ({ component: Component, categories, ...rest }: Props) {
   return (
     <Route {...rest} render={props => {
       function replace (route: string) {
@@ -40,7 +40,7 @@ function MainLayout ({ component: Component, categories, toggleMediaPlayer, ...r
               要闻
             </TopNavItem>
             {
-              categories.map((category, index) => (
+              categories.map((category) => (
                 <TopNavItem key={category.id} selected={categoryId === category.id} onClick={() => replace(`/articles/${category.id}`)}>
                   { category.name }
                 </TopNavItem>
@@ -59,7 +59,7 @@ function MainLayout ({ component: Component, categories, toggleMediaPlayer, ...r
   )
 }
 
-const mapStateToProps = ({ settings: { categories } }: AppState, ownProps: RouteProps): StateProps => ({
+const mapStateToProps = ({ settings: { categories } }: AppState): StateProps => ({
   categories,
 })
 

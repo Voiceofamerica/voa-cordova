@@ -83,7 +83,7 @@ class HomeRouteBase extends React.Component<Props> {
     return (
       <div className={row}>
         {
-          breakingNews.slice(1, 3).map((blurb, idx) => (
+          breakingNews.slice(1, 3).map((blurb) => (
             <SecondaryCard
               key={blurb.id}
               onPress={() => this.goToArticle(blurb.id)}
@@ -107,7 +107,7 @@ class HomeRouteBase extends React.Component<Props> {
     }
 
     return (
-      breakingNews.slice(3).map((blurb, idx) => (
+      breakingNews.slice(3).map((blurb) => (
         <div className={row} key={blurb.id}>
           <Ticket
             onPress={() => this.goToArticle(blurb.id)}
@@ -190,7 +190,7 @@ const withHomeQuery = graphql(
   },
 )
 
-const withAnalytics = analytics<Props>(({ data }, { match: oldMatch }) => ({
+const withAnalytics = analytics<Props>(({ data }) => ({
   state: 'Breaking News',
   title: 'Breaking News',
   skip: data.loading,

@@ -8,8 +8,6 @@ import TopNav, { CenterText } from '@voiceofamerica/voa-shared/components/TopNav
 import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
 import DefaultBottomNav from 'containers/DefaultBottomNav'
 
-import AppState from 'types/AppState'
-
 interface OwnProps extends RouteProps {
   heading: string
 }
@@ -23,7 +21,7 @@ interface DispatchProps {
 
 type Props = StateProps & OwnProps & DispatchProps
 
-function MainLayout ({ component: Component, heading, toggleMediaPlayer, ...rest }: Props) {
+function MainLayout ({ component: Component, heading, ...rest }: Props) {
   return (
     <Route {...rest} render={props => {
       return (
@@ -43,15 +41,12 @@ function MainLayout ({ component: Component, heading, toggleMediaPlayer, ...rest
   )
 }
 
-const mapStateToProps = ({ settings: { categories } }: AppState, ownProps: OwnProps): StateProps => ({
-})
-
 const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => ({
   toggleMediaPlayer: () => dispatch(toggleMediaDrawer({})),
 })
 
 const withRedux = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 )
 

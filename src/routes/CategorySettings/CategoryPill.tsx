@@ -68,7 +68,7 @@ const draggable = DragSource(
 const dropArea = DropTarget(
   (props: Props) => props.cardType,
   {
-    hover (props, monitor, component) {
+    hover (props, monitor) {
       const item = monitor.getItem() as PillItem
       const dragId = item.id
       const hoverId = props.itemId
@@ -77,7 +77,7 @@ const dropArea = DropTarget(
         return
       }
 
-      props.draggedOver(getItem(props), item)
+      props.draggedOver(item, getItem(props))
     },
   },
   connect => ({

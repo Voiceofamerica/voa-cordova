@@ -88,13 +88,13 @@ class MainBottomNavBase extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: AppState, ownProps: OwnProps): StateProps => ({
+const mapStateToProps = (state: AppState): StateProps => ({
   mediaDrawerOpen: state.media.mediaOpen,
   mediaImageUrl: state.media.imageUrl,
   mediaPlaying: state.media.playing,
 })
 
-const mapDispatchToProps = (dispatch: Dispatch<AppState>, ownProps: OwnProps): DispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<AppState>): DispatchProps => ({
   toggleMediaPlayer: () => dispatch(toggleMediaDrawer({})),
   togglePlay: () => dispatch(toggleMediaPlaying({})),
 })
