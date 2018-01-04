@@ -21,6 +21,8 @@
     "moduleResolution": "node",
     "target": "es5",
     "baseUrl": "./src",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "paths": {
       "containers/*": ["containers/*"],
       "helpers/*": ["helpers/*"],

@@ -54,14 +54,14 @@ jobs:
       NODE_VERSION: 6.11.1
     steps:
       - checkout
-      - restore_cache:
+      - restore_cache: &cacheIosKey
           key: v3-voa-cordova-ios-{{ checksum "package-lock.json" }}-{{ checksum "config.xml" }}
       - run: bash scripts/setupiOS.sh
-      - run: npm install --unsafe-perm
+      - run: npm install
       - run: npm run cordova:prepare
       - run: npm run generate
       - save_cache:
-          key: v3-voa-cordova-ios-{{ checksum "package-lock.json" }}-{{ checksum "config.xml" }}
+          <<: *cacheIosKey
           paths:
             - "~/.npm"
             - "node_modules"
