@@ -109,7 +109,6 @@ class HomeRouteBase extends React.Component<Props, State> {
               key={blurb.id}
               onPress={() => this.goToArticle(blurb.id)}
               title={<span>{this.renderIcon(blurb)} {blurb.title}</span>}
-              minorText={moment(blurb.pubDate).fromNow()}
               imageUrl={blurb.image && blurb.image.url}
               factor={2}
             />

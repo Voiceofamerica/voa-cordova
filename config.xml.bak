@@ -29,7 +29,7 @@
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="cordova-wheel-selector-plugin" spec="^1.0.9" />
     <plugin name="adobe-mobile-services" spec="^4.13.1-cor" />
-    <plugin name="psiphon-cordova-plugin" spec="^0.2.1" />
+    <plugin name="psiphon-cordova-plugin" spec="^0.3.0-2" />
     <plugin name="cordova-plugin-fullscreen" spec="^1.2.0" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="cordova-plugin-crosswalk-webview" spec="^2.3.0">
@@ -42,4 +42,5 @@
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.2.1" />
     <plugin name="cordova-pdf-generator" spec="^1.9.3" />
     <plugin name="cordova-plugin-add-swift-support" spec="^1.7.1" />
+    <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.1" />
 </widget>

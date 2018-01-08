@@ -22,6 +22,7 @@
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
+        <preference name="AllowInlineMediaPlayback" value="true" />
     </platform>
     <engine name="android" spec="^6.3.0" />
     <engine name="ios" spec="^4.5.4" />
@@ -42,4 +43,5 @@
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.2.1" />
     <plugin name="cordova-pdf-generator" spec="^1.9.3" />
     <plugin name="cordova-plugin-add-swift-support" spec="^1.7.1" />
+    <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.1" />
 </widget>
