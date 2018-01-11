@@ -10,6 +10,8 @@ import Loader from 'components/Loader'
 import { SearchQuery, SearchQueryVariables } from 'helpers/graphql-types'
 import { mapImageUrl } from 'helpers/image'
 
+import { searchLabels } from 'labels'
+
 import * as Query from './Search.graphql'
 
 import { searchArea, row, ticketIcon, loadingText, loader } from './Search.scss'
@@ -28,7 +30,7 @@ class SearchAreaBase extends React.Component<Props> {
   renderEmpty () {
     return (
       <div className={loadingText}>
-        没有
+        {searchLabels.empty}
       </div>
     )
   }

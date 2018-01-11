@@ -5,6 +5,8 @@ import Refresher from 'react-refresher'
 
 import Spinner from '@voiceofamerica/voa-shared/components/Spinner'
 
+import { pullToRefreshLabels } from 'labels'
+
 import { pullIcon, upsideDown } from './PullToRefresh.scss'
 
 interface Props {
@@ -20,8 +22,8 @@ export default class PullToRefresh extends React.Component<Props> {
         onRefresh={data.refetch}
         spinner={<Spinner style={{ height: 30 }} />}
         refreshColor='#0162B1'
-        downArrow={<div><i className={`mdi mdi-arrow-down ${pullIcon}`} /> Pull</div>}
-        upArrow={<div><i className={`mdi mdi-arrow-down ${pullIcon} ${upsideDown}`} /> Pull</div>}
+        downArrow={<div><i className={`mdi mdi-arrow-down ${pullIcon}`} /> {pullToRefreshLabels.pull}</div>}
+        upArrow={<div><i className={`mdi mdi-arrow-down ${pullIcon} ${upsideDown}`} /> {pullToRefreshLabels.release}</div>}
         successIcon={<i className='mdi mdi-check' />}
         errorIcon={<i className='mdi mdi-close' />}
       >

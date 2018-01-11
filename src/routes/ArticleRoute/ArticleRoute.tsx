@@ -22,6 +22,7 @@ import { generatePDF } from 'helpers/articlePrinter'
 import MainBottomNav from 'containers/MainBottomNav'
 import ErrorBoundary from 'components/ErrorBoundary'
 import Loader from 'components/Loader'
+import { articleLabels } from 'labels'
 
 import AppState from 'types/AppState'
 
@@ -144,7 +145,7 @@ class ArticleRouteBase extends React.Component<Props> {
 
     return (
       <div style={{ fontWeight: 'bold' }}>
-        {updated.format('lll')}更新
+        {articleLabels.updatedOn(updated.format('lll'))}
       </div>
     )
   }
@@ -285,7 +286,7 @@ class ArticleRouteBase extends React.Component<Props> {
     return (
       <div className={relatedArticles}>
         <span className={relatedContentHeading}>
-          相关内容
+          {articleLabels.relatedContent}
         </span>
         {
           article.relatedStories.map(related => (

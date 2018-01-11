@@ -7,25 +7,22 @@ import BottomNav, { IconItem } from '@voiceofamerica/voa-shared/components/Botto
 
 import setMediaPlaybackRate from 'redux-store/actions/setMediaPlaybackRate'
 import AppState from 'types/AppState'
+import { mediaSettingsLabels } from 'labels'
 
 import { mediaSettings, topNav, buttons, settingsButton, items, item, active } from './MediaSettings.scss'
 
 const data = {
   speed: [
     {
-      description: '常速',
+      description: mediaSettingsLabels.normalSpeed,
       value: 1,
     },
     {
-      description: '1.25倍速',
-      value: 1.25,
-    },
-    {
-      description: '1.5倍速',
+      description: mediaSettingsLabels.halfAgainSpeed,
       value: 1.5,
     },
     {
-      description: '2倍速',
+      description: mediaSettingsLabels.doubleSpeed,
       value: 2,
     },
   ],
@@ -49,10 +46,10 @@ class MediaSettingsBase extends React.Component<Props> {
 
     return (
       <div className={mediaSettings}>
-        <div className={topNav}>视频设置</div>
+        <div className={topNav}>{mediaSettingsLabels.header}</div>
         <div className={buttons}>
           <div className={settingsButton}>
-            播放速度
+            {mediaSettingsLabels.chooseSpeed}
             <div className={items}>
               {
                 data.speed.map(spd => (

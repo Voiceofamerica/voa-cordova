@@ -15,9 +15,30 @@ import AppState from 'types/AppState'
 
 import Loader from 'components/Loader'
 import ErrorBoundary from 'components/ErrorBoundary'
+import NotificationSwitch from 'containers/NotificationSwitch'
+import { liveStreamLabels } from 'labels'
 
 import * as Query from './LiveStream.graphql'
-import { liveStream, content, programTime, liveStreamItem, programTitle, collapser, collapserIconContainer, collapserIcon, drawer, drawerImage, imageIcon, drawerContent, open, loadingText } from './LiveStream.scss'
+import {
+  liveStream,
+  content,
+  programTime,
+  liveStreamItem,
+  programTitle,
+  collapser,
+  collapserIconContainer,
+  collapserIcon,
+  drawer,
+  drawerImage,
+  imageIcon,
+  drawerContent,
+  textContent,
+  toggleContent,
+  toggleText,
+  toggler,
+  open,
+  loadingText,
+} from './LiveStream.scss'
 
 interface DispatchProps {
   playMedia: (url: string, title: string, description: string, isVideo: boolean, imageUrl: string) => void
@@ -44,31 +65,27 @@ class LiveStreamBase extends React.Component<Props, State> {
     }))
   }
 
-  renderLoading () {
-    const { data } = this.props
-    if (!data.loading) {
-      return null
-    }
-
-    return (
-      <div style={{ display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center', height: '100%', zIndex: 1 }}>
-        <div style={{ alignContent: 'center', fontSize: '10vw', backgroundColor: 'transparent', textAlign: 'center' }}>
-          装载...
-        </div>
-      </div>
-    )
-  }
-
   renderIconFromType = () => {
     return <i className={`mdi mdi-monitor ${imageIcon}`} />
   }
 
-  renderDrawer = (prog: { url: string, programTitle: string, programDescription: string, image?: { url: string } }) => {
+  deviceSupportsNotifications () {
+    if (typeof device === 'undefined') {
+      return false
+    }
+
+    const version = device.version.split(/\.|\-/).map(val => parseInt(val, 10))
+    return device.platform !== 'Android' || version[0] > 4 || (version[0] === 4 && version[1] > 3)
+  }
+
+  renderDrawer = (prog: LiveStreamQuery['program'][0]) => {
     const { playMedia } = this.props
 
     const onClick = prog.url
                   ? () => playMedia(prog.url, prog.programTitle, prog.programDescription, true, prog.image && prog.image.url)
                   : null
+
+    const showSwitch = this.deviceSupportsNotifications()
 
     return (
       <div className={drawer}>
@@ -77,7 +94,19 @@ class LiveStreamBase extends React.Component<Props, State> {
             {this.renderIconFromType()}
           </ResilientImage>
         </div>
-        <div className={drawerContent}>{prog.programDescription}</div>
+        <div className={drawerContent}>
+          <div className={textContent}>{prog.programDescription}</div>
+          {
+            showSwitch
+            ? <div className={toggleContent}>
+                <div className={toggleText}>{liveStreamLabels.notifyMe}</div>
+                <div className={toggler}>
+                  <NotificationSwitch notificationId={prog.id} title={prog.programTitle} time={moment(prog.date)} />
+                </div>
+              </div>
+            : null
+          }
+        </div>
       </div>
     )
   }
@@ -118,7 +147,6 @@ class LiveStreamBase extends React.Component<Props, State> {
       <div className={liveStream}>
         <Loader className={loadingText} data={this.props.data}>
           <ErrorBoundary>
-            {this.renderLoading()}
             {this.renderContent()}
           </ErrorBoundary>
         </Loader>

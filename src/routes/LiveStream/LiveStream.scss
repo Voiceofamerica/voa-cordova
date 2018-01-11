@@ -66,9 +66,32 @@
         }
 
         .drawerContent {
-          padding: 8px;
+          display: flex;
+          flex-direction: column;
           flex: 5;
-          overflow-y: scroll;
+
+          .textContent {
+            flex: 1;
+            padding: 8px;
+            overflow-y: scroll;
+          }
+
+          .toggleContent {
+            display: flex;
+            flex-direction: row;
+            padding: 6px;
+            border-top: 1px solid $border-grey;
+          }
+
+          .toggleText {
+            flex: 1;
+            font-weight: bold;
+            font-size: 18px;
+          }
+          
+          .toggler {
+            padding-top: 4px;
+          }
         }
       }
 

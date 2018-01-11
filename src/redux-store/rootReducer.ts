@@ -9,12 +9,14 @@ import { type as clearAllType } from './actions/clearAll'
 import appSettingsReducer from './reducers/appSettingsReducer'
 import mediaStateReducer from './reducers/mediaStateReducer'
 import favoriteContentsReducer from './reducers/favoriteContentsReducer'
+import notificationsReducer from './reducers/notificationsReducer'
 
 const baseRootReducer: Reducer<AppState> = combineReducers({
   settings: appSettingsReducer,
   media: mediaStateReducer,
   favorites: favoriteContentsReducer,
   router: routerReducer,
+  notifications: notificationsReducer,
 })
 
 function rootReducer (prev: AppState, action: Action): AppState {

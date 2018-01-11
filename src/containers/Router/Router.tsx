@@ -13,6 +13,8 @@ import CategorySettings from 'routes/CategorySettings'
 import MediaSettings from 'routes/MediaSettings'
 import Search from 'routes/Search'
 
+import { settingsLabels, liveStreamLabels, breakingNewsLabels } from 'labels'
+
 import HeadingLayout from './layouts/HeadingLayout'
 import MainLayout from './layouts/MainLayout'
 
@@ -27,9 +29,9 @@ export default () => (
       <Route path='/search/:zoneId/:query' component={Search}/>
       <Route path='/search/:zoneId' component={Search}/>
       <Route path='/search' component={Search}/>
-      <HeadingLayout path='/settings' component={Settings} heading='我的设置' />
-      <HeadingLayout path='/liveStream' component={LiveStream} heading='直播时间表'/>
-      <HeadingLayout path='/breakingNews' component={BreakingNews} heading='突发新闻'/>
+      <HeadingLayout path='/settings' component={Settings} heading={settingsLabels.header} />
+      <HeadingLayout path='/liveStream' component={LiveStream} heading={liveStreamLabels.header} />
+      <HeadingLayout path='/breakingNews' component={BreakingNews} heading={breakingNewsLabels.header} />
       <MainLayout path='/articles/:category' component={CategoryRoute}/>
       <MainLayout path='/' component={HomeRoute}/>
     </Switch>

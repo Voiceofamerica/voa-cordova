@@ -40,6 +40,7 @@ module.exports = {
       helpers: path.join(srcDir, 'helpers'),
       'redux-store': path.join(srcDir, 'redux-store'),
       routes: path.join(srcDir, 'routes'),
+      labels: path.join(srcDir, 'labels'),
       res: path.join(__dirname, 'res'),
       react: path.join(__dirname, './node_modules/react'),
     }

@@ -32,6 +32,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@types/cordova": "0.0.34",
+    "@types/cordova-plugin-device": "^1.1.5",
     "@types/cordova-plugin-x-socialsharing": "^5.1.1",
     "@types/graphql": "^0.11.6",
     "@types/history": "^4.6.1",
@@ -144,11 +145,12 @@
       "cordova-plugin-x-socialsharing": {},
       "cordova-pdf-generator": {},
       "cordova-plugin-add-swift-support": {},
-      "cordova-plugin-local-notification": {}
+      "cordova-plugin-local-notification": {},
+      "cordova-plugin-device": {}
     }
   },
   "devDependencies": {
-    "@playlyfe/gql": "^2.3.2",
+    "@playlyfe/gql": "^2.4.0",
     "chalk": "^2.3.0",
     "cordova-icon": "^0.11.0",
     "cordova-splash": "^0.10.0",

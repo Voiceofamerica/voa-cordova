@@ -1,5 +1,7 @@
 import * as React from 'react'
 
+import { errorBoundaryLabels } from 'labels'
+
 import { errorBoundary, content, retryButton } from './ErrorBoundary.scss'
 
 interface Props {
@@ -27,10 +29,10 @@ export default class ErrorBoundary extends React.Component<Props, State> {
       return (
         <div className={errorBoundary}>
           <div className={content}>
-            发生错误
+            {errorBoundaryLabels.error}
           </div>
           <div className={retryButton} onClick={() => this.setState({ hasError: false })}>
-            重试
+            {errorBoundaryLabels.retry}
           </div>
         </div>
       )

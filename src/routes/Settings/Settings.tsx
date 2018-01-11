@@ -7,6 +7,8 @@ import { compose } from 'redux'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
 import clearAll from 'redux-store/actions/clearAll'
 
+import { settingsLabels, categorySettingsLabels, mediaSettingsLabels } from 'labels'
+
 import { settings, panicButtonHolder, panicButton, buttons, settingsButton, buttonIcon } from './Settings.scss'
 
 interface DispatchProps {
@@ -25,16 +27,16 @@ class SettingsRoute extends React.Component<Props> {
       <div className={settings}>
         <div className={panicButtonHolder}>
           <div className={panicButton} onClick={clearAll}>
-            马上删除此程序
+            {settingsLabels.panic}
           </div>
         </div>
         <div className={buttons}>
           <button className={settingsButton} onClick={() => history.push(`/settings/categories`)}>
-            新闻分类排序
+            {categorySettingsLabels.header}
             <i className={`mdi mdi-chevron-right ${buttonIcon}`} />
           </button>
           <button className={settingsButton} onClick={() => history.push(`/settings/media`)}>
-            视频设置
+            {mediaSettingsLabels.header}
             <i className={`mdi mdi-chevron-right ${buttonIcon}`} />
           </button>
         </div>

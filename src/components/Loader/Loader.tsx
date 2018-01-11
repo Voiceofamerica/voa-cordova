@@ -5,6 +5,8 @@ import { QueryProps } from 'react-apollo'
 import Spinner from '@voiceofamerica/voa-shared/components/Spinner'
 import ResilientImage from '@voiceofamerica/voa-shared/components/ResilientImage'
 
+import { errorBoundaryLabels } from 'labels'
+
 import { loader, backdrop, fader, reloadButton } from './Loader.scss'
 
 interface Props extends React.Props<HTMLDivElement> {
@@ -22,8 +24,8 @@ export default ({ data, children, className = '', style, hasContent = false }: P
   if (error && !hasContent) {
     return (
       <div className={fullClassName} style={style}>
-        发生错误
-        <button className={reloadButton} onClick={() => refetch()}>刷新</button>
+        {errorBoundaryLabels.error}
+        <button className={reloadButton} onClick={() => refetch()}>{errorBoundaryLabels.retry}</button>
       </div>
     )
   } else if (loading && !hasContent) {

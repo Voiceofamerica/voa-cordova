@@ -17,6 +17,7 @@ import analytics, { AnalyticsProps } from 'helpers/analytics'
 
 import Loader from 'components/Loader'
 import PullToRefresh from 'components/PullToRefresh'
+import { homeLabels } from 'labels'
 
 type QueryProps = ChildProps<RouteComponentProps<void>, HomeRouteQuery>
 
@@ -138,7 +139,7 @@ class HomeRouteBase extends React.Component<Props, State> {
       <div className={row}>
         <button className={searchButton} onClick={() => this.goTo('/search')}>
           <i className='mdi mdi-magnify' />
-          搜索
+          {homeLabels.search}
         </button>
       </div>
     )

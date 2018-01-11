@@ -17,6 +17,7 @@ import * as Query from './BreakingNewsRoute.graphql'
 import { BreakingNewsRouteQuery } from 'helpers/graphql-types'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
 import { mapImageUrl } from 'helpers/image'
+import { breakingNewsLabels } from 'labels'
 
 type OwnProps = RouteComponentProps<void>
 type QueryProps = ChildProps<RouteComponentProps<void>, BreakingNewsRouteQuery>
@@ -133,7 +134,7 @@ class HomeRouteBase extends React.Component<Props> {
   renderDefault () {
     return (
       <div className={defaultText}>
-        目前没有重突发新闻
+        {breakingNewsLabels.noNews}
       </div>
     )
   }

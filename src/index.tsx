@@ -5,6 +5,8 @@ import { AppContainer } from 'react-hot-loader'
 
 import * as moment from 'moment'
 
+import { momentLocale } from 'labels'
+
 import './globalStyle.scss'
 
 import App from './containers/App'
@@ -12,7 +14,7 @@ import { start } from 'helpers/psiphon'
 
 const rootElement = document.getElementById('app')
 
-moment.locale('zh-cn')
+moment.locale(momentLocale)
 
 start().then(() => {
   const afsm = (window as any).AndroidFullScreen

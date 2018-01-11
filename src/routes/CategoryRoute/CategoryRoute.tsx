@@ -17,6 +17,7 @@ import * as Query from './CategoryRoute.graphql'
 import { CategoryRouteQuery, CategoryRouteQueryVariables } from 'helpers/graphql-types'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
 import { mapImageUrl } from 'helpers/image'
+import { homeLabels } from 'labels'
 
 export interface Params {
   category: string
@@ -147,7 +148,7 @@ class HomeRouteBase extends React.Component<Props, State> {
       <div className={row}>
         <button className={searchButton} onClick={() => this.goTo(`/search/${category}`)}>
           <i className='mdi mdi-magnify' />
-          搜索
+          {homeLabels.search}
         </button>
       </div>
     )

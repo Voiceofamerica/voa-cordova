@@ -8,6 +8,7 @@ import ResilientImage from '@voiceofamerica/voa-shared/components/ResilientImage
 import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
 import toggleMediaPlaying from 'redux-store/actions/toggleMediaPlaying'
 import AppState from 'types/AppState'
+import { bottomNavLabels } from 'labels'
 
 import { bottomNav, centerIcon, iconText, mediaIsOpen, centerButton, backgroundImage, overlay } from './MainBottomNav.scss'
 
@@ -80,7 +81,7 @@ class MainBottomNavBase extends React.Component<Props> {
         <RoundItem onClick={this.roundItemAction} className={centerButton}>
           { this.renderImage() }
           { this.renderIcon() }
-          <div className={iconText}>多媒体</div>
+          <div className={iconText}>{bottomNavLabels.media}</div>
         </RoundItem>
         {right}
       </BottomNav>
