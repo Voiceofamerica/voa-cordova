@@ -2,13 +2,9 @@
 @import "'~@voiceofamerica/voa-shared/commonStyles/index";
 
 .searchScreen {
+  flex: 1;
   display: flex;
-  position: fixed;
   flex-direction: column;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   background: transparent;
   overflow-y: scroll;
   margin-bottom: $menu-height;
@@ -108,7 +104,6 @@
 
 .searchArea {
   height: 100%;
-  padding-top: $menu-height;
 
   .row {
     display: flex;

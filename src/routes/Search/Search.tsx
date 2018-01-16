@@ -6,8 +6,6 @@ import { RouteComponentProps } from 'react-router'
 import { connect } from 'react-redux'
 import shallowCompare from 'shallow-compare'
 
-import TopNav, { CenterText } from '@voiceofamerica/voa-shared/components/TopNav'
-
 import AppState from 'types/AppState'
 import Category from 'types/Category'
 
@@ -36,7 +34,7 @@ const THROTTLE_TIMEOUT = 1000
 class SearchBase extends React.Component<Props, State> {
   state: State = {
     keyboardHeight: 0,
-    debouncedQuery: '',
+    debouncedQuery: this.props.match.params.query,
   }
 
   private inputHeight: number = 0
@@ -143,11 +141,6 @@ class SearchBase extends React.Component<Props, State> {
 
     return (
       <div className={searchScreen} style={{ marginBottom }}>
-        <TopNav>
-          <CenterText>
-            {searchLabels.header}
-          </CenterText>
-        </TopNav>
         <SearchArea goTo={this.goTo} query={debouncedQuery} zoneId={parseInt(zoneId, 10)} />
         {this.renderInputs()}
       </div>

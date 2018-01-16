@@ -35,6 +35,10 @@ export const errorBoundaryLabels = {
   retry: 'Retry',
 }
 
+export const favoritesSettingsLabels = {
+  header: 'Favorites',
+}
+
 export const homeLabels = {
   headlines: 'Headlines',
   search: 'Search',

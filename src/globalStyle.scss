@@ -25,3 +25,10 @@ html, body {
     padding-bottom: $menu-height;
   }
 }
+
+#app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}

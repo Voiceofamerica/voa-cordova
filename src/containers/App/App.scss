@@ -2,5 +2,8 @@
 @import "'~@voiceofamerica/voa-shared/commonStyles/index";
 
 .app {
+  flex: 1;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }

@@ -35,6 +35,10 @@ export const errorBoundaryLabels = {
   retry: '重试',
 }
 
+export const favoritesSettingsLabels = {
+  header: 'Favorites',
+}
+
 export const homeLabels = {
   headlines: '要闻',
   search: '搜索',
