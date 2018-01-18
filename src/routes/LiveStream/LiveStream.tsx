@@ -69,7 +69,7 @@ class LiveStreamBase extends React.Component<Props, State> {
     return <i className={`mdi mdi-monitor ${imageIcon}`} />
   }
 
-  deviceSupportsNotifications () {
+  deviceSupportsNotifications = () => {
     if (typeof device === 'undefined') {
       return false
     }

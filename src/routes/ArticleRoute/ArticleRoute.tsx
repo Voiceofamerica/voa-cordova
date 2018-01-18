@@ -164,6 +164,8 @@ class ArticleRouteBase extends React.Component<Props> {
         className={mediaButton}
         onClick={() => playMedia(video.url, article.title, video.videoDescription, true, video.thumbnail)}
         src={video.thumbnail}
+        showSpinner
+        alwaysShow
       >
         <i className={`mdi mdi-monitor ${contentIcon}`} />
       </ResilientImage>
