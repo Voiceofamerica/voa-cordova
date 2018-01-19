@@ -86,7 +86,7 @@ class HomeRouteBase extends React.Component<Props, State> {
         <Card
           onPress={() => this.goToArticle(blurb.id)}
           title={<span>{this.renderIcon(blurb)} {blurb.title}</span>}
-          minorText={moment(blurb.pubDate).fromNow()}
+          minorText={moment(blurb.pubDate).format('lll')}
           imageUrl={blurb.image && blurb.image.url}
           factor={1}
         />
@@ -133,7 +133,7 @@ class HomeRouteBase extends React.Component<Props, State> {
           <Ticket
             onPress={() => this.goToArticle(blurb.id)}
             title={blurb.title}
-            minorText={moment(blurb.pubDate).fromNow()}
+            minorText={moment(blurb.pubDate).format('lll')}
             imageUrl={blurb.image && blurb.image.url}
             icon={this.renderIcon(blurb, ticketIcon)}
           />
