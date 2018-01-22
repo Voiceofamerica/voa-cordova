@@ -5,7 +5,7 @@
   display: flex;
   position: fixed;
   flex-direction: column;
-  top: 1vh;
+  top: 8vh;
   left: 0;
   right: 0;
   bottom: 0;
@@ -77,6 +77,7 @@
 .overlay {
   background: transparent;
   z-index: $menu-z-max;
+  transition: 0.3s background;
 
   &.open{
     position: fixed;

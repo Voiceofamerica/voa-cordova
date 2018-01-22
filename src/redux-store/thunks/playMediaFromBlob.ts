@@ -5,8 +5,6 @@ import AppState from 'types/AppState'
 import playMedia from '../actions/playMedia'
 import toggleMediaDrawer from '../actions/toggleMediaDrawer'
 
-export const type = 'PLAY_MEDIA'
-
 interface PlayMediaOptions {
   mediaUrl: string
   mediaTitle: string

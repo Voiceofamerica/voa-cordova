@@ -7,7 +7,13 @@ import { compose } from 'redux'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
 import clearAll from 'redux-store/actions/clearAll'
 
-import { settingsLabels, categorySettingsLabels, mediaSettingsLabels, favoritesSettingsLabels } from 'labels'
+import {
+  settingsLabels,
+  categorySettingsLabels,
+  mediaSettingsLabels,
+  favoritesSettingsLabels,
+  notificationSettingsLabels,
+} from 'labels'
 
 import { settings, panicButtonHolder, panicButton, buttons, settingsButton, buttonIcon } from './Settings.scss'
 
@@ -31,6 +37,10 @@ class SettingsRoute extends React.Component<Props> {
           </div>
         </div>
         <div className={buttons}>
+          <button className={settingsButton} onClick={() => history.push(`/settings/notifications`)}>
+            {notificationSettingsLabels.header}
+            <i className={`mdi mdi-chevron-right ${buttonIcon}`} />
+          </button>
           <button className={settingsButton} onClick={() => history.push(`/settings/favorites`)}>
             {favoritesSettingsLabels.header}
             <i className={`mdi mdi-chevron-right ${buttonIcon}`} />

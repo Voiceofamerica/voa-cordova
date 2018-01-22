@@ -120,7 +120,7 @@ class MediaPlayerBase extends React.Component<Props> {
 
     return (
       <div>
-        <div className={mediaOpen ? `${overlay} ${open}` : overlay} />
+        <div className={mediaOpen ? `${overlay} ${open}` : overlay} onClick={() => closeMedia()} />
         <div className={className}>
           <div className={content}>
             <div className={closePlayer} onClick={() => closeMedia()}>

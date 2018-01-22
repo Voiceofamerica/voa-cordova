@@ -8,10 +8,18 @@ import PsiphonIndicator from 'components/PsiphonIndicator'
 import Router from 'containers/Router'
 import MediaPlayer from 'containers/MediaPlayer'
 import client from 'helpers/graphql-client'
+import { scheduleDaily } from 'helpers/notifications'
 
 import { app } from './App.scss'
 
 export default class App extends React.Component {
+
+  componentDidMount () {
+    const appState = store.getState()
+    if (appState.settings.dailyNotificationOn) {
+      scheduleDaily()
+    }
+  }
 
   render () {
     return (

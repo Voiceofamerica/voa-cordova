@@ -80,6 +80,16 @@ class ArticleRouteBase extends React.Component<Props> {
     if (!this.props.data.content || !this.props.data.content[0]) {
       return
     }
+    const id = this.props.match.params.id
+    const articleTitle = this.props.data.content[0].title
+    const authors = this.props.data.content[0].authors.map(({ name: { first, last } }) => `${first} ${last}`).join('; ')
+
+    this.props.analytics.shareArticle({
+      id,
+      articleTitle,
+      authors,
+    })
+
     const { url } = this.props.data.content[0]
 
     window.plugins.socialsharing.shareWithOptions({
@@ -103,6 +113,49 @@ class ArticleRouteBase extends React.Component<Props> {
       pubDate: moment(pubDate).format('lll'),
       content,
     }).catch(console.error)
+  }
+
+  toggleFavorite = () => {
+    if (!this.props.data.content || !this.props.data.content[0]) {
+      return
+    }
+    const id = this.props.match.params.id
+    const articleTitle = this.props.data.content[0].title
+    const authors = this.props.data.content[0].authors.map(({ name: { first, last } }) => `${first} ${last}`).join('; ')
+
+    this.props.analytics.favoriteArticle({
+      id,
+      articleTitle,
+      authors,
+    })
+    this.props.toggleFavorite()
+  }
+
+  renderBottomNav () {
+    const { history, isFavorite } = this.props
+
+    const starIcon = isFavorite ? 'mdi-star' : 'mdi-star-outline'
+
+    return (
+      <MainBottomNav
+        left={[
+          <IconItem key={0} onClick={() => history.goBack()}>
+            <i className='mdi mdi-chevron-left' />
+          </IconItem>,
+          <IconItem key={1} onClick={this.share}>
+            <i className='mdi mdi-share' />
+          </IconItem>,
+        ]}
+        right={[
+          <IconItem key={0} onClick={this.toggleFavorite}>
+            <i className={`mdi ${starIcon}`} />
+          </IconItem>,
+          <IconItem key={1} onClick={this.download}>
+            <i className='mdi mdi-download' />
+          </IconItem>,
+        ]}
+      />
+    )
   }
 
   renderImage () {
@@ -303,33 +356,6 @@ class ArticleRouteBase extends React.Component<Props> {
           ))
         }
       </div>
-    )
-  }
-
-  renderBottomNav () {
-    const { history, isFavorite, toggleFavorite } = this.props
-
-    const starIcon = isFavorite ? 'mdi-star' : 'mdi-star-outline'
-
-    return (
-      <MainBottomNav
-        left={[
-          <IconItem key={0} onClick={() => history.goBack()}>
-            <i className='mdi mdi-chevron-left' />
-          </IconItem>,
-          <IconItem key={1} onClick={this.share}>
-            <i className='mdi mdi-share' />
-          </IconItem>,
-        ]}
-        right={[
-          <IconItem key={0} onClick={() => toggleFavorite()}>
-            <i className={`mdi ${starIcon}`} />
-          </IconItem>,
-          <IconItem key={1} onClick={this.download}>
-            <i className='mdi mdi-download' />
-          </IconItem>,
-        ]}
-      />
     )
   }
 

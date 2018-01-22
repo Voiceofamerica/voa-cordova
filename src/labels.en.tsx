@@ -69,6 +69,11 @@ export const mediaSettingsLabels = {
   chooseSpeed: 'Playback Speed',
 }
 
+export const notificationSettingsLabels = {
+  header: 'Notifications',
+  dailyToggle: 'Daily Reminder',
+}
+
 export const pullToRefreshLabels = {
   pull: 'Pull',
   release: 'Refresh',

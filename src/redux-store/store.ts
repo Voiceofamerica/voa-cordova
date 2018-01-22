@@ -5,9 +5,10 @@ import { routerMiddleware } from 'react-router-redux'
 import { persistStore, autoRehydrate } from 'redux-persist'
 
 import history from 'containers/Router/history'
+import AppState from 'types/AppState'
 import rootReducer from './rootReducer'
 
-const store = createStore(
+const store = createStore<AppState>(
   rootReducer,
   compose(
     applyMiddleware(
@@ -15,7 +16,7 @@ const store = createStore(
       thunk,
     ),
     autoRehydrate(),
-  ),
+  ) as any,
 )
 
 persistStore(store)

@@ -80,7 +80,7 @@ declare module NotificationPlugin {
   }
 
   export interface EveryTrigger {
-    count: number
+    count?: number
     every: Every
     firstAt?: Date
     after?: Date

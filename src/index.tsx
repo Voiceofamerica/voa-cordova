@@ -20,19 +20,21 @@ start().then(() => {
   const afsm = (window as any).AndroidFullScreen
   afsm && afsm.immersiveMode()
 
-  let render = Component => {
+  let render = (Component, cb?) => {
     ReactDOM.render(
       <Component />,
       rootElement,
+      cb,
     )
   }
   if (module.hot) {
-    render = Component => {
+    render = (Component, cb?) => {
       ReactDOM.render(
         <AppContainer>
           <Component />
         </AppContainer>,
         rootElement,
+        cb,
       )
     }
 
@@ -42,7 +44,11 @@ start().then(() => {
     })
   }
 
-  render(App)
+  render(App, () => {
+    setTimeout(() => {
+      (navigator as any).splashscreen.hide()
+    }, 3000)
+  })
 }).catch(err => {
   console.error(err)
 })

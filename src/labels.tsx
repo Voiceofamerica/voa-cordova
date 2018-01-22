@@ -80,6 +80,11 @@ export const mediaSettingsLabels = {
   chooseSpeed: '播放速度',
 }
 
+export const notificationSettingsLabels = {
+  header: '通知',
+  dailyToggle: '每日提醒',
+}
+
 export const pullToRefreshLabels = {
   pull: 'Pull',
   release: 'Refresh',

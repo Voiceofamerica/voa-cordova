@@ -9,6 +9,11 @@ import {
   SetMediaPlaybackRateAction,
 } from '../actions/setMediaPlaybackRate'
 
+import {
+  type as toggleDailyNotificationType,
+  ToggleDailyNotificationAction,
+} from '../actions/toggleDailyNotification'
+
 import { ActorMap, buildReducer } from '../actorMap'
 import AppSettings from 'types/AppSettings'
 
@@ -20,6 +25,10 @@ const actors: ActorMap<AppSettings> = {
   [setMediaPlaybackRateType]: (prev, { mediaPlaybackRate }: SetMediaPlaybackRateAction) => ({
     ...prev,
     mediaPlaybackRate,
+  }),
+  [toggleDailyNotificationType]: (prev, { on: dailyNotificationOn = !prev.dailyNotificationOn }: ToggleDailyNotificationAction) => ({
+    ...prev,
+    dailyNotificationOn,
   }),
 }
 
@@ -55,6 +64,7 @@ export const INITIAL_STATE: AppSettings = {
     },
   ],
   mediaPlaybackRate: 1,
+  dailyNotificationOn: true,
 }
 
 export default buildReducer(INITIAL_STATE, actors)

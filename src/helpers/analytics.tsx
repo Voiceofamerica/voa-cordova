@@ -7,20 +7,66 @@ if (typeof cordova !== 'undefined') {
   ADB = require('adobe-mobile-services/sdks/Cordova/ADBMobile/Shared/ADB_Helper')
 }
 
+const PROXY_ON: 'on' = 'on'
+
 interface TrackStateOptions {
   language: string
   section: string
   content_type: string
   page_title: string
+  article_uid?: string
+  audio_name?: string
+  video_name?: string
+  proxy_status: 'on' | 'off'
+}
+
+interface TrackActionOptions {
+  language: string
+  content_type: string
+  page_title: string
+  section?: string
+  category?: string
+  headline?: string
+  article_uid?: string
   proxy_status: 'on' | 'off'
 }
 
 export interface AdbInterface {
   trackState<T> (path: string, options: TrackStateOptions & T)
+  trackAction<T> (type: string, options: TrackActionOptions & T)
+}
+
+export function favoriteArticle (opts: { id: string, articleTitle: string, authors: string }) {
+  ADB && ADB.trackAction('ARTICLE_TO_FAV', {
+    language: 'zh-cn',
+    content_type: 'article',
+    article_uid: opts.id,
+    page_title: opts.articleTitle,
+    headline: opts.articleTitle,
+    byline: opts.authors,
+    proxy_status: PROXY_ON,
+  })
+}
+
+export function shareArticle (opts: { id: string, articleTitle: string, authors: string }) {
+  ADB && ADB.trackAction('ARTICLE_SHARED', {
+    language: 'zh-cn',
+    content_type: 'article',
+    article_uid: opts.id,
+    page_title: opts.articleTitle,
+    headline: opts.articleTitle,
+    byline: opts.authors,
+    proxy_status: PROXY_ON,
+  })
+}
+
+export const analyticsHelper = {
+  favoriteArticle,
+  shareArticle,
 }
 
 export interface AnalyticsProps {
-  analytics: AdbInterface
+  analytics: typeof analyticsHelper
 }
 
 export interface HOCAnalyticsOptions {
@@ -62,7 +108,7 @@ export default function analytics<P = {}> (options: HOCAnalyticsOptions | ((prop
           section: section,
           content_type: type,
           page_title: title,
-          proxy_status: 'on',
+          proxy_status: PROXY_ON,
         } as TrackStateOptions)
       }
 
@@ -84,13 +130,13 @@ export default function analytics<P = {}> (options: HOCAnalyticsOptions | ((prop
           section: section,
           content_type: type,
           page_title: title,
-          proxy_status: 'on',
+          proxy_status: PROXY_ON,
         } as TrackStateOptions)
       }
 
       render () {
         return (
-          <Component { ...this.props } analytics={ADB}>
+          <Component { ...this.props } analytics={analyticsHelper}>
             {this.props.children}
           </Component>
         )
