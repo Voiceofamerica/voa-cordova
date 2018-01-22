@@ -6,8 +6,8 @@ jobs:
     steps:
       - checkout
       - restore_cache: &cacheCheckKey
-          key: v4-voa-cordova-npm-{{ checksum "package-lock.json" }}
-      - run: yarn global add npm@5
+          key: v5-voa-cordova-npm-{{ checksum "package-lock.json" }}
+      - run: yarn global add npm@5.5.1
       - run: npm install
       - save_cache:
           <<: *cacheCheckKey
