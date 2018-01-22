@@ -22,7 +22,7 @@ jobs:
     steps:
       - checkout
       - restore_cache: &cacheAndroidKey
-          key: v3-voa-cordova-android-{{ checksum "package-lock.json" }}-{{ checksum "config.xml" }}
+          key: v4-voa-cordova-android-{{ checksum "package-lock.json" }}-{{ checksum "config.xml" }}
       - run: bash scripts/setupAndroid.sh
       - run: npm install
       - run: npx cordova prepare
