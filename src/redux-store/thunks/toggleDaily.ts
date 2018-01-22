@@ -10,16 +10,16 @@ interface ToggleNotifierOptions {
 }
 
 export default (options: ToggleNotifierOptions) =>
-  (dispatch: Dispatch<AppState>, getState: () => AppState) => {
+  async (dispatch: Dispatch<AppState>, getState: () => AppState) => {
     const { on = !getState().settings.dailyNotificationOn } = options
 
     if (on) {
-      scheduleDaily().then((ret) => {
+      await scheduleDaily().then((ret) => {
         console.log(ret)
         dispatch(toggleDailyNotification({ on }))
       })
     } else {
-      cancelDaily().then((ret) => {
+      await cancelDaily().then((ret) => {
         console.log(ret)
         dispatch(toggleDailyNotification({ on }))
       })

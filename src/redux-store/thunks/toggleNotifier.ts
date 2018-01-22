@@ -14,7 +14,7 @@ interface ToggleNotifierOptions {
 }
 
 export default (options: ToggleNotifierOptions) =>
-  (dispatch: Dispatch<AppState>, getState: () => AppState) => {
+  async (dispatch: Dispatch<AppState>, getState: () => AppState) => {
     const { id, on = !getState().notifications[id], title, time } = options
 
     const trigger = time ? {
@@ -22,7 +22,7 @@ export default (options: ToggleNotifierOptions) =>
     } : undefined
 
     if (on) {
-      schedule({
+      await schedule({
         id,
         title,
         trigger,
@@ -31,7 +31,7 @@ export default (options: ToggleNotifierOptions) =>
         dispatch(toggleNotification({ id, on }))
       })
     } else {
-      cancel([id]).then((ret) => {
+      await cancel([id]).then((ret) => {
         console.log(ret)
         dispatch(toggleNotification({ id, on }))
       })

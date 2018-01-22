@@ -17,7 +17,7 @@ export default class App extends React.Component {
   componentDidMount () {
     const appState = store.getState()
     if (appState.settings.dailyNotificationOn) {
-      scheduleDaily()
+      scheduleDaily().catch(err => console.error(err))
     }
   }
 
