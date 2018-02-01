@@ -4,6 +4,7 @@ import { connect, Dispatch } from 'react-redux'
 
 import MediaPlayer from '@voiceofamerica/voa-shared/components/MediaPlayer'
 import ResilientImage from '@voiceofamerica/voa-shared/components/ResilientImage'
+import Drawer from '@voiceofamerica/voa-shared/components/Drawer'
 
 import AppState from 'types/AppState'
 import MediaState from 'types/MediaState'
@@ -18,11 +19,7 @@ import {
   player,
   backgroundImage,
   textContent,
-  content,
   defaultText,
-  open,
-  closePlayer,
-  overlay,
 } from './MediaPlayer.scss'
 
 interface StateProps {
@@ -116,20 +113,10 @@ class MediaPlayerBase extends React.Component<Props> {
 
   render () {
     const { media: { mediaOpen }, closeMedia } = this.props
-    const className = mediaOpen ? `${mediaPlayer} ${open}` : mediaPlayer
-
     return (
-      <div>
-        <div className={mediaOpen ? `${overlay} ${open}` : overlay} onClick={() => closeMedia()} />
-        <div className={className}>
-          <div className={content}>
-            <div className={closePlayer} onClick={() => closeMedia()}>
-              <i className='mdi mdi-chevron-down' />
-            </div>
-            {this.renderContent()}
-          </div>
-        </div>
-      </div>
+      <Drawer className={mediaPlayer} open={mediaOpen} onClose={closeMedia}>
+        {this.renderContent()}
+      </Drawer>
     )
   }
 

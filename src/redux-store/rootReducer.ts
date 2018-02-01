@@ -10,6 +10,8 @@ import appSettingsReducer from './reducers/appSettingsReducer'
 import mediaStateReducer from './reducers/mediaStateReducer'
 import favoriteContentsReducer from './reducers/favoriteContentsReducer'
 import notificationsReducer from './reducers/notificationsReducer'
+import circumventionDrawerReducer from './reducers/circumventionDrawerReducer'
+import progressStateReducer from './reducers/progressStateReducer'
 
 const baseRootReducer: Reducer<AppState> = combineReducers({
   settings: appSettingsReducer,
@@ -17,6 +19,8 @@ const baseRootReducer: Reducer<AppState> = combineReducers({
   favorites: favoriteContentsReducer,
   router: routerReducer,
   notifications: notificationsReducer,
+  circumventionDrawer: circumventionDrawerReducer,
+  progress: progressStateReducer,
 })
 
 function rootReducer (prev: AppState, action: Action): AppState {

@@ -5,6 +5,8 @@ import MediaState from './MediaState'
 import FlatMap from './FlatMap'
 import FavoriteContent from './FavoriteContent'
 import Notifications from './Notifications'
+import CircumventionDrawerState from './CircumventionDrawerState';
+import ProgressState from './ProgressState';
 
 export default interface AppState {
   settings: AppSettings
@@ -12,4 +14,6 @@ export default interface AppState {
   favorites: FlatMap<FavoriteContent>
   router: RouterState
   notifications: Notifications
+  circumventionDrawer: CircumventionDrawerState
+  progress: ProgressState
 }

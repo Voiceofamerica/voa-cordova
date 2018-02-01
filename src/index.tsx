@@ -46,7 +46,10 @@ start().then(() => {
 
   render(App, () => {
     setTimeout(() => {
-      (navigator as any).splashscreen.hide()
+      const splash = (navigator as any).splashscreen
+      if (splash) {
+        splash.hide()
+      }
     }, 3000)
   })
 }).catch(err => {

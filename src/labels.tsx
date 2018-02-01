@@ -30,6 +30,14 @@ export const categorySettingsLabels = {
   dragAndDrop: '长按拖动调整分类',
 }
 
+export const circumventionDrawerLabels = {
+  content: (
+    <div>
+      asdfasdfasdf
+    </div>
+  ),
+}
+
 export const errorBoundaryLabels = {
   error: '发生错误',
   retry: '重试',
@@ -42,6 +50,12 @@ export const favoritesSettingsLabels = {
 export const homeLabels = {
   headlines: '要闻',
   search: '搜索',
+}
+
+export const introLabels = {
+  heading: 'Welcome to VoA!',
+  content: 'This is a newsreader',
+  continue: 'Continue',
 }
 
 export const liveStreamLabels = {

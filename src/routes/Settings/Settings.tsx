@@ -6,6 +6,7 @@ import { compose } from 'redux'
 
 import analytics, { AnalyticsProps } from 'helpers/analytics'
 import clearAll from 'redux-store/actions/clearAll'
+import { routerActions } from 'react-router-redux'
 
 import {
   settingsLabels,
@@ -60,7 +61,10 @@ class SettingsRoute extends React.Component<Props> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => ({
-  clearAll: () => dispatch(clearAll()),
+  clearAll: () => {
+    dispatch(clearAll())
+    dispatch(routerActions.replace('/'))
+  },
 })
 
 const withRedux = connect(null, mapDispatchToProps)
