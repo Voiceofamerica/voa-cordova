@@ -116,3 +116,11 @@ export const settingsLabels = {
   header: '我的设置',
   panic: '马上删除此程序',
 }
+
+export const textSettingsLabels = {
+  header: 'Text Settings',
+  chooseSize: 'Article Text Size',
+  normalSize: '1x',
+  largeSize: '1.5x',
+  hugeSize: '2x',
+}

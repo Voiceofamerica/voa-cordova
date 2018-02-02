@@ -14,6 +14,7 @@ import {
   mediaSettingsLabels,
   favoritesSettingsLabels,
   notificationSettingsLabels,
+  textSettingsLabels,
 } from 'labels'
 
 import { settings, panicButtonHolder, panicButton, buttons, settingsButton, buttonIcon } from './Settings.scss'
@@ -48,6 +49,10 @@ class SettingsRoute extends React.Component<Props> {
           </button>
           <button className={settingsButton} onClick={() => history.push(`/settings/categories`)}>
             {categorySettingsLabels.header}
+            <i className={`mdi mdi-chevron-right ${buttonIcon}`} />
+          </button>
+          <button className={settingsButton} onClick={() => history.push(`/settings/text`)}>
+            {textSettingsLabels.header}
             <i className={`mdi mdi-chevron-right ${buttonIcon}`} />
           </button>
           <button className={settingsButton} onClick={() => history.push(`/settings/media`)}>

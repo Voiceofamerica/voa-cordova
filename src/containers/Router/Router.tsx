@@ -14,6 +14,7 @@ import MediaSettings from 'routes/MediaSettings'
 import Search from 'routes/Search'
 import FavoritesSettings from 'routes/FavoritesSettings'
 import NotificationSettings from 'routes/NotificationSettings'
+import TextSettings from 'routes/TextSettings'
 
 import {
   searchLabels,
@@ -22,6 +23,7 @@ import {
   breakingNewsLabels,
   favoritesSettingsLabels,
   notificationSettingsLabels,
+  textSettingsLabels,
 } from 'labels'
 
 import HeadingLayout from './layouts/HeadingLayout'
@@ -41,6 +43,7 @@ export default () => (
       <HeadingOnlyLayout path='/search' component={Search} heading={searchLabels.header}/>
       <HeadingOnlyLayout path='/settings/favorites' component={FavoritesSettings} heading={favoritesSettingsLabels.header} />
       <HeadingOnlyLayout path='/settings/notifications' component={NotificationSettings} heading={notificationSettingsLabels.header} />
+      <HeadingOnlyLayout path='/settings/text' component={TextSettings} heading={textSettingsLabels.header} />
       <HeadingLayout path='/settings' component={Settings} heading={settingsLabels.header} />
       <HeadingLayout path='/liveStream' component={LiveStream} heading={liveStreamLabels.header} />
       <HeadingLayout path='/breakingNews' component={BreakingNews} heading={breakingNewsLabels.header} />

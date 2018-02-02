@@ -54,6 +54,7 @@ class MediaSettingsBase extends React.Component<Props> {
               {
                 data.speed.map(spd => (
                   <div
+                    key={spd.value}
                     className={`${item} ${spd.value === mediaPlaybackRate ? active : ''}`}
                     onClick={() => setPlaybackRate(spd.value)}
                   >{spd.description}</div>

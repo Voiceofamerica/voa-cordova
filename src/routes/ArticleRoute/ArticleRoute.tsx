@@ -54,6 +54,7 @@ export interface Params {
 
 interface StateProps {
   isFavorite: boolean
+  textSize: number
 }
 
 interface DispatchProps {
@@ -360,8 +361,10 @@ class ArticleRouteBase extends React.Component<Props> {
   }
 
   render () {
+    const { textSize } = this.props
+
     return (
-      <div className={articleRoute}>
+      <div className={articleRoute} style={{ fontSize: `${textSize}em` }}>
         <Loader data={this.props.data}>
           <ErrorBoundary>
             { this.renderArticle() }
@@ -376,6 +379,7 @@ class ArticleRouteBase extends React.Component<Props> {
 const mapStateToProps = (state: AppState, ownProps: OwnProps): StateProps => {
   return {
     isFavorite: !!state.favorites[ownProps.match.params.id],
+    textSize: state.settings.textSize,
   }
 }
 
