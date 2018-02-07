@@ -4,6 +4,10 @@ import {
   ToggleFavoriteContentAction,
 } from '../actions/toggleFavoriteContent'
 
+import {
+  type as clearFavoritesType,
+} from '../actions/clearFavorites'
+
 import { ActorMap, buildReducer } from '../actorMap'
 import FlatMap from 'types/FlatMap'
 import FavoriteContent from 'types/FavoriteContent'
@@ -27,6 +31,7 @@ const actors: ActorMap<FlatMap<FavoriteContent>> = {
 
     return newState
   },
+  [clearFavoritesType]: () => ({}),
 }
 
 export const INITIAL_STATE: FlatMap<FavoriteContent> = {}

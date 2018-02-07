@@ -13,8 +13,11 @@ import analytics, { AnalyticsProps } from 'helpers/analytics'
 import AppState from 'types/AppState'
 import FavoriteContent from 'types/FavoriteContent'
 import toggleFavoriteContent from 'redux-store/actions/toggleFavoriteContent'
+import clearFavorites from 'redux-store/actions/clearFavorites'
 
-import { favoriteSettings } from './FavoriteSettings.scss'
+import { favoritesSettingsLabels } from 'labels'
+
+import { favoriteSettings, removeAllContainer, removeAllButton } from './FavoriteSettings.scss'
 
 interface StateProps {
   favorites: FavoriteContent[]
@@ -22,6 +25,7 @@ interface StateProps {
 
 interface DispatchProps {
   unfavorite: (id: number) => void
+  clearAllFavorites: () => void
 }
 
 type RouteProps = RouteComponentProps<void>
@@ -34,10 +38,15 @@ class FavoriteSettingsRoute extends React.Component<Props> {
   }
 
   render () {
-    const { history, favorites, unfavorite } = this.props
+    const { history, favorites, unfavorite, clearAllFavorites } = this.props
 
     return (
       <div className={favoriteSettings}>
+        <div className={removeAllContainer}>
+          <div className={removeAllButton} onClick={clearAllFavorites}>
+            {favoritesSettingsLabels.removeAll}
+          </div>
+        </div>
         {
           favorites.map(({ id, title, content, pubDate }) => (
             <SwipeToDelete onSwipe={() => unfavorite(id)} key={id}>
@@ -72,6 +81,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AppState>): DispatchProps => ({
     pubDate: '',
     favorite: false,
   })),
+  clearAllFavorites: () => dispatch(clearFavorites()),
 })
 
 const withRedux = connect(mapStateToProps, mapDispatchToProps)

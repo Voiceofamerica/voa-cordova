@@ -45,6 +45,7 @@ export const errorBoundaryLabels = {
 
 export const favoritesSettingsLabels = {
   header: 'Favorites',
+  removeAll: 'Remove All',
 }
 
 export const homeLabels = {

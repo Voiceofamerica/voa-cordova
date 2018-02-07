@@ -1,5 +1,25 @@
 
+@import "'~@voiceofamerica/voa-shared/commonStyles/index";
+
 .favoriteSettings {
   display: flex;
   flex-direction: column;
+
+  .removeAllContainer {
+    padding: 20px;
+
+    .removeAllButton {
+      @include touchable();
+
+      text-align: center;
+      background: $voa-red;
+      color: white;
+      padding: 10px 30px;
+      font-size: 2em;
+      font-weight: bold;
+      border-radius: 20px;
+      border: none;
+      outline: none;
+    }
+  }
 }
