@@ -6,6 +6,7 @@ import {
   DragElementWrapper,
   DragSourceOptions,
   ConnectDropTarget,
+  ClientOffset,
 } from 'react-dnd'
 
 import { pillOuter, pill, dragged } from './CategorySettings.scss'
@@ -20,6 +21,8 @@ interface Props extends React.Props<any> {
   connectDragSource?: DragElementWrapper<DragSourceOptions>
   connectDropTarget?: ConnectDropTarget
   isDragging?: boolean
+  clientOffset?: ClientOffset
+  sourceOffset?: ClientOffset
 }
 
 export interface PillItem {
@@ -29,14 +32,17 @@ export interface PillItem {
   draggedOver: DragHandler
 }
 
-const CategoryPill = ({ children, connectDragSource, isDragging, connectDropTarget }: Props) => {
+const CategoryPill = ({ children, connectDragSource, isDragging, clientOffset, sourceOffset, connectDropTarget }: Props) => {
   const className = isDragging ? `${pill} ${dragged}` : pill
+  const left = isDragging && clientOffset && sourceOffset ? sourceOffset.x : 0
+  const top = isDragging && clientOffset && sourceOffset ? sourceOffset.y : 0
+  const pointerEvents = isDragging ? 'none' : 'auto'
 
   return connectDropTarget((
     <div className={pillOuter}>
       {
         connectDragSource((
-          <div className={className}>
+          <div className={className} style={{ left, top, pointerEvents }}>
             {children}
           </div>
         ))
@@ -62,6 +68,8 @@ const draggable = DragSource(
   (connect, monitor) => ({
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging(),
+    clientOffset: monitor.getClientOffset(),
+    sourceOffset: monitor.getSourceClientOffset(),
   }),
 )
 

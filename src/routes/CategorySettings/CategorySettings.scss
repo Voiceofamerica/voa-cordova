@@ -43,6 +43,7 @@
 
     .pillOuter {
       padding: 5px;
+      position: relative;
   
       .pill {
         background: $light-grey;
@@ -53,6 +54,9 @@
 
         &.dragged {
           background: $border-grey;
+          position: fixed;
+          width: 50%;
+          z-index: 1;
         }
       }
     }
