@@ -69,8 +69,18 @@ class FavoriteSettingsRoute extends React.Component<Props> {
   }
 }
 
+function getVals<T> (obj: Object): T[] {
+  const output = [] as T[]
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      output.push(obj[key])
+    }
+  }
+  return output
+}
+
 const mapStateToProps = (state: AppState): StateProps => ({
-  favorites: Object.values(state.favorites),
+  favorites: getVals(state.favorites),
 })
 
 const mapDispatchToProps = (dispatch: Dispatch<AppState>): DispatchProps => ({

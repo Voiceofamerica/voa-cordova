@@ -33,7 +33,7 @@ export const categorySettingsLabels = {
 export const circumventionDrawerLabels = {
   content: (
     <div>
-      asdfasdfasdf
+      This is where the circumvetion would be explained
     </div>
   ),
 }
