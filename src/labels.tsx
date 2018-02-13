@@ -51,6 +51,7 @@ export const favoritesSettingsLabels = {
 export const homeLabels = {
   headlines: '要闻',
   search: '搜索',
+  manage: 'Manage',
 }
 
 export const introLabels = {

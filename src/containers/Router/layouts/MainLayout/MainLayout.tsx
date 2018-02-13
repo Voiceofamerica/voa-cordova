@@ -48,6 +48,9 @@ function MainLayout ({ component: Component, categories, ...rest }: Props) {
                 </TopNavItem>
               ))
             }
+            <TopNavItem onClick={() => replace('/settings/categories')}>
+              {homeLabels.manage}
+            </TopNavItem>
           </TopNav>
 
           <ErrorBoundary>
