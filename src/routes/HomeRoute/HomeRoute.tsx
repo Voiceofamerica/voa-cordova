@@ -127,7 +127,6 @@ class HomeRouteBase extends React.Component<Props, State> {
             minorText={moment(blurb.pubDate).format('lll')}
             imageUrl={blurb.image && blurb.image.url}
             icon={this.renderIcon(blurb, ticketIcon)}
-            description={blurb.introduction}
           />
         </div>
       ))

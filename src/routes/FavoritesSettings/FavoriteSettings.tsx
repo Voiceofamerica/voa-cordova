@@ -48,11 +48,10 @@ class FavoriteSettingsRoute extends React.Component<Props> {
           </div>
         </div>
         {
-          favorites.map(({ id, title, content, pubDate }) => (
+          favorites.map(({ id, title, pubDate }) => (
             <SwipeToDelete onSwipe={() => unfavorite(id)} key={id}>
               <Ticket
                 title={title}
-                description={content}
                 minorText={moment(pubDate).fromNow()}
                 onPress={() => this.goToArticle(id)}
               />
