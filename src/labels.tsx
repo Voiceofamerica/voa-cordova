@@ -106,7 +106,7 @@ export const pullToRefreshLabels = {
 }
 
 export const searchLabels = {
-  header: '搜索结果',
+  header: '搜索',
   back: '取消',
   all: '全部',
   query: '搜索',
