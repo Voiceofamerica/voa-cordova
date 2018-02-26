@@ -44,20 +44,12 @@ const actors: ActorMap<AppSettings> = {
 export const INITIAL_STATE: AppSettings = {
   categories: [
     {
-      id: 1757,
-      name: '中国',
-    },
-    {
       id: 1746,
       name: '美国',
     },
     {
-      id: 1745,
-      name: '亚太',
-    },
-    {
-      id: 1904,
-      name: '时事大家谈',
+      id: 1757,
+      name: '中国',
     },
     {
       id: 1769,
@@ -68,8 +60,20 @@ export const INITIAL_STATE: AppSettings = {
       name: '港澳',
     },
     {
-      id: 5120,
-      name: '人权·法律·宗教',
+      id: 1740,
+      name: '国际',
+    },
+    {
+      id: 1756,
+      name: '人权',
+    },
+    {
+      id: 1772,
+      name: '军事',
+    },
+    {
+      id: 1737,
+      name: '学英语',
     },
   ],
   mediaPlaybackRate: 1,
