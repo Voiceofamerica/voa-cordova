@@ -64,6 +64,10 @@ export const INITIAL_STATE: AppSettings = {
       name: '国际',
     },
     {
+      id: 1748,
+      name: '经济·金融·贸易',
+    },
+    {
       id: 1756,
       name: '人权',
     },
