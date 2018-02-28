@@ -13,7 +13,7 @@ import { IconItem } from '@voiceofamerica/voa-shared/components/BottomNav'
 import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
 
 import { ArticleRouteQuery, ArticleRouteQueryVariables } from 'helpers/graphql-types'
-import playMedia from 'redux-store/thunks/playMediaFromBlob'
+import playMedia from 'redux-store/thunks/playMediaFromPsiphon'
 import toggleFavoriteContent from 'redux-store/actions/toggleFavoriteContent'
 
 import { mapImageUrl } from 'helpers/image'

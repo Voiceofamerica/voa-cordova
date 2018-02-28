@@ -9,7 +9,7 @@ import ResilientImage from '@voiceofamerica/voa-shared/components/ResilientImage
 
 import { LiveStreamQuery } from 'helpers/graphql-types'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
-import playMedia from 'redux-store/thunks/playMediaFromBlob'
+import playMedia from 'redux-store/thunks/playMediaFromPsiphon'
 
 import AppState from 'types/AppState'
 
