@@ -1,14 +1,16 @@
 query HomeRoute {
-  content(source: zhcn, type: [Article, Video, PhotoGallery, Clip]) {
+  content(source: zhcn, type: [PhotoGallery, Article, Clip], topNews: true) {
     id
     title
     introduction
     pubDate
+    url
     image {
       url
     }
     video {
       url
+      relType
     }
     audio {
       url
