@@ -31,3 +31,13 @@ export function pause (): Promise<void> {
     })
   })
 }
+
+export function port (): Promise<number> {
+  return configPromise.then(() => {
+    return new Promise<number>((resolve, reject) => {
+      document.addEventListener('deviceready', () => {
+        psiphon.port(([portNumber]) => resolve(portNumber), reject)
+      })
+    })
+  })
+}
