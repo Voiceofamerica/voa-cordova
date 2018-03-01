@@ -15,7 +15,7 @@ interface Props extends React.Props<HTMLImageElement>, DispatchProps {
 
 const PsiphonIndicatorBase = ({ ref, toggleCircumventionDrawer }: Props) => {
   return (
-    <img ref={ref} className={psiphonIndicator} src={require('./psiphon_on.png')} onClick={toggleCircumventionDrawer} />
+    <img ref={ref} className={psiphonIndicator} src={require('./psiphon_on.svg')} onClick={toggleCircumventionDrawer} />
   )
 }
 

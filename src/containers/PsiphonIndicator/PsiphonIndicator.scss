@@ -4,9 +4,9 @@
 .psiphonIndicator {
   position: fixed;
   z-index: 100;
-  top: $menu-border-size;
-  left: $menu-border-size;
-  width: $menu-font-size;
-  height: $menu-font-size;
+  top: 5px;
+  left: 5px;
+  width: calc(#{$menu-height} - 10px);
+  height: calc(#{$menu-height} - 10px);
   opacity: 0.7;
 }
