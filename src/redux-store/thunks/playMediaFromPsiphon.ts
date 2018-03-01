@@ -26,7 +26,7 @@ export default (options: PlayMediaOptions) =>
       return Promise.resolve()
     }
 
-    if (device.platform !== 'iOS') {
+    if (typeof device === 'undefined' || device.platform !== 'iOS') {
       dispatch(playMedia({
         ...options,
         originalMediaUrl,
