@@ -1,24 +1,22 @@
 
 # Voice Of America Mandarin App
 
-## Prerequisites
+## Pre-requisites
 
-* NodeJS (Download)[https://nodejs.org/en/]
-* NPM 5+
-  * To check your NPM version, run `npm -v`
-  * To get the latest version, run `npm i -g npm@latest`
-* Cordova 7+
-  * To check your cordova version, run `cordova -v`
-  * To get the latest version, run `npm i -g cordova@latest`
+* NodeJS LTS (Download)[https://nodejs.org/en/]
+* If you have a globally installed version of Cordova, uninstall.
 
 ## Quickstart
 
-To set up the project, run the following:
+To set up:
 * `npm install`
 * `cordova prepare`
+> If you encounter plugin installation errors, re-run `cordova prepare` until you get no errors
 
-To run the project in your browser, run:
-* `npm run host`
+To build & run:
+* `npm run start:web` - to run in the browser
+* `npm run start:android` - to run in an Android emulator or device
+* `npm run start:ios` - to run in an iOS emulator or device
 
-To run the project in an Android emulator or device, run:
-* `npm start`
+For CI:
+* `npm run build`
