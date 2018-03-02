@@ -13,6 +13,7 @@ import { homeRoute, row, content, searchButton, ticketIcon } from './HomeRoute.s
 import * as Query from './HomeRoute.graphql'
 import { HomeRouteQuery } from 'helpers/graphql-types'
 import { mapImageUrl } from 'helpers/image'
+import { truncateTitleText } from 'helpers/truncation'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
 
 import Loader from 'components/Loader'
@@ -72,13 +73,15 @@ class HomeRouteBase extends React.Component<Props, State> {
     }
 
     const blurb = content[0]
+    const icon = this.renderIcon(blurb)
+    const hasIcon = icon !== null ? true : false
 
     return (
       <div className={row} style={{ marginBottom: '1.5vw' }}>
         <Card
           onPress={() => this.goToArticle(blurb.id)}
-          icon={this.renderIcon(blurb)}
-          title={blurb.title}
+          icon={icon}
+          title={truncateTitleText(blurb.title, hasIcon)}
           minorText={moment(blurb.pubDate).format('lll')}
           imageUrl={blurb.image && blurb.image.url}
           factor={1}
