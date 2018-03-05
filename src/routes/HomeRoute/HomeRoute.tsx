@@ -3,6 +3,7 @@ import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
 import { graphql, ChildProps } from 'react-apollo'
 import * as moment from 'moment'
+import { port } from 'helpers/psiphon'
 
 import Card from '@voiceofamerica/voa-shared/components/Card'
 import SecondaryCard from '@voiceofamerica/voa-shared/components/SecondaryCard'
@@ -24,16 +25,27 @@ type QueryProps = ChildProps<RouteComponentProps<void>, HomeRouteQuery>
 type Props = QueryProps & AnalyticsProps
 
 interface State {
+  portNum: number
+  startupDone: boolean
 }
+
+const encodedUrl = encodeURIComponent("https://av.voanews.com/Videoroot/Pangeavideo/2018/03/0/0c/0c16dd4d-dd0c-4acc-8bbb-5cdd030e89ab_mobile.mp4")
 
 class HomeRouteBase extends React.Component<Props, State> {
   state: State = {
+    portNum: 0,
+    startupDone: false
   }
 
   componentDidMount () {
+
     ready()
-      .then(() => this.setState({ startupDone: true }))
-      .catch(console.error)
+    .then(() => {
+      this.setState({ startupDone: true })
+      port().then(portNum => this.setState({ portNum }))
+    })
+    .catch(console.error)
+
   }
 
   goTo (route: string) {
@@ -164,6 +176,7 @@ class HomeRouteBase extends React.Component<Props, State> {
 
     return (
       <div className={homeRoute}>
+        <video controls autoPlay src={`http://127.0.0.1:${this.state.portNum}/tunneled-rewrite/${encodedUrl}?m3u8=true`}></video>
         <Loader data={data} hasContent={data.content && data.content.length > 0}>
           { this.renderContent() }
         </Loader>
