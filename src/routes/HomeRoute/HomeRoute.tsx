@@ -171,9 +171,15 @@ class HomeRouteBase extends React.Component<Props, State> {
   }
 
   render () {
+    const { data } = this.props
+
     return (
       <div className={homeRoute}>
-        <video controls autoPlay src={`http://127.0.0.1:${this.state.portNum}/tunneled-rewrite/${encodedUrl}?m3u8=true`}></video>
+          <div className={content}>
+            <PullToRefresh data={data}>
+             <video controls autoPlay src={`http://127.0.0.1:${this.state.portNum}/tunneled-rewrite/${encodedUrl}?m3u8=true`}></video>
+            </PullToRefresh>
+          </div>
       </div>
     )
   }
