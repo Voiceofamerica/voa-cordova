@@ -16,7 +16,6 @@ import { HomeRouteQuery } from 'helpers/graphql-types'
 import { mapImageUrl } from 'helpers/image'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
 
-import Loader from 'components/Loader'
 import PullToRefresh from 'components/PullToRefresh'
 import { homeLabels } from 'labels'
 
@@ -172,14 +171,9 @@ class HomeRouteBase extends React.Component<Props, State> {
   }
 
   render () {
-    const { data } = this.props
-
     return (
       <div className={homeRoute}>
         <video controls autoPlay src={`http://127.0.0.1:${this.state.portNum}/tunneled-rewrite/${encodedUrl}?m3u8=true`}></video>
-        <Loader data={data} hasContent={data.content && data.content.length > 0}>
-          { this.renderContent() }
-        </Loader>
       </div>
     )
   }
