@@ -22,7 +22,7 @@
     "build:webpack": "webpack",
     "build:cordova": "cordova build",
     "build:clean": "rimraf plugins && rimraf platforms",
-    "build:dev": "run-s -c prepare prepare prepare copy:assets build",
+    "build:full": "run-s -c prepare prepare prepare copy:assets build",
     "copy:assets": "run-p copy:assets:*",
     "copy:assets:ios": "rsync -rv ./assets/ios/Images.xcassets/ ./platforms/ios/VOAChinese/Images.xcassets/",
     "copy:assets:android": "rsync -rv ./assets/android/res/ ./platforms/android/res/",
