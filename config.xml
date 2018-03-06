@@ -2,7 +2,7 @@
 <widget id="com.voanews.voazh" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name short="美国之声">VOAChinese</name>
     <description>
-        美国之声
+        美国之音将代表整个美国，而不是美国社会的个别阶层。所以，美国之音将平衡、全面地反映重要的美国思想和体制。
     </description>
     <author email="chinese@voanews.com" href="https://www.voachinese.com/">
         普通话组
