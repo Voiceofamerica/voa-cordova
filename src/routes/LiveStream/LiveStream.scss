@@ -26,6 +26,7 @@
         padding: 0 10px;
         border-bottom: 1px solid $border-grey;
         overflow: hidden;
+        -webkit-overflow-scrolling: touch;
 
         .programTime {
           padding-right: 15px;

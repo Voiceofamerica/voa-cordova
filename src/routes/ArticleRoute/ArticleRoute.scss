@@ -122,6 +122,7 @@
       flex-direction: column;
       margin-bottom: 70px;
       overflow: hidden;
+      -webkit-overflow-scrolling: touch;
 
       .photoContainer {
         background: black;
@@ -144,6 +145,7 @@
         position: relative;
         border-radius: 5px;
         overflow: hidden;
+        -webkit-overflow-scrolling: touch;
 
         .photoText {
           padding: 5px;
