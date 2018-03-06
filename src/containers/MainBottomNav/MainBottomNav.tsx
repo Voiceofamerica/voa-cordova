@@ -3,13 +3,16 @@ import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
 
 import BottomNav, { RoundItem } from '@voiceofamerica/voa-shared/components/BottomNav'
+import { IconItem } from '@voiceofamerica/voa-shared/components/BottomNav'
 import ResilientImage from '@voiceofamerica/voa-shared/components/ResilientImage'
+import SvgIcon from '@voiceofamerica/voa-shared/components/SvgIcon/SvgIcon'
 
 import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
 import toggleCircumventionDrawer from 'redux-store/actions/toggleCircumventionDrawer'
 import toggleMediaPlaying from 'redux-store/actions/toggleMediaPlaying'
 import AppState from 'types/AppState'
 import { bottomNavLabels } from 'labels'
+import { play, pause } from '../../svg';
 
 import { bottomNav, centerIcon, iconText, mediaIsOpen, centerButton, backgroundImage, overlay } from './MainBottomNav.scss'
 
@@ -52,12 +55,18 @@ class MainBottomNavBase extends React.Component<Props> {
     )
   }
 
+  // renderIcon() {
+  //   const { mediaDrawerOpen, mediaPlaying } = this.props
+  //   let iconClassName = mediaDrawerOpen && mediaPlaying ? `${icon} ${iconActive}` : icon;
+  //   return <SvgIcon src={require('./video.svg')} className={iconClassName} />;
+  // }
+
   renderIcon () {
     const { mediaDrawerOpen, mediaPlaying } = this.props
     if (mediaDrawerOpen && mediaPlaying) {
-      return <i className={`mdi mdi-pause-circle-outline ${centerIcon}`} />
+      return <SvgIcon src={pause} className={centerIcon} />
     } else {
-      return <i className={`mdi mdi-play-circle-outline ${centerIcon}`} />
+      return <SvgIcon src={play} className={centerIcon} style={{marginLeft: '0.2em'}} />
     }
   }
 
@@ -82,7 +91,6 @@ class MainBottomNavBase extends React.Component<Props> {
         <RoundItem onClick={this.roundItemAction} className={centerButton}>
           { this.renderImage() }
           { this.renderIcon() }
-          <div className={iconText}>{bottomNavLabels.media}</div>
         </RoundItem>
         {right}
       </BottomNav>

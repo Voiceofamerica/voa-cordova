@@ -12,8 +12,10 @@ export const articleLabels = {
 
 export const bottomNavLabels = {
   home: '首页',
+  editorsChoice: '编辑推荐',
   breakingNews: '突发新闻',
   media: '多媒体',
+  programs: '节目',
   liveStream: '直播',
   settings: '我',
 }
