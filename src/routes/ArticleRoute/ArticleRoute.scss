@@ -9,13 +9,14 @@
   bottom: 0;
   display: flex;
   flex-direction: column;
-  
+
   .container {
     flex: 1;
     display: flex;
     flex-direction: column;
     background: white;
     overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
     overflow-x: hidden;
     padding-bottom: $menu-height;
     margin-bottom: 30px;
@@ -137,7 +138,7 @@
           display: flex;
         }
       }
-      
+
       .photoTextContainer {
         margin: 10px;
         position: relative;
@@ -149,8 +150,9 @@
           background: white;
           height: 8em;
           overflow-y: scroll;
+          -webkit-overflow-scrolling: touch;
           padding-bottom: 20px;
-  
+
           .photoTitle {
             font-weight: bold;
             font-size: 1.2em;

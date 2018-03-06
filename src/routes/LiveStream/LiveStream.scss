@@ -11,11 +11,12 @@
   bottom: 0;
   background: transparent;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 
   .content {
 
     .liveStreamItem {
-      
+
       .collapser {
         display: flex;
         flex-direction: row;
@@ -41,7 +42,7 @@
           flex-direction: row;
           justify-content: flex-end;
         }
-        
+
         .collapserIcon {
           font-size: 2em;
           transition: transform 0.3s;
@@ -74,6 +75,7 @@
             flex: 1;
             padding: 8px;
             overflow-y: scroll;
+            -webkit-overflow-scrolling: touch;
           }
 
           .toggleContent {
@@ -88,7 +90,7 @@
             font-weight: bold;
             font-size: 18px;
           }
-          
+
           .toggler {
             padding-top: 4px;
           }
