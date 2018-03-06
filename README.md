@@ -22,3 +22,10 @@ To build & run:
 
 For CI:
 * `npm run build`
+
+To Publish:
+* In Xcode, select the project, switch to Build Phases tab, add new script
+```
+set -e
+bash "${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/PsiphonTunnel.framework/strip-frameworks.sh"
+```
