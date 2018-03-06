@@ -1,0 +1,13 @@
+query Galleries {
+  content(source: zhcn, type: [PhotoGallery]) {
+    id
+    title
+    introduction
+    pubDate
+    photoGallery {
+      photo {
+        id
+      }
+    }
+  }
+}

@@ -126,3 +126,6 @@ export const textSettingsLabels = {
   largeSize: '1.5x',
   hugeSize: '2x',
 }
+
+export const programsScreenLabels = {
+}

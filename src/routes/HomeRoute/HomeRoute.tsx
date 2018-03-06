@@ -30,12 +30,6 @@ class HomeRouteBase extends React.Component<Props, State> {
   state: State = {
   }
 
-  componentDidMount () {
-    ready()
-      .then(() => this.setState({ startupDone: true }))
-      .catch(console.error)
-  }
-
   goTo (route: string) {
     const { history } = this.props
     history.push(route)
