@@ -25,6 +25,7 @@
     left: 0;
     padding-top: $menu-height;
     overflow: hidden;
+    -webkit-overflow-scrolling: touch;
 
     .defaultText {
       display: flex;
@@ -34,7 +35,7 @@
       justify-content: center;
       align-items: center;
     }
-    
+
     .searchButton {
       @include touchable();
 
@@ -52,7 +53,7 @@
       border: none;
     }
   }
-  
+
   .ticketIcon {
     font-size: 2.4em;
     color: white;

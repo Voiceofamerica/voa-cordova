@@ -5,6 +5,8 @@
 
 * NodeJS LTS (Download)[https://nodejs.org/en/]
 * If you have a globally installed version of Cordova, uninstall.
+* src/psiphon_config.json
+* static/ADBMobileConfig.json
 
 ## Quickstart
 

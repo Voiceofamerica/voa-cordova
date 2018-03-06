@@ -19,6 +19,8 @@ const store = createStore<AppState>(
   ) as any,
 )
 
-persistStore(store)
+persistStore(store, {
+  blacklist: ['media'],
+})
 
 export default store
