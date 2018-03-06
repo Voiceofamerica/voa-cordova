@@ -1,8 +1,8 @@
 {
   "name": "com.voanews.voazh",
-  "displayName": "VoaCordova",
+  "displayName": "VOAChinese",
   "version": "1.0.0",
-  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "description": "Voice of America Mobile for Chinese Audiences",
   "main": "index.js",
   "private": true,
   "scripts": {
@@ -31,8 +31,8 @@
     "prepare": "cordova prepare",
     "gql:types": "apollo-codegen generate src/**/*.graphql --schema node_modules/@voiceofamerica/voa-core-shared/introspect/schema.json --target typescript --output src/helpers/graphql-types.d.ts"
   },
-  "author": "Apache Cordova Team",
-  "license": "Apache-2.0",
+  "author": "Voice of America",
+  "license": "MIT",
   "dependencies": {
     "@types/cordova": "0.0.34",
     "@types/cordova-plugin-device": "^1.1.5",
@@ -54,7 +54,7 @@
     "@types/redux-thunk": "^2.1.0",
     "@types/webpack-env": "^1.13.2",
     "@voiceofamerica/voa-core-shared": "^1.48.0",
-    "@voiceofamerica/voa-shared": "^1.12.48",
+    "@voiceofamerica/voa-shared": "^1.13.48",
     "adobe-mobile-services": "^4.13.1-cor",
     "android-versions": "^1.2.1",
     "apollo-cache-inmemory": "^1.1.1",
