@@ -1,0 +1,11 @@
+query Clips {
+  content(source: zhcn, type: [Clip]) {
+    id
+    title
+    introduction
+    pubDate
+    audio {
+      url
+    }
+  }
+}
