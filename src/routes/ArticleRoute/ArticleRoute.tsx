@@ -10,6 +10,7 @@ import * as moment from 'moment'
 
 import ResilientImage from '@voiceofamerica/voa-shared/components/ResilientImage'
 import { IconItem } from '@voiceofamerica/voa-shared/components/BottomNav'
+import SvgIcon from '@voiceofamerica/voa-shared/components/SvgIcon/SvgIcon'
 import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
 
 import { ArticleRouteQuery, ArticleRouteQueryVariables } from 'helpers/graphql-types'
@@ -23,8 +24,11 @@ import MainBottomNav from 'containers/MainBottomNav'
 import ErrorBoundary from 'components/ErrorBoundary'
 import Loader from 'components/Loader'
 import { articleLabels } from 'labels'
+import { audio as audioSvg, back, share, favorite, download, video as videoSvg } from '../../svg'
 
 import AppState from 'types/AppState'
+
+import { articleAuthors, articleDate, byline, icon, iconActive, heroImage } from './ArticleRoute.scss'
 
 import {
   articleRoute,
@@ -135,24 +139,24 @@ class ArticleRouteBase extends React.Component<Props> {
   renderBottomNav () {
     const { history, isFavorite } = this.props
 
-    const starIcon = isFavorite ? 'mdi-star' : 'mdi-star-outline'
+    const favoriteIconClass = isFavorite ? `${icon} ${iconActive}` : icon
 
     return (
       <MainBottomNav
         left={[
           <IconItem key={0} onClick={() => history.goBack()}>
-            <i className='mdi mdi-chevron-left' />
+            <SvgIcon src={back} className={icon} />
           </IconItem>,
           <IconItem key={1} onClick={this.share}>
-            <i className='mdi mdi-share' />
+            <SvgIcon src={share} className={icon} />
           </IconItem>,
         ]}
         right={[
           <IconItem key={0} onClick={this.toggleFavorite}>
-            <i className={`mdi ${starIcon}`} />
+            <SvgIcon src={favorite} className={favoriteIconClass} />
           </IconItem>,
           <IconItem key={1} onClick={this.download}>
-            <i className='mdi mdi-download' />
+            <SvgIcon src={download} className={icon} />
           </IconItem>,
         ]}
       />
@@ -165,7 +169,7 @@ class ArticleRouteBase extends React.Component<Props> {
       return null
     }
 
-    return <ResilientImage src={image.url} />
+    return <ResilientImage src={image.url} className={heroImage} />
   }
 
   renderHeading () {
@@ -178,12 +182,18 @@ class ArticleRouteBase extends React.Component<Props> {
       <div className={heading}>
         <h1>{title}</h1>
         <hr />
-        {
-          authorNames.map((name, idx) => (
-            <h2 key={idx}>{name}</h2>
-          ))
-        }
-        <h3>{moment(pubDate).format('lll')}</h3>
+        <div className={byline}>
+          <div className={articleAuthors}>
+          {
+            authorNames.map((name, idx) => (
+              <h2 key={idx}>{name}</h2>
+            ))
+          }
+          </div>
+          <div className={articleDate}>
+            <h3>{moment(pubDate).format('lll')}</h3>
+          </div>
+        </div>
       </div>
     )
   }
@@ -214,15 +224,11 @@ class ArticleRouteBase extends React.Component<Props> {
     }
 
     return (
-      <ResilientImage
-        className={mediaButton}
+      <IconItem 
         onClick={() => playMedia(video.url, article.title, video.videoDescription, true, video.thumbnail)}
-        src={video.thumbnail}
-        showSpinner
-        alwaysShow
-      >
-        <i className={`mdi mdi-monitor ${contentIcon}`} />
-      </ResilientImage>
+        className={mediaButton}>
+        <SvgIcon src={videoSvg} />
+      </IconItem>
     )
   }
 
@@ -238,13 +244,11 @@ class ArticleRouteBase extends React.Component<Props> {
     const imgUrl = article.image && article.image.url
 
     return (
-      <ResilientImage
-        className={mediaButton}
+      <IconItem
         onClick={() => playMedia(audio.url, audio.audioTitle, audio.audioDescription, false, imgUrl)}
-        src={imgUrl}
-      >
-        <i className={`mdi mdi-headphones ${contentIcon}`} />
-      </ResilientImage>
+        className={mediaButton}>
+        <SvgIcon src={audioSvg} />
+      </IconItem>
     )
   }
 
