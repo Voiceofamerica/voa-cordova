@@ -28,7 +28,7 @@
     "copy:assets:android": "rsync -rv ./assets/android/res/ ./platforms/android/res/",
     "scss:types": "tcm -p './src/{components,containers,routes}/**/*.scss'",
     "scss:types:watch": "npm run scss:types -- -w",
-    "prepare": "cordova prepare",
+    "cordova:prepare": "cordova prepare",
     "gql:types": "apollo-codegen generate src/**/*.graphql --schema node_modules/@voiceofamerica/voa-core-shared/introspect/schema.json --target typescript --output src/helpers/graphql-types.d.ts"
   },
   "author": "Voice of America",
@@ -54,7 +54,7 @@
     "@types/redux-thunk": "^2.1.0",
     "@types/webpack-env": "^1.13.2",
     "@voiceofamerica/voa-core-shared": "^1.48.0",
-    "@voiceofamerica/voa-shared": "^1.14.48",
+    "@voiceofamerica/voa-shared": "^1.14.50",
     "adobe-mobile-services": "^4.13.1-cor",
     "android-versions": "^1.2.1",
     "apollo-cache-inmemory": "^1.1.1",
