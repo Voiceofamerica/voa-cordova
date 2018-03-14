@@ -26,7 +26,7 @@ jobs:
       - run: bash scripts/setupAndroid.sh
       - run: npm install
       - run: npx cordova prepare
-      - run: npm run generate
+      - run: npm run copy:assets
       - save_cache:
           <<: *cacheAndroidKey
           paths:
