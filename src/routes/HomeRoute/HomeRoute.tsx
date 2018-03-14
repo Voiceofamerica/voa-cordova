@@ -6,7 +6,6 @@ import * as moment from 'moment'
 
 import Card from '@voiceofamerica/voa-shared/components/Card'
 import SecondaryCard from '@voiceofamerica/voa-shared/components/SecondaryCard'
-import { ready } from '@voiceofamerica/voa-shared/helpers/startup'
 import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
 
 import { homeRoute, row, content, searchButton, ticketIcon } from './HomeRoute.scss'

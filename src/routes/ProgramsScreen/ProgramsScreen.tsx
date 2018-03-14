@@ -1,6 +1,6 @@
 
 import * as React from 'react'
-import { programsScreenLabels } from 'labels'
+// import { programsScreenLabels } from 'labels'
 
 import { programsScreen } from './ProgramsScreen.scss'
 
