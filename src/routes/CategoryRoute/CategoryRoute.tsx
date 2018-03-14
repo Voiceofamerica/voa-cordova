@@ -85,7 +85,8 @@ class HomeRouteBase extends React.Component<Props, State> {
       <div className={row} style={{ marginBottom: '1.5vw' }}>
         <Card
           onPress={() => this.goToArticle(blurb.id)}
-          title={<span>{this.renderIcon(blurb)} {blurb.title}</span>}
+          icon={this.renderIcon(blurb)}
+          title={blurb.title}
           minorText={moment(blurb.pubDate).format('lll')}
           imageUrl={blurb.image && blurb.image.url}
           factor={1}
