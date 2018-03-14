@@ -135,7 +135,6 @@ class HomeRouteBase extends React.Component<Props, State> {
     return (
       <div className={row}>
         <button className={searchButton} onClick={() => this.goTo('/search')}>
-          <i className='mdi mdi-magnify' />
           {homeLabels.search}
         </button>
       </div>
