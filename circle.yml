@@ -2,15 +2,15 @@ version: 2
 jobs:
   test:
     docker:
-      - image: "node:8.9.4"
+      - image: "node:6.11.1"
     steps:
       - checkout
-      - restore_cache: &cacheCheckKey
-          key: v5-voa-cordova-npm-{{ checksum "package-lock.json" }}
-      - run: yarn global add npm@5.5.1
+      - restore_cache: &cacheTestKey
+          key: v4-voa-zh-cordova-npm-{{ checksum "package-lock.json" }}
+      - run: yarn global add npm@5
       - run: npm install
       - save_cache:
-          <<: *cacheCheckKey
+          <<: *cacheTestKey
           paths:
             - "~/.npm"
             - "node_modules"
@@ -21,18 +21,23 @@ jobs:
       - image: bitriseio/docker-android
     steps:
       - checkout
-      - restore_cache: &cacheAndroidKey
-          key: v4-voa-cordova-android-{{ checksum "package-lock.json" }}-{{ checksum "config.xml" }}
+      - restore_cache: &cacheAndroidNpmKey
+          key: v1-voa-zh-cordova-android-{{ checksum "package-lock.json" }}
+      - restore_cache: &cacheAndroidCordovaKey
+          key: v1-voa-zh-cordova-android-{{ checksum "config.xml" }}
       - run: bash scripts/setupAndroid.sh
       - run: npm install
-      - run: npx cordova prepare
-      - run: npm run copy:assets:android
       - save_cache:
-          <<: *cacheAndroidKey
+          <<: *cacheAndroidNpmKey
           paths:
             - "~/.npm"
-            - "~/.android"
             - "node_modules"
+      - run: npx cordova prepare android
+      - run: npm run copy:assets:android
+      - save_cache:
+          <<: *cacheAndroidCordovaKey
+          paths:
+            - "~/.android"
             - "plugins"
             - "platforms"
       - run: unzip -P "$PROTECTED_PASS" protected.zip
@@ -55,7 +60,7 @@ jobs:
     steps:
       - checkout
       - restore_cache: &cacheIosKey
-          key: v3-voa-cordova-ios-{{ checksum "package-lock.json" }}-{{ checksum "config.xml" }}
+          key: v3-voa-zh-cordova-ios-{{ checksum "package-lock.json" }}-{{ checksum "config.xml" }}
       - run: bash scripts/setupiOS.sh
       - run: npm install
       - run: npm run cordova:prepare
