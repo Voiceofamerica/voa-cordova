@@ -30,6 +30,7 @@
       "routes/*": ["routes/*"],
       "graqhql-types": ["graqhql-types"],
       "types/*": ["types/*"],
+      "svg/*": ["svg/*"],
       "react": ["../node_modules/@types/react"]
     }
   },

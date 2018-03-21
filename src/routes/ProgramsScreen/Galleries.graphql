@@ -1,4 +1,4 @@
-query Galleries {
+query ProgramGalleries {
   content(source: zhcn, type: [PhotoGallery]) {
     id
     title
@@ -8,6 +8,9 @@ query Galleries {
       photo {
         id
       }
+    }
+    image {
+      url
     }
   }
 }

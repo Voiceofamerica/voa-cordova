@@ -7,6 +7,7 @@ import { DragDropContext } from 'react-dnd'
 import TouchBackend from 'react-dnd-touch-backend'
 
 import BottomNav, { IconItem } from '@voiceofamerica/voa-shared/components/BottomNav'
+import SvgIcon from '@voiceofamerica/voa-shared/components/SvgIcon'
 
 import setCategoryOrder from 'redux-store/actions/setCategoryOrder'
 import AppState from 'types/AppState'
@@ -15,9 +16,9 @@ import Category from 'types/Category'
 import * as Query from './CategorySettings.graphql'
 import { CategorySettingsQuery } from 'helpers/graphql-types'
 import Loader from 'components/Loader'
-import { categorySettingsLabels } from 'labels'
+import { categorySettingsLabels, homeLabels } from 'labels'
 
-import { categorySettings, pillContainer, topNav } from './CategorySettings.scss'
+import { categorySettings, pill, pillOuter, pillContainer, bottomNav, icon, headlinesSubtitle, sectionHeader, sectionName, sectionSubtitle } from './CategorySettings.scss'
 
 import CategoryPill, { PillItem } from './CategoryPill'
 
@@ -97,9 +98,8 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
   renderCategory = ({ id, name, chosen, separator }: Category & { chosen: boolean, separator: boolean }, index: number) => {
     if (separator) {
       return (
-        <div key={'separator'} style={{ gridColumnStart: 1, gridColumnEnd: 3, fontWeight: 'bold', fontSize: '1.5em', marginLeft: 5, marginRight: 5 }}>
-          {categorySettingsLabels.allCategories}
-          <span style={{ float: 'right', fontSize: '0.8em', fontWeight: 'normal' }}>{categorySettingsLabels.dragAndDrop}</span>
+        <div key={'separator'} className={sectionHeader}>
+          <div className={sectionName}>{categorySettingsLabels.allCategories}</div>
         </div>
       )
     } else {
@@ -130,20 +130,26 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
 
     return (
       <div className={categorySettings}>
-        <div className={topNav}>{categorySettingsLabels.header}</div>
         <Loader data={data}>
           <div className={pillContainer}>
-            <div style={{ fontWeight: 'bold', gridColumnStart: 1, gridColumnEnd: 3, fontSize: '1.5em', marginLeft: 5, marginRight: 5 }}>
-              {categorySettingsLabels.myCategories}
+            <div className={pillOuter}>
+              <div className={pill}>{homeLabels.headlines}</div>
+            </div>
+            <div className={headlinesSubtitle}>
+              <div>{categorySettingsLabels.headlinesFirst}</div>
+            </div>
+            <div className={sectionHeader}>
+              <div className={sectionName}>{categorySettingsLabels.myCategories}</div>
+              <div className={sectionSubtitle}>{categorySettingsLabels.dragAndDrop}</div>
             </div>
             {
               allCategoriesWithSeparator.map(this.renderCategory)
             }
           </div>
         </Loader>
-        <BottomNav>
+        <BottomNav className={bottomNav}>
           <IconItem onClick={() => history.goBack()}>
-            <i className={`mdi mdi-arrow-left`} />
+            <SvgIcon src={require('svg/back.svg')} className={icon} />
           </IconItem>
         </BottomNav>
       </div>

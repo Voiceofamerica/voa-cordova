@@ -10,6 +10,6 @@ export const searchInput: string;
 export const emptyText: string;
 export const searchArea: string;
 export const row: string;
-export const ticketIcon: string;
 export const loadingText: string;
 export const loader: string;
+export const iconCircle: string;

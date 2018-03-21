@@ -68,7 +68,6 @@ class HomeRouteBase extends React.Component<Props> {
           title={blurb.title}
           minorText={moment(blurb.pubDate).fromNow()}
           imageUrl={blurb.image && blurb.image.url}
-          factor={1}
         />
       </div>
     )
@@ -91,7 +90,6 @@ class HomeRouteBase extends React.Component<Props> {
               onPress={() => this.goToArticle(blurb.id)}
               title={<span>{this.renderIcon(blurb)} {blurb.title}</span>}
               imageUrl={blurb.image && blurb.image.url}
-              factor={2}
             />
           ))
         }

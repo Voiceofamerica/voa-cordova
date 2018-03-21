@@ -2,9 +2,13 @@
 @import "'~@voiceofamerica/voa-shared/commonStyles/index";
 
 .searchScreen {
-  flex: 1;
   display: flex;
+  position: fixed;
   flex-direction: column;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: transparent;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
@@ -69,6 +73,12 @@
         font-size: 1.5em;
         width: 2em;
         background: linear-gradient(90deg, rgba($border-grey, 0), $border-grey 50%, $border-grey);
+
+        [dir="rtl"] & {
+          left: 0;
+          right: auto;
+          background: linear-gradient(-90deg, rgba($border-grey, 0), $border-grey 50%, $border-grey);
+        }
       }
     }
 
@@ -105,16 +115,11 @@
 
 .searchArea {
   height: 100%;
+  padding-top: $menu-height;
 
   .row {
     display: flex;
     flex-direction: row;
-  }
-
-  .ticketIcon {
-    font-size: 2.4em;
-    color: white;
-    text-shadow: 0 0 0.2em #000;
   }
 
   .loadingText {
@@ -129,5 +134,20 @@
 
   .loader {
     height: 100%;
+  }
+
+  .iconCircle {
+    $size: 40px;
+    $padding: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(64, 64, 64, 0.5);
+    width: $size;
+    height: $size;
+    font-size: $size - ($padding * 2);
+    color: white;
+    border-radius: $size / 2;
   }
 }

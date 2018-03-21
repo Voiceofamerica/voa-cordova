@@ -46,7 +46,7 @@ class MediaPlayerBase extends React.Component<Props> {
   renderDefault () {
     return (
       <div>
-        <ResilientImage src={require('../../../res/images/MediaDefault.png')} />
+        <ResilientImage src={require('../../../static/MediaDefault.png')} />
         <div className={textContent}>
           <div className={defaultText}>
             {mediaPlayerLabels.empty}
@@ -88,7 +88,6 @@ class MediaPlayerBase extends React.Component<Props> {
     return (
       <ResilientImage
         src={imageUrl}
-        defaultSrc={require('res/images/imagedefault.gif')}
         className={backgroundImage}
       />
     )

@@ -28,6 +28,7 @@ export const categorySettingsLabels = {
   myCategories: '我的分类',
   allCategories: '所有分类',
   dragAndDrop: '长按拖动调整分类',
+  headlinesFirst: 'Headlines First',
 }
 
 export const circumventionDrawerLabels = {
@@ -36,6 +37,10 @@ export const circumventionDrawerLabels = {
       This is where the circumvetion would be explained
     </div>
   ),
+}
+
+export const editorsChoiceLabels = {
+  header: 'Editor\'s Choice',
 }
 
 export const errorBoundaryLabels = {
@@ -101,6 +106,12 @@ export const notificationSettingsLabels = {
   dailyToggle: '每日提醒',
 }
 
+export const programsScreenLabels = {
+  videos: 'Videos',
+  audio: 'Audio',
+  all: 'All',
+}
+
 export const pullToRefreshLabels = {
   pull: 'Pull',
   release: 'Refresh',
@@ -117,6 +128,9 @@ export const searchLabels = {
 export const settingsLabels = {
   header: '我的设置',
   panic: '马上删除此程序',
+  sendToFriends: 'Send to a Friend',
+  sendFeedback: 'Send Feedback',
+  aboutVoa: 'Lorem Ipsum',
 }
 
 export const textSettingsLabels = {
@@ -125,7 +139,4 @@ export const textSettingsLabels = {
   normalSize: '1x',
   largeSize: '1.5x',
   hugeSize: '2x',
-}
-
-export const programsScreenLabels = {
 }

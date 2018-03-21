@@ -30,6 +30,9 @@ function MainLayout ({ component: Component, categories, ...rest }: Props) {
       function replace (route: string) {
         props.history.replace(route)
       }
+      function goTo (route: string) {
+        props.history.push(route)
+      }
 
       const { category: categoryIdStr } = props.match.params
       const isHeadlines = categoryIdStr === null || categoryIdStr === undefined
@@ -48,7 +51,7 @@ function MainLayout ({ component: Component, categories, ...rest }: Props) {
                 </TopNavItem>
               ))
             }
-            <TopNavItem onClick={() => replace('/settings/categories')}>
+            <TopNavItem onClick={() => goTo('/settings/categories')}>
               {homeLabels.manage}
             </TopNavItem>
           </TopNav>

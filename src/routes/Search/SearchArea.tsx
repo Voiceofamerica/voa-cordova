@@ -4,6 +4,7 @@ import * as moment from 'moment'
 import { graphql, ChildProps } from 'react-apollo'
 
 import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
+import SvgIcon from '@voiceofamerica/voa-shared/components/SvgIcon'
 
 import Loader from 'components/Loader'
 
@@ -14,7 +15,7 @@ import { searchLabels } from 'labels'
 
 import * as Query from './Search.graphql'
 
-import { searchArea, row, ticketIcon, loadingText, loader } from './Search.scss'
+import { searchArea, row, loadingText, loader, iconCircle } from './Search.scss'
 
 interface OwnProps extends SearchQueryVariables {
   goTo: (route: string) => void
@@ -35,11 +36,27 @@ class SearchAreaBase extends React.Component<Props> {
     )
   }
 
-  renderIcon = (blurb) => {
+  renderIcon = (blurb: SearchQuery['search'][0]) => {
     if (blurb.video && blurb.video.url) {
-      return <i className={`mdi mdi-monitor ${ticketIcon}`} />
+      return <SvgIcon src={require('svg/video.svg')} />
     } else if (blurb.audio && blurb.audio.url) {
-      return <i className={`mdi mdi-headphones ${ticketIcon}`} />
+      return <SvgIcon src={require('svg/audio.svg')} />
+    } else if (blurb.photoGallery && blurb.photoGallery.length > 0) {
+      return <SvgIcon src={require('svg/gallery.svg')} />
+    } else {
+      return null
+    }
+  }
+
+  renderIconWithCircle = (blurb: SearchQuery['search'][0]) => {
+    const icon = this.renderIcon(blurb)
+
+    if (icon) {
+      return (
+        <div className={iconCircle}>
+          {this.renderIcon(blurb)}
+        </div>
+      )
     } else {
       return null
     }

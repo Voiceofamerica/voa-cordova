@@ -8,6 +8,7 @@ import * as moment from 'moment'
 import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
 import SwipeToDelete from '@voiceofamerica/voa-shared/components/SwipeToDelete'
 import BottomNav, { IconItem } from '@voiceofamerica/voa-shared/components/BottomNav'
+import SvgIcon from '@voiceofamerica/voa-shared/components/SvgIcon'
 
 import analytics, { AnalyticsProps } from 'helpers/analytics'
 import AppState from 'types/AppState'
@@ -17,7 +18,7 @@ import clearFavorites from 'redux-store/actions/clearFavorites'
 
 import { favoritesSettingsLabels } from 'labels'
 
-import { favoriteSettings, removeAllContainer, removeAllButton } from './FavoriteSettings.scss'
+import { favoriteSettings, removeAllContainer, removeAllButton, icon } from './FavoriteSettings.scss'
 
 interface StateProps {
   favorites: FavoriteContent[]
@@ -60,7 +61,7 @@ class FavoriteSettingsRoute extends React.Component<Props> {
         }
         <BottomNav>
           <IconItem onClick={() => history.goBack()}>
-            <i className={`mdi mdi-arrow-left`} />
+            <SvgIcon src={require('svg/back.svg')} className={icon} />
           </IconItem>
         </BottomNav>
       </div>

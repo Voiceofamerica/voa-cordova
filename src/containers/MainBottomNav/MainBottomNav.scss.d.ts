@@ -4,4 +4,6 @@ export const backgroundImage: string;
 export const overlay: string;
 export const centerIcon: string;
 export const iconText: string;
+export const icon: string;
+export const iconActive: string;
 export const mediaIsOpen: string;

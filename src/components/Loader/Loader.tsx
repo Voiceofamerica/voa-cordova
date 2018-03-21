@@ -25,7 +25,7 @@ export default ({ data, children, className, style, hasContent }: Props) => {
       hasContent={hasContent}
       errorText={errorBoundaryLabels.error}
       retryText={errorBoundaryLabels.retry}
-      backgroundImage={require('res/images/Default.png')}
+      backgroundImage={require('static/splash.png')}
     >
       {children}
     </Loader>

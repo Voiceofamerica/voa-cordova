@@ -31,7 +31,7 @@ module.exports = {
     port: 3000,
     historyApiFallback: true,
   },
-  devtool: 'source-map',  
+  devtool: 'source-map',
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json', '.scss', '.d.ts'],
     alias: {
@@ -41,8 +41,9 @@ module.exports = {
       'redux-store': path.join(srcDir, 'redux-store'),
       routes: path.join(srcDir, 'routes'),
       labels: path.join(srcDir, 'labels'),
-      res: path.join(__dirname, 'res'),
+      svg: path.join(srcDir, 'svg'),
       react: path.join(__dirname, './node_modules/react'),
+      static: path.join(__dirname, 'static'),
     }
   },
   module: {
@@ -118,10 +119,9 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       {
-        from: path.join(__dirname, 'static/ADBMobileConfig.json')
-      },
-      {
-        from: path.join(__dirname, 'splash.png')
+        from: path.join(__dirname, 'static/'),
+        to: '.',
+        toType: 'dir'
       }
     ]),
   ]

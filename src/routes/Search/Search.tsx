@@ -75,16 +75,6 @@ class SearchBase extends React.Component<Props, State> {
     this.setState({ keyboardHeight: 0 })
   }
 
-  enterImmersive = () => {
-    const afsm = (window as any).AndroidFullScreen
-    afsm && afsm.immersiveMode()
-  }
-
-  leaveImmersive = () => {
-    const afsm = (window as any).AndroidFullScreen
-    afsm && afsm.showSystemUI()
-  }
-
   replace = (route: string) => {
     const { history } = this.props
     history.replace(route)

@@ -13,5 +13,8 @@ query Search($query: String!, $zoneId: Int) {
     audio {
       url
     }
+    photoGallery {
+      id
+    }
   }
 }

@@ -9,6 +9,7 @@
   bottom: 0;
   display: flex;
   flex-direction: column;
+  color: $dark-grey;
 
   .container {
     flex: 1;
@@ -20,34 +21,50 @@
     overflow-x: hidden;
     padding-bottom: $menu-height;
     margin-bottom: 30px;
-    padding-bottom: 200px;
+    padding-bottom: 50px;
+  }
+
+  .heroImage {
+    background: $voa-red;
+  }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid $accent-green;
   }
 
   .heading {
-    h1 {
-      font-size: 1.5em;
-      font-weight: bold;
-      margin: 2vw 5vw;
-      text-align: center;
+    margin: 20px 15px;
+
+    .byline {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
     }
 
-    hr {
-      border: none;
-      border-bottom: 1px solid black;
-      margin: 0 20vw;
+    .articleAuthors {
+      width: 48%;
+    }
+
+    .articleDate {
+      width: 48%;
+      text-align: left;
+    }
+
+    h1 {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 2vw 0;
     }
 
     h2 {
-      font-size: 1.1em;
-      font-weight: bold;
-      text-align: center;
-      margin: 1vw 5vw;
+      font-size: 12px;
+      margin: 1vw 0;
     }
 
     h3 {
-      font-size: 0.9em;
-      text-align: center;
-      margin: 1vw;
+      font-size: 12px;
+      margin: 1vw 0;
     }
   }
 
@@ -62,28 +79,34 @@
     bottom: $menu-height;
     right: 0;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     z-index: 2;
   }
 
   .mediaButton {
-    $size: 50px;
+    $size: 40px;
+    $padding: 8px;
     $margin: 10px;
     @include touchable();
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $voa-blue;
     height: $size;
     width: $size;
+    font-size: $size - ($padding * 2);
+    color: white;
     border-radius: $size / 2;
     overflow: hidden;
-    font-size: $size / 4;
-    margin-right: $margin;
     margin-bottom: $margin;
-    box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.5);
+    margin-right: $margin;
+    opacity: 0.9;
   }
 
   .articleText {
     font-size: 1em;
-    margin: 10px;
+    margin: 15px;
 
     .paragraph {
       margin-bottom: 1em;
@@ -94,6 +117,15 @@
     font-size: 1.4em;
     margin-top: -0.1em;
     margin-bottom: -0.1em;
+  }
+
+  .icon {
+    font-size: calc(#{$menu-font-size} * 2);
+    color: $mid-grey;
+  }
+
+  .iconActive {
+    color: $voa-blue;
   }
 
   .iconText {
@@ -117,7 +149,6 @@
     margin: 10px 0;
 
     .photoContent {
-      background: $voa-grey;
       display: flex;
       flex-direction: column;
       margin-bottom: 70px;
@@ -156,7 +187,6 @@
           padding-bottom: 20px;
 
           .photoTitle {
-            font-weight: bold;
             font-size: 1.2em;
           }
         }
@@ -170,6 +200,43 @@
           background: linear-gradient(transparent, white)
         }
       }
+    }
+
+    $dotSize: 50px;
+
+    .galleryDots {
+      display: block;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      margin-top: -50px;
+      list-style: none;
+      text-align: center;
+
+      li {
+        position: relative;
+        display: inline-block;
+        width: $dotSize;
+        height: $dotSize;
+        margin: 0 3px;
+        padding: 0;
+        cursor: pointer;
+      }
+
+      :global {
+        .slick-active img {
+          border-bottom: 5px solid $voa-red !important;
+        }
+      }
+
+      img {
+        border-bottom: 5px solid transparent;
+      }
+    }
+
+    .thumb {
+      max-width: $dotSize;
+      max-height: $dotSize;
     }
   }
 }

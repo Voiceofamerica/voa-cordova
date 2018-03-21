@@ -9,6 +9,13 @@ export enum ContentType {
 }
 
 
+export enum ArticleVideoRelationship {
+  SameItem = "SameItem",
+  MainImage = "MainImage",
+  EmbededInContent = "EmbededInContent",
+}
+
+
 export type ArticleRouteQueryVariables = {
   id?: number | null,
 };
@@ -119,7 +126,7 @@ export type CategorySettingsQuery = {
   } | null > | null,
 };
 
-export type HomeRouteQuery = {
+export type EditorsChoiceRouteQuery = {
   content:  Array< {
     id: number,
     title: string,
@@ -142,7 +149,82 @@ export type HomeRouteQuery = {
   } | null > | null,
 };
 
+export type HomeRouteQuery = {
+  content:  Array< {
+    id: number,
+    title: string,
+    introduction: string,
+    pubDate: string,
+    url: string | null,
+    image:  {
+      url: string,
+    } | null,
+    video:  {
+      url: string | null,
+      relType: ArticleVideoRelationship | null,
+    } | null,
+    audio:  {
+      url: string | null,
+    } | null,
+    photoGallery:  Array< {
+      photo:  Array< {
+        id: number | null,
+      } | null > | null,
+    } | null > | null,
+  } | null > | null,
+};
+
 export type LiveStreamQuery = {
+  program:  Array< {
+    id: number,
+    date: string | null,
+    timeLeft: number | null,
+    programTitle: string | null,
+    programDescription: string | null,
+    image:  {
+      url: string,
+    } | null,
+    url: string | null,
+  } | null > | null,
+};
+
+export type ProgramClipsQuery = {
+  content:  Array< {
+    id: number,
+    title: string,
+    introduction: string,
+    pubDate: string,
+    audio:  {
+      url: string | null,
+    } | null,
+    image:  {
+      url: string,
+    } | null,
+  } | null > | null,
+};
+
+export type ProgramGalleriesQuery = {
+  content:  Array< {
+    id: number,
+    title: string,
+    introduction: string,
+    pubDate: string,
+    photoGallery:  Array< {
+      photo:  Array< {
+        id: number | null,
+      } | null > | null,
+    } | null > | null,
+    image:  {
+      url: string,
+    } | null,
+  } | null > | null,
+};
+
+export type ProgramVideosQueryVariables = {
+  zone?: number | null,
+};
+
+export type ProgramVideosQuery = {
   program:  Array< {
     id: number,
     date: string | null,
@@ -176,5 +258,8 @@ export type SearchQuery = {
     audio:  {
       url: string | null,
     } | null,
+    photoGallery:  Array< {
+      id: number,
+    } | null > | null,
   } | null > | null,
 };

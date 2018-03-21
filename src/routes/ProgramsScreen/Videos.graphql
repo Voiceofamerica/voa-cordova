@@ -1,0 +1,13 @@
+query ProgramVideos($zone: Int) {
+  program(source: zhcn, type: [Video], zoneId: $zone) {
+    id
+    date
+    timeLeft
+    programTitle
+    programDescription
+    image {
+      url
+    }
+    url
+  }
+}

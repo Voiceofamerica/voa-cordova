@@ -42,10 +42,19 @@ $button-rise: 15px;
   }
 
   .centerIcon {
-    font-size: 1.4em;
+    font-size: calc(#{$menu-font-size} + 5px);
     margin-top: -0.1em;
-    margin-bottom: -0.1em;
     z-index: 1;
+    color: white; 
+  } 
+ 
+  .icon { 
+    font-size: calc(#{$menu-font-size} * 3); 
+    color: $mid-grey; 
+  } 
+   
+  .iconActive { 
+    color: $voa-blue; 
   }
 
   .iconText {

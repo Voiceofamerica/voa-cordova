@@ -5,5 +5,5 @@ export const contentLoading: string;
 export const searchButton: string;
 export const loadingText: string;
 export const startup: string;
-export const ticketIcon: string;
 export const topNav: string;
+export const iconCircle: string;

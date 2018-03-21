@@ -9,6 +9,8 @@ import toggleCircumventionDrawer from 'redux-store/actions/toggleCircumventionDr
 
 import { circumventionDrawerLabels } from 'labels'
 
+import { content } from './CircumventionDrawer.scss'
+
 interface StateProps {
   open: boolean
 }
@@ -23,7 +25,7 @@ class CircumventionDrawerBase extends React.Component<Props> {
   render () {
     const { open, close } = this.props
     return (
-      <Drawer open={open} onClose={close}>
+      <Drawer open={open} onClose={close} className={content}>
         {circumventionDrawerLabels.content}
       </Drawer>
     )
