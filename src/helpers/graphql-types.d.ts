@@ -188,17 +188,21 @@ export type LiveStreamQuery = {
   } | null > | null,
 };
 
-export type ProgramClipsQuery = {
+export type ProgramAudioQueryVariables = {
+  zone?: number | null,
+};
+
+export type ProgramAudioQuery = {
   content:  Array< {
     id: number,
-    title: string,
-    introduction: string,
     pubDate: string,
-    audio:  {
-      url: string | null,
-    } | null,
     image:  {
       url: string,
+    } | null,
+    audio:  {
+      url: string | null,
+      audioTitle: string | null,
+      audioDescription: string | null,
     } | null,
   } | null > | null,
 };
@@ -225,16 +229,17 @@ export type ProgramVideosQueryVariables = {
 };
 
 export type ProgramVideosQuery = {
-  program:  Array< {
+  content:  Array< {
     id: number,
-    date: string | null,
-    timeLeft: number | null,
-    programTitle: string | null,
-    programDescription: string | null,
+    pubDate: string,
     image:  {
       url: string,
     } | null,
-    url: string | null,
+    video:  {
+      url: string | null,
+      videoTitle: string | null,
+      videoDescription: string | null,
+    } | null,
   } | null > | null,
 };
 

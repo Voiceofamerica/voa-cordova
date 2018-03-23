@@ -4,7 +4,7 @@
 
 ### What's new
 
-- First pass of Video Programs screen
+- Video Programs and Audio Programs screens
 - Editor's Choice screen
 - Loading feedback during initial load of video
 - Videos can now be played in landscape mode

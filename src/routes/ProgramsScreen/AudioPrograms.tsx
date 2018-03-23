@@ -12,12 +12,11 @@ import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
 import Loader from 'components/Loader'
 import playMedia from 'redux-store/thunks/playMediaFromPsiphon'
 
-// import { programsScreenLabels } from 'labels'
-import { ProgramVideosQuery, ProgramVideosQueryVariables } from 'helpers/graphql-types'
+import { ProgramAudioQuery, ProgramAudioQueryVariables } from 'helpers/graphql-types'
 import { mapImageUrl } from 'helpers/image'
 
 import Params from './Params'
-import * as Query from './Videos.graphql'
+import * as Query from './Audio.graphql'
 import { programContent } from './ProgramsScreen.scss'
 
 interface OwnProps {
@@ -29,16 +28,15 @@ interface DispatchProps {
   playMedia: (mediaUrl: string, mediaTitle: string, mediaDescription: string, imageUrl: string) => void
 }
 
-type QueryProps = ChildProps<OwnProps, ProgramVideosQuery>
+type QueryProps = ChildProps<OwnProps, ProgramAudioQuery>
 type Props = QueryProps & DispatchProps
 
-class VideoPrograms extends React.Component<Props> {
-
-  playVideo (item: ProgramVideosQuery['content'][0]['video'], imageUrl) {
+class AudioPrograms extends React.Component<Props> {
+  playAudio (item: ProgramAudioQuery['content'][0]['audio'], imageUrl: string) {
     this.props.playMedia(
       item.url,
-      item.videoTitle,
-      item.videoDescription,
+      item.audioTitle,
+      item.audioDescription,
       imageUrl,
     )
   }
@@ -50,11 +48,11 @@ class VideoPrograms extends React.Component<Props> {
       <div className={programContent}>
         <Loader data={data}>
           {
-            data.content && data.content.map(({ id, image, video, pubDate }) => (
+            data.content && data.content.map(({ id, audio, image, pubDate }) => (
               <div key={id}>
                 <Ticket
-                  onPress={() => this.playVideo(video, image && image.url)}
-                  title={video.videoTitle}
+                  onPress={() => this.playAudio(audio, image && image.url)}
+                  title={audio.audioTitle}
                   imageUrl={image && image.url}
                   minorText={moment(pubDate).format('lll')}
                 />
@@ -67,17 +65,17 @@ class VideoPrograms extends React.Component<Props> {
   }
 }
 
-const withQuery = graphql<QueryProps, ProgramVideosQuery>(
+const withQuery = graphql<QueryProps, ProgramAudioQuery>(
   Query,
   {
     props: ({ data }) => {
       if (!data.loading && !data.error) {
-        data.content = data.content.filter(c => c && c.video && c.video.url).map(c => {
+        data.content = data.content.filter(c => c && c.audio && c.audio.url).map(c => {
           return {
             ...c,
             image: c.image && {
               ...c.image,
-              url: mapImageUrl(c.image.url, 'w100'),
+              url: mapImageUrl(c.image.url, 'w300'),
             },
           }
         })
@@ -85,7 +83,7 @@ const withQuery = graphql<QueryProps, ProgramVideosQuery>(
 
       return { data }
     },
-    options: (ownProps: OwnProps): QueryOpts<ProgramVideosQueryVariables> => ({
+    options: (ownProps: OwnProps): QueryOpts<ProgramAudioQueryVariables> => ({
       variables: {
         zone: parseInt(ownProps.match.params.zone || '0', 10),
       },
@@ -96,7 +94,7 @@ const withQuery = graphql<QueryProps, ProgramVideosQuery>(
 const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => {
   return {
     playMedia: (mediaUrl, mediaTitle, mediaDescription, imageUrl) =>
-      dispatch(playMedia({ mediaUrl, mediaTitle, mediaDescription, isVideo: true, imageUrl })),
+      dispatch(playMedia({ mediaUrl, mediaTitle, mediaDescription, isVideo: false, imageUrl })),
   }
 }
 
@@ -105,4 +103,4 @@ const withRedux = connect(null, mapDispatchToProps)
 export default compose(
   withQuery,
   withRedux,
-)(VideoPrograms)
+)(AudioPrograms)
