@@ -10,7 +10,7 @@ import {
   introLabels,
 } from 'labels'
 
-import { introRoute, content, heading, continueButton } from './Intro.scss'
+import { introRoute, content, continueButton } from './Intro.scss'
 
 interface StateProps {
   introDone: boolean
@@ -33,7 +33,6 @@ class SettingsRoute extends React.Component<Props> {
     return (
       <div className={introRoute}>
         <div className={content}>
-          <div className={heading}>{introLabels.heading}</div>
           {introLabels.content}
         </div>
         <div className={continueButton} onClick={onContinue}>{introLabels.continue}</div>

@@ -34,13 +34,13 @@ export const categorySettingsLabels = {
 export const circumventionDrawerLabels = {
   content: (
     <div>
-      This is where the circumvetion would be explained
+      安全访问已启动
     </div>
   ),
 }
 
 export const editorsChoiceLabels = {
-  header: 'Editor\'s Choice',
+  header: '编辑推荐',
 }
 
 export const errorBoundaryLabels = {
@@ -49,8 +49,8 @@ export const errorBoundaryLabels = {
 }
 
 export const favoritesSettingsLabels = {
-  header: 'Favorites',
-  removeAll: 'Remove All',
+  header: '收藏夹',
+  removeAll: '删除所有',
 }
 
 export const homeLabels = {
@@ -61,8 +61,8 @@ export const homeLabels = {
 
 export const introLabels = {
   heading: 'Welcome to VoA!',
-  content: 'This is a newsreader',
-  continue: 'Continue',
+  content: '您好',
+  continue: '继续',
 }
 
 export const liveStreamLabels = {
@@ -108,13 +108,13 @@ export const notificationSettingsLabels = {
 
 export const programsScreenLabels = {
   videos: '视频',
-  audio: 'Audio',
-  all: 'All',
+  audio: '音频',
+  all: '卫视',
 }
 
 export const pullToRefreshLabels = {
-  pull: 'Pull',
-  release: 'Refresh',
+  pull: '释放刷新',
+  release: '释放刷新',
 }
 
 export const searchLabels = {
