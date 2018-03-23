@@ -7,7 +7,6 @@
     <author email="chinese@voanews.com" href="https://www.voachinese.com/">
         普通话组
     </author>
-    <preference name="Orientation" value="portrait" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="android-minSdkVersion" value="19" />
