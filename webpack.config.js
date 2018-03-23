@@ -92,7 +92,7 @@ module.exports = {
         exclude: GLOBAL_CSS
       },
       {
-        test: /\.(jpg|png|gif|woff|woff2|eot|ttf|svg)$/,
+        test: /\.(jpg|png|gif|woff|woff2|eot|ttf|otf|svg)$/,
         loaders: [{
           loader: 'url-loader',
           options: {

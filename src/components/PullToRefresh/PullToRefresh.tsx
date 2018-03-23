@@ -1,6 +1,6 @@
 
 import * as React from 'react'
-import { QueryProps } from 'react-apollo'
+import { DataValue } from 'react-apollo'
 import Refresher from 'react-refresher'
 
 import Spinner from '@voiceofamerica/voa-shared/components/Spinner'
@@ -10,7 +10,7 @@ import { pullToRefreshLabels } from 'labels'
 import { pullIcon, upsideDown } from './PullToRefresh.scss'
 
 interface Props {
-  data: QueryProps
+  data: DataValue<any, any>
 }
 
 export default class PullToRefresh extends React.Component<Props> {

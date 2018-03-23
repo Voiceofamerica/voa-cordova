@@ -25,7 +25,6 @@ type OwnProps = RouteComponentProps<{ query: string, zoneId: string }>
 type Props = OwnProps & StateProps & AnalyticsProps
 
 interface State {
-  keyboardHeight: number
   debouncedQuery: string
 }
 
@@ -33,7 +32,6 @@ const THROTTLE_TIMEOUT = 1000
 
 class SearchBase extends React.Component<Props, State> {
   state: State = {
-    keyboardHeight: 0,
     debouncedQuery: this.props.match.params.query,
   }
 
@@ -46,16 +44,6 @@ class SearchBase extends React.Component<Props, State> {
       THROTTLE_TIMEOUT,
     )
 
-  componentDidMount () {
-    window.addEventListener('native.keyboardshow', this.onKeyboard)
-    window.addEventListener('native.keyboardhide', this.onKeyboardHide)
-  }
-
-  componentWillUnmount () {
-    window.removeEventListener('native.keyboardshow', this.onKeyboard)
-    window.removeEventListener('native.keyboardhide', this.onKeyboardHide)
-  }
-
   componentWillReceiveProps (nextProps: Props) {
     if (!shallowCompare(this, nextProps, this.state)) {
       return false
@@ -65,14 +53,6 @@ class SearchBase extends React.Component<Props, State> {
     this.setDebouncedQuery(query)
 
     return true
-  }
-
-  onKeyboard = ({ keyboardHeight }: any) => {
-    this.setState({ keyboardHeight: keyboardHeight + this.inputHeight })
-  }
-
-  onKeyboardHide = () => {
-    this.setState({ keyboardHeight: 0 })
   }
 
   replace = (route: string) => {
@@ -100,7 +80,7 @@ class SearchBase extends React.Component<Props, State> {
     const { query = '', zoneId = '0' } = this.props.match.params
 
     return (
-      <div ref={el => this.inputHeight = el && el.clientHeight || 0 } className={inputs} style={{ bottom: this.state.keyboardHeight }}>
+      <div ref={el => this.inputHeight = el && el.clientHeight || 0 } className={inputs}>
         <div onClick={() => history.goBack()} className={backButton}>{searchLabels.back}</div>
         <div className={inputsPill}>
           <div className={dropdownPill}>
@@ -125,9 +105,9 @@ class SearchBase extends React.Component<Props, State> {
 
   render () {
     const { zoneId = '0' } = this.props.match.params
-    const { keyboardHeight, debouncedQuery = '' } = this.state
+    const { debouncedQuery = '' } = this.state
 
-    const marginBottom = this.inputHeight + keyboardHeight
+    const marginBottom = this.inputHeight
 
     return (
       <div className={searchScreen} style={{ marginBottom }}>

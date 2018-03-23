@@ -1,5 +1,6 @@
 
 import * as React from 'react'
+import { compose } from 'redux'
 import { RouteComponentProps } from 'react-router'
 import { graphql, ChildProps } from 'react-apollo'
 import * as moment from 'moment'
@@ -209,4 +210,7 @@ const withHomeQuery = graphql(
   },
 )
 
-export default withHomeQuery(withAnalytics(HomeRouteBase))
+export default compose(
+  withHomeQuery,
+  withAnalytics,
+)(HomeRouteBase)

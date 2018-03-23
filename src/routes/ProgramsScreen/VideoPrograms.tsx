@@ -29,7 +29,8 @@ interface DispatchProps {
   playMedia: (mediaUrl: string, mediaTitle: string, mediaDescription: string, isVideo: boolean) => void
 }
 
-type Props = ChildProps<OwnProps, ProgramVideosQuery> & DispatchProps
+type QueryProps = ChildProps<OwnProps, ProgramVideosQuery>
+type Props = QueryProps & DispatchProps
 
 class ClipPrograms extends React.Component<Props> {
   goTo (route: string) {
@@ -70,7 +71,7 @@ class ClipPrograms extends React.Component<Props> {
   }
 }
 
-const withQuery = graphql<ProgramVideosQuery, OwnProps>(
+const withQuery = graphql<QueryProps, ProgramVideosQuery>(
   Query,
   {
     props: ({ data }) => {

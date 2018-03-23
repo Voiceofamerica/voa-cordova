@@ -7,6 +7,16 @@ const client = new ApolloClient({
     uri: 'https://dev.voamobileendpoints.com/server/graphql',
   }),
   cache: new InMemoryCache(),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'cache-first',
+      notifyOnNetworkStatusChange: true,
+    },
+    query: {
+      fetchPolicy: 'cache-first',
+      notifyOnNetworkStatusChange: true,
+    },
+  },
 })
 
 export default client

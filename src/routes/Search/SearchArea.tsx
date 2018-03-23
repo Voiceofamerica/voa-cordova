@@ -98,7 +98,7 @@ class SearchAreaBase extends React.Component<Props> {
   }
 }
 
-const withSearchQuery = graphql(
+const withSearchQuery = graphql<Props, SearchQuery>(
   Query,
   {
     options: (props: OwnProps) => ({
@@ -106,10 +106,9 @@ const withSearchQuery = graphql(
       fetchPolicy: 'network-only',
     }),
     props: ({ data }) => {
-      let outputData = data as (typeof data) & SearchQuery
-      const { search = [] } = outputData
+      const { search = [] } = data
       if (!data.loading && !data.error && search) {
-        outputData.search = search.filter(c => c).map(c => {
+        data.search = search.filter(c => c).map(c => {
           return {
             ...c,
             image: c.image && {
@@ -120,7 +119,7 @@ const withSearchQuery = graphql(
         })
       }
 
-      return { data: outputData }
+      return { data }
     },
   },
 )
