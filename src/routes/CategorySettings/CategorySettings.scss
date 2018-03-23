@@ -10,9 +10,7 @@
   right: 0;
   bottom: 0;
   background: white;
-  overflow: scroll;
   user-select: none;
-  padding: 0px 20px;
 
   .bottomNav {
     justify-content: flex-end;
@@ -29,10 +27,9 @@
     flex-wrap: wrap;
     background: transparent;
 
-    padding-top: 10px;
-    padding-bottom: $menu-height;
-    margin-top: $menu-height;
-    margin-bottom: 10px;
+    margin: 10px 0;
+    overflow: scroll;
+    padding: $menu-height 20px;
 
     .pillOuter {
       padding: 5px;
@@ -44,7 +41,8 @@
         padding: 3px;
         border-radius: 100px;
         text-align: center;
-        height: calc(2em);
+        height: calc(1.5em);
+        font-size: 0.8em;
 
         &.dragged {
           background: $border-grey;
