@@ -28,7 +28,7 @@ export const categorySettingsLabels = {
   myCategories: '我的分类',
   allCategories: '所有分类',
   dragAndDrop: '长按拖动调整分类',
-  headlinesFirst: 'Headlines First',
+  headlinesFirst: '最新要闻列在首位',
 }
 
 export const circumventionDrawerLabels = {
@@ -107,7 +107,7 @@ export const notificationSettingsLabels = {
 }
 
 export const programsScreenLabels = {
-  videos: 'Videos',
+  videos: '视频',
   audio: 'Audio',
   all: 'All',
 }
@@ -130,12 +130,11 @@ export const settingsLabels = {
   panic: '马上删除此程序',
   sendToFriends: 'Send to a Friend',
   sendFeedback: 'Send Feedback',
-  aboutVoa: 'Lorem Ipsum',
+  aboutVoa: '美国之音(VOA)向国际受众发送准确、平衡和全面的新闻与信息。美国之音创建于1942年，用电台向封闭和被战火蹂躏的地区播送新闻。目前美国之音已发展成为一个多媒体新闻部门，通过网络、移动设备和社交媒体，以40多种语言为人们服务。',
 }
 
 export const textSettingsLabels = {
-  header: 'Text Settings',
-  chooseSize: 'Article Text Size',
+  header: '设置字体大小',
   normalSize: '1x',
   largeSize: '1.5x',
   hugeSize: '2x',
