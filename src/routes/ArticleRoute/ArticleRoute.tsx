@@ -315,7 +315,7 @@ class ArticleRouteBase extends React.Component<Props> {
             const sorted = gal.photo.slice().sort((a, b) => a.order - b.order)
             const customPaging = (i) => (
               <a>
-                <img src={sorted[sorted.length - i - 1].url} className={thumb} />
+                <img src={sorted[i].url} className={thumb} />
               </a>
             )
 
