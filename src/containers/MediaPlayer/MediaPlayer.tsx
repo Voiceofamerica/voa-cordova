@@ -73,6 +73,7 @@ class MediaPlayerBase extends React.Component<Props> {
           playbackRate={mediaPlaybackRate}
           autoPlay={playing}
           onTogglePlay={toggleMediaPlaying}
+          loadingText={mediaPlayerLabels.loading}
         />
       </div>
     )

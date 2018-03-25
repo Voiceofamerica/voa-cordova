@@ -19,6 +19,15 @@
     -webkit-overflow-scrolling: touch;
     overflow-x: hidden;
     padding-top: $menu-height;
+
+    .emptyContent {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+      font-weight: bold;
+    }
   }
 
   .programTypeNav {

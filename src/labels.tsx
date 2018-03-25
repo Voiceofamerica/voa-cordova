@@ -91,6 +91,7 @@ export const mediaPlayerLabels = {
       </p>
     </div>
   ),
+  loading: '加载视频',
 }
 
 export const mediaSettingsLabels = {
@@ -110,6 +111,7 @@ export const programsScreenLabels = {
   videos: '视频',
   audio: '音频',
   all: '卫视',
+  empty: 'No Programs Available',
 }
 
 export const pullToRefreshLabels = {

@@ -15,10 +15,11 @@ import playMedia from 'redux-store/thunks/playMediaFromPsiphon'
 // import { programsScreenLabels } from 'labels'
 import { ProgramVideosQuery, ProgramVideosQueryVariables } from 'helpers/graphql-types'
 import { mapImageUrl } from 'helpers/image'
+import { programsScreenLabels } from 'labels'
 
 import Params from './Params'
 import * as Query from './Videos.graphql'
-import { programContent } from './ProgramsScreen.scss'
+import { programContent, emptyContent } from './ProgramsScreen.scss'
 
 interface OwnProps {
   history: History
@@ -43,24 +44,40 @@ class VideoPrograms extends React.Component<Props> {
     )
   }
 
+  renderContent () {
+    const { data } = this.props
+
+    return (
+      data.content && data.content.map(({ id, image, video, pubDate }) => (
+        <div key={id}>
+          <Ticket
+            onPress={() => this.playVideo(video, image && image.url)}
+            title={video.videoTitle}
+            imageUrl={image && image.url}
+            minorText={moment(pubDate).format('lll')}
+          />
+        </div>
+      ))
+    )
+  }
+
+  renderEmpty () {
+    return (
+      <div className={emptyContent}>
+        {programsScreenLabels.empty}
+      </div>
+    )
+  }
+
   render () {
     const { data } = this.props
+
+    const content = data.content && data.content.length ? this.renderContent() : this.renderEmpty()
 
     return (
       <div className={programContent}>
         <Loader data={data}>
-          {
-            data.content && data.content.map(({ id, image, video, pubDate }) => (
-              <div key={id}>
-                <Ticket
-                  onPress={() => this.playVideo(video, image && image.url)}
-                  title={video.videoTitle}
-                  imageUrl={image && image.url}
-                  minorText={moment(pubDate).format('lll')}
-                />
-              </div>
-            ))
-          }
+          {content}
         </Loader>
       </div>
     )
