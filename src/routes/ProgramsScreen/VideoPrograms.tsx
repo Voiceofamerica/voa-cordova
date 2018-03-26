@@ -94,7 +94,7 @@ const withQuery = graphql<QueryProps, ProgramVideosQuery>(
             ...c,
             image: c.image && {
               ...c.image,
-              url: mapImageUrl(c.image.url, 'w100'),
+              url: mapImageUrl(c.image.url, 'w300'),
             },
           }
         })
