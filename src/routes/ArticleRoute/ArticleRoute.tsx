@@ -54,6 +54,9 @@ import {
   heroImage,
   thumb,
   galleryDots,
+  galleryButton,
+  next,
+  prev,
 } from './ArticleRoute.scss'
 import * as Query from './ArticleRoute.graphql'
 
@@ -75,6 +78,29 @@ type BaseProps = RouteComponentProps<Params>
 type QueryProps = ChildProps<BaseProps, ArticleRouteQuery>
 type OwnProps = QueryProps
 type Props = QueryProps & DispatchProps & StateProps & AnalyticsProps
+
+interface ArrowProps {
+  onClick?: () => void
+  next?: boolean
+  prev?: boolean
+}
+
+function GalleryArrow ({ onClick, next: nextButton, prev: prevButton }: ArrowProps) {
+  const nextClass = nextButton ? next : ''
+  const prevClass = prevButton ? prev : ''
+
+  let content: string
+
+  if (nextButton) {
+    content = '>'
+  } else if (prevButton) {
+    content = '<'
+  }
+
+  return (
+    <div className={`${galleryButton} ${nextClass} ${prevClass}`} onClick={onClick}>{content}</div>
+  )
+}
 
 class ArticleRouteBase extends React.Component<Props> {
   componentWillReceiveProps (newProps: Props) {
@@ -321,7 +347,7 @@ class ArticleRouteBase extends React.Component<Props> {
 
             return (
               <div key={gal.id} className={gallery} dir='ltr'>
-                <Carousel dots dotsClass={galleryDots} customPaging={customPaging}>
+                <Carousel dots dotsClass={galleryDots} customPaging={customPaging} nextArrow={<GalleryArrow next />} prevArrow={<GalleryArrow prev />}>
                   {
                     sorted.map(photo => (
                       <div key={photo.id} className={photoContent}>

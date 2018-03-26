@@ -26,3 +26,6 @@ export const photoTitle: string;
 export const fadeOut: string;
 export const galleryDots: string;
 export const thumb: string;
+export const galleryButton: string;
+export const next: string;
+export const prev: string;

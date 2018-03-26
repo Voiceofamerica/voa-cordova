@@ -202,7 +202,7 @@
       }
     }
 
-    $dotSize: 50px;
+    $thumbSize: 50px;
 
     .galleryDots {
       display: block;
@@ -216,8 +216,8 @@
       li {
         position: relative;
         display: inline-block;
-        width: $dotSize;
-        height: $dotSize;
+        width: $thumbSize;
+        height: $thumbSize;
         margin: 0 3px;
         padding: 0;
         cursor: pointer;
@@ -235,8 +235,36 @@
     }
 
     .thumb {
-      max-width: $dotSize;
-      max-height: $dotSize;
+      max-width: $thumbSize;
+      max-height: $thumbSize;
+    }
+
+    .galleryButton {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba($voa-light-grey, 0.5);
+      border-radius: 15px;
+      color: black;
+      font-size: 30px;
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      top: 50vw;
+      padding: 0;
+      margin: 10px;
+      -webkit-transform: translate(0, 50%);
+      transform: translate(0, -50%);
+      z-index: 1;
+      cursor: pointer;
+
+      &.next {
+        right: 0;
+      }
+
+      &.prev {
+        left: 0;
+      }
     }
   }
 }
