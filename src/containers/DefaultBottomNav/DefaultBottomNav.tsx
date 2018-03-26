@@ -13,7 +13,11 @@ interface Props {
   history: History
 }
 
+const DEFAULT_RGX = /index\.html/
+const EMPTY_RGX = /^$/
 const HOME_RGX = /^\/$/
+const CATEGORY_RGX = /^\/articles/
+
 const EDITORS_CHOICE_RGX = /^\/editorsChoice/
 const PROGRAMS_RGX = /^\/programs/
 const SETTINGS_RGX = /^\/settings/
@@ -23,11 +27,15 @@ function determineIconClass (isActive: boolean) {
 }
 
 export default class DefaultBottomNav extends React.Component<Props> {
+  checkHome (path: string) {
+    return DEFAULT_RGX.test(path) || EMPTY_RGX.test(path) || HOME_RGX.test(path) || CATEGORY_RGX.test(path)
+  }
+
   renderLeft () {
     const { history } = this.props
 
     const path = history.location.pathname
-    const homeActive = HOME_RGX.test(path)
+    const homeActive = this.checkHome(path)
     const editorsChoiceActive = EDITORS_CHOICE_RGX.test(path)
 
     const homeIconClass = determineIconClass(homeActive)
