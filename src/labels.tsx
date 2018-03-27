@@ -112,7 +112,7 @@ export const programsScreenLabels = {
   videos: '视频',
   audio: '音频',
   all: '卫视',
-  empty: 'No Programs Available',
+  empty: '什么都没有',
 }
 
 export const pullToRefreshLabels = {
