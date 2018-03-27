@@ -13,6 +13,7 @@ import SvgIcon from '@voiceofamerica/voa-shared/components/SvgIcon'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
 import AppState from 'types/AppState'
 import FavoriteContent from 'types/FavoriteContent'
+import FlatMap from 'types/FlatMap'
 import toggleFavoriteContent from 'redux-store/actions/toggleFavoriteContent'
 import clearFavorites from 'redux-store/actions/clearFavorites'
 
@@ -69,7 +70,7 @@ class FavoriteSettingsRoute extends React.Component<Props> {
   }
 }
 
-function getVals<T> (obj: Object): T[] {
+function getVals<T> (obj: FlatMap<T>): T[] {
   const output = [] as T[]
   for (const key in obj) {
     if (obj.hasOwnProperty(key)) {
@@ -80,7 +81,7 @@ function getVals<T> (obj: Object): T[] {
 }
 
 const mapStateToProps = (state: AppState): StateProps => ({
-  favorites: getVals(state.favorites),
+  favorites: getVals(state.favorites).sort((f1, f2) => f1.favoriteDate - f2.favoriteDate),
 })
 
 const mapDispatchToProps = (dispatch: Dispatch<AppState>): DispatchProps => ({

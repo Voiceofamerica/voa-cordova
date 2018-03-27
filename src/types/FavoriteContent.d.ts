@@ -4,4 +4,5 @@ export default interface FavoriteContent {
   title: string
   content: string
   pubDate: string
+  favoriteDate?: number
 }

@@ -12,5 +12,6 @@ export type ToggleFavoriteContentAction = ToggleFavoriteContentOptions & Action
 
 export default (options: ToggleFavoriteContentOptions): ToggleFavoriteContentAction => ({
   ...options,
+  favoriteDate: Date.now(),
   type,
 })
