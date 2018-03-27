@@ -481,6 +481,10 @@ const withQuery = graphql(
                 }),
               }
             }),
+            relatedStories: c.relatedStories.map(related => ({
+              ...related,
+              thumbnailUrl: mapImageUrl(related.thumbnailUrl, 'w300'),
+            })),
           }
         })
       }
