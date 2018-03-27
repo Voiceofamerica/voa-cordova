@@ -11,6 +11,8 @@ import {
 
 import { pillOuter, pill, dragged } from './CategorySettings.scss'
 
+export const DRAG_DELAY = 150
+
 type DragHandler = (self: PillItem, over: PillItem) => void
 
 interface Props extends React.Props<any> {
@@ -25,6 +27,10 @@ interface Props extends React.Props<any> {
   sourceOffset?: ClientOffset
 }
 
+interface State {
+  touched: boolean
+}
+
 export interface PillItem {
   id: number
   type: string
@@ -32,23 +38,53 @@ export interface PillItem {
   draggedOver: DragHandler
 }
 
-const CategoryPill = ({ children, connectDragSource, isDragging, clientOffset, sourceOffset, connectDropTarget }: Props) => {
-  const className = isDragging ? `${pill} ${dragged}` : pill
-  const left = isDragging && clientOffset && sourceOffset ? sourceOffset.x : 0
-  const top = isDragging && clientOffset && sourceOffset ? sourceOffset.y : 0
-  const pointerEvents = isDragging ? 'none' : 'auto'
+class CategoryPill extends React.Component<Props> {
+  state: State = {
+    touched: false,
+  }
 
-  return connectDropTarget((
-    <div className={pillOuter}>
-      {
-        connectDragSource((
-          <div className={className} style={{ left, top, pointerEvents }}>
-            {children}
-          </div>
-        ))
-      }
-    </div>
-  ))
+  timerId: any
+
+  onTouchStart = () => {
+    this.timerId = setTimeout(() => {
+      this.toggleTouched(true)
+    }, DRAG_DELAY)
+  }
+
+  onTouchEnd = () => {
+    clearTimeout(this.timerId)
+    this.toggleTouched(false)
+  }
+
+  toggleTouched = (touched: boolean) =>
+    this.setState({ touched })
+
+  render () {
+    const { children, connectDragSource, isDragging, clientOffset, sourceOffset, connectDropTarget } = this.props
+    const { touched } = this.state
+
+    const className = touched ? `${pill} ${dragged}` : pill
+    const left = isDragging && clientOffset && sourceOffset ? sourceOffset.x : 0
+    const top = isDragging && clientOffset && sourceOffset ? sourceOffset.y : 0
+    const pointerEvents = isDragging ? 'none' : 'auto'
+
+    return connectDropTarget((
+      <div className={pillOuter}>
+        {
+          connectDragSource((
+            <div
+              className={className}
+              style={{ left, top, pointerEvents }}
+              onTouchStart={this.onTouchStart}
+              onTouchEnd={this.onTouchEnd}
+            >
+              {children}
+            </div>
+          ))
+        }
+      </div>
+    ))
+  }
 }
 
 function getItem (props: Props): PillItem {

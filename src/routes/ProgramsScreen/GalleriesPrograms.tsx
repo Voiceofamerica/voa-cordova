@@ -84,9 +84,6 @@ const withQuery = graphql<Props, ProgramGalleriesQuery>(
 
       return { data }
     },
-    options: {
-      fetchPolicy: 'cache-first',
-    },
   },
 )
 

@@ -202,7 +202,6 @@ const withHomeQuery = graphql(
       variables: {
         category: parseInt(ownProps.match.params.category, 10),
       },
-      fetchPolicy: 'cache-first',
     }),
     props: ({ data }) => {
       let outputData = data as (typeof data) & CategoryRouteQuery

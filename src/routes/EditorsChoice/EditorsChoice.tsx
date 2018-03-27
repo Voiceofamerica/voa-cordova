@@ -204,9 +204,6 @@ const withEditorsChoiceQuery = graphql(
 
       return { data: outputData }
     },
-    options: {
-      fetchPolicy: 'cache-first',
-    },
   },
 )
 

@@ -20,7 +20,7 @@ import { categorySettingsLabels, homeLabels } from 'labels'
 
 import { categorySettings, pill, pillOuter, pillContainer, bottomNav, icon, headlinesSubtitle, sectionHeader, sectionName, sectionSubtitle } from './CategorySettings.scss'
 
-import CategoryPill, { PillItem } from './CategoryPill'
+import CategoryPill, { PillItem , DRAG_DELAY } from './CategoryPill'
 
 const CATEGORY = 'CATEGORY'
 
@@ -169,6 +169,6 @@ export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   graphql(Query),
   DragDropContext(TouchBackend({
-    delayTouchStart: 250,
+    delayTouchStart: DRAG_DELAY,
   })),
 )(CategorySettingsBase)

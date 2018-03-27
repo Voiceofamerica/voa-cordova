@@ -18,7 +18,9 @@ import {
   textSettingsLabels,
 } from 'labels'
 
-import { settings, panicButtonHolder, panicButton, panicButtonIcon, buttons, settingsRow, disabled, settingsButton, row, aboutVoa, content, settingsItem, settingsRowHeader, settingsValuesRow, active } from './Settings.scss'
+import { settings, panicButtonHolder, panicButton, panicButtonIcon, buttons, settingsRow, settingsButton, row, aboutVoa, content, settingsItem, settingsRowHeader, settingsValuesRow, active } from './Settings.scss'
+
+const SHARE_URL = 'https://www.voanews.com/p/5850.html'
 
 const data = {
   textSize: [
@@ -116,7 +118,7 @@ class SettingsRoute extends React.Component<Props> {
   renderSendToFriends () {
     return (
       <div className={settingsRow}>
-        <button className={`${settingsButton} ${disabled}`}>
+        <button className={settingsButton} onClick={this.shareApp}>
           {settingsLabels.sendToFriends}
         </button>
       </div>
@@ -124,11 +126,13 @@ class SettingsRoute extends React.Component<Props> {
   }
 
   renderSendFeedback () {
+    const url = `mailto:${settingsLabels.feedbackEmail}?subject=${settingsLabels.feedbackSubject}&body=${settingsLabels.feedbackBody}`
+
     return (
       <div className={settingsRow}>
-        <button className={`${settingsButton} ${disabled}`}>
+        <a href={url} className={settingsButton}>
           {settingsLabels.sendFeedback}
-        </button>
+        </a>
       </div>
     )
   }
@@ -159,6 +163,13 @@ class SettingsRoute extends React.Component<Props> {
         </div>
       </div>
     )
+  }
+
+  private shareApp = () => {
+    window.plugins.socialsharing.shareWithOptions({
+      message: settingsLabels.shareMessage,
+      url: SHARE_URL,
+    })
   }
 }
 

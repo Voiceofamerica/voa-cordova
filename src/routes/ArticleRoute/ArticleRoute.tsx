@@ -129,7 +129,7 @@ class ArticleRouteBase extends React.Component<Props> {
     const { url } = this.props.data.content[0]
 
     window.plugins.socialsharing.shareWithOptions({
-      message: '',
+      message: articleLabels.shareMessage,
       url,
     })
   }
@@ -346,7 +346,7 @@ class ArticleRouteBase extends React.Component<Props> {
             )
 
             return (
-              <div key={gal.id} className={gallery} dir='ltr'>
+              <div key={gal.id} className={gallery}>
                 <Carousel dots dotsClass={galleryDots} customPaging={customPaging} nextArrow={<GalleryArrow next />} prevArrow={<GalleryArrow prev />}>
                   {
                     sorted.map(photo => (
@@ -355,7 +355,7 @@ class ArticleRouteBase extends React.Component<Props> {
                           <ResilientImage src={photo.url} className={photoItem} contain />
                         </div>
                         <div className={photoTextContainer}>
-                          <div className={photoText} dir='rtl'>
+                          <div className={photoText}>
                             <div className={photoTitle}>
                               {photo.photoTitle}
                             </div>
@@ -458,7 +458,6 @@ const withQuery = graphql(
       variables: {
         id: parseInt(ownProps.match.params.id, 10),
       },
-      fetchPolicy: 'cache-first',
     }),
 
     props: ({ data }) => {

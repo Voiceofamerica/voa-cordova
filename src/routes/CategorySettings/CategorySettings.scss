@@ -45,7 +45,8 @@
         font-size: 0.8em;
 
         &.dragged {
-          background: $border-grey;
+          transform: scale(1.4);
+          background: lighten($voa-blue, 5);
         }
       }
     }

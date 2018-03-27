@@ -204,9 +204,6 @@ const withHomeQuery = graphql(
 
       return { data: outputData }
     },
-    options: {
-      fetchPolicy: 'cache-first',
-    },
   },
 )
 

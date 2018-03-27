@@ -103,7 +103,7 @@ const withSearchQuery = graphql<Props, SearchQuery>(
   {
     options: (props: OwnProps) => ({
       variables: props,
-      fetchPolicy: 'network-only',
+      fetchPolicy: 'cache-and-network',
     }),
     props: ({ data }) => {
       const { search = [] } = data
