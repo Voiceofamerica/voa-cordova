@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Route, RouteProps } from 'react-router'
 import { connect, Dispatch } from 'react-redux'
 
-import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav'
+import TopNav, { TopNavItem, StaticItem } from '@voiceofamerica/voa-shared/components/TopNav'
 
 import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
 
@@ -41,6 +41,7 @@ function MainLayout ({ component: Component, categories, ...rest }: Props) {
       return (
         <div>
           <TopNav>
+            <StaticItem />
             <TopNavItem selected={isHeadlines} onClick={() => replace('/')}>
               {homeLabels.headlines}
             </TopNavItem>
@@ -51,9 +52,9 @@ function MainLayout ({ component: Component, categories, ...rest }: Props) {
                 </TopNavItem>
               ))
             }
-            <TopNavItem onClick={() => goTo('/settings/categories')}>
+            <StaticItem onClick={() => goTo('/settings/categories')}>
               {homeLabels.manage}
-            </TopNavItem>
+            </StaticItem>
           </TopNav>
 
           <ErrorBoundary>

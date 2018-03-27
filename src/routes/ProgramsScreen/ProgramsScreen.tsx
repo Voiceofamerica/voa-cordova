@@ -1,7 +1,7 @@
 
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
-import TopNav, { TopNavItem } from '@voiceofamerica/voa-shared/components/TopNav'
+import TopNav, { TopNavItem, StaticItem } from '@voiceofamerica/voa-shared/components/TopNav'
 
 import analytics, { AnalyticsProps } from 'helpers/analytics'
 import ErrorBoundary from 'components/ErrorBoundary'
@@ -142,6 +142,7 @@ class ProgramsScreen extends React.Component<Props> {
 
     return (
       <TopNav>
+        <StaticItem />
         {
           PROGRAM_ZONES.map(({ id, name }, idx) => {
             const selected = zone ? parseInt(zone, 10) === id : idx === 0
