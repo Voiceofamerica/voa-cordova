@@ -2,12 +2,14 @@
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
 import TopNav, { TopNavItem, StaticItem } from '@voiceofamerica/voa-shared/components/TopNav'
+import ThemeProvider from '@voiceofamerica/voa-shared/components/ThemeProvider'
 
 import analytics, { AnalyticsProps } from 'helpers/analytics'
 import ErrorBoundary from 'components/ErrorBoundary'
 import Category from 'types/Category'
 import { programsScreenLabels } from 'labels'
 
+import TopNavTheme from './TopNavTheme'
 import Params from './Params'
 import AudioPrograms from './AudioPrograms'
 import VideoPrograms from './VideoPrograms'
@@ -141,25 +143,27 @@ class ProgramsScreen extends React.Component<Props> {
     const { zone } = this.props.match.params
 
     return (
-      <TopNav>
-        <StaticItem />
-        {
-          PROGRAM_ZONES.map(({ id, name }, idx) => {
-            const selected = zone ? parseInt(zone, 10) === id : idx === 0
+      <ThemeProvider value={TopNavTheme}>
+        <TopNav>
+          <StaticItem />
+          {
+            PROGRAM_ZONES.map(({ id, name }, idx) => {
+              const selected = zone ? parseInt(zone, 10) === id : idx === 0
 
-            return (
-              <TopNavItem
-                key={id}
-                selected={selected}
-                onClick={() => this.setZoneId(id)}
-              >
-                {name}
-              </TopNavItem>
-            )
-          })
-        }
-        <TopNavItem />
-      </TopNav>
+              return (
+                <TopNavItem
+                  key={id}
+                  selected={selected}
+                  onClick={() => this.setZoneId(id)}
+                >
+                  {name}
+                </TopNavItem>
+              )
+            })
+          }
+          <TopNavItem />
+        </TopNav>
+      </ThemeProvider>
     )
   }
 
