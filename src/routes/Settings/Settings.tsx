@@ -8,6 +8,7 @@ import analytics, { AnalyticsProps } from 'helpers/analytics'
 import clearAll from 'redux-store/actions/clearAll'
 import { routerActions } from 'react-router-redux'
 
+import setMediaPlaybackRate from 'redux-store/actions/setMediaPlaybackRate'
 import setTextSize from 'redux-store/actions/setTextSize'
 import AppState from 'types/AppState'
 
@@ -16,6 +17,7 @@ import {
   categorySettingsLabels,
   favoritesSettingsLabels,
   textSettingsLabels,
+  mediaSettingsLabels,
 } from 'labels'
 
 import { settings, panicButtonHolder, panicButton, panicButtonIcon, buttons, settingsRow, settingsButton, row, aboutVoa, content, settingsItem, settingsRowHeader, settingsValuesRow, active } from './Settings.scss'
@@ -37,15 +39,31 @@ const data = {
       value: 2,
     },
   ],
+  speed: [
+    {
+      description: mediaSettingsLabels.normalSpeed,
+      value: 1,
+    },
+    {
+      description: mediaSettingsLabels.halfAgainSpeed,
+      value: 1.5,
+    },
+    {
+      description: mediaSettingsLabels.doubleSpeed,
+      value: 2,
+    },
+  ],
 }
 
 interface StateProps {
   textSize: number
+  mediaPlaybackRate: number
 }
 
 interface DispatchProps {
   clearAll: () => void
   setTextSize: (size: number) => void
+  setPlaybackRate: (speed: number) => void
 }
 
 type RouteProps = RouteComponentProps<void>
@@ -115,6 +133,29 @@ class SettingsRoute extends React.Component<Props> {
     )
   }
 
+  renderPlaybackSpeed () {
+    const { mediaPlaybackRate, setPlaybackRate } = this.props
+
+    return (
+      <div className={settingsRow}>
+        <div className={settingsRowHeader}>
+          {mediaSettingsLabels.chooseSpeed}
+        </div>
+        <div className={settingsValuesRow}>
+          {
+            data.speed.map(speed => (
+              <div
+                key={speed.value}
+                className={`${settingsItem} ${speed.value === mediaPlaybackRate ? active : ''}`}
+                onClick={() => setPlaybackRate(speed.value)}
+              >{speed.description}</div>
+            ))
+          }
+        </div>
+      </div>
+    )
+  }
+
   renderSendToFriends () {
     return (
       <div className={settingsRow}>
@@ -156,6 +197,7 @@ class SettingsRoute extends React.Component<Props> {
             { this.renderFavoritesSettings() }
             { this.renderCategoriesSettings() }
             { this.renderTextSettings() }
+            { this.renderPlaybackSpeed() }
             { this.renderSendToFriends() }
             { this.renderSendFeedback() }
             { this.renderAboutVoa() }
@@ -175,6 +217,7 @@ class SettingsRoute extends React.Component<Props> {
 
 const mapStateToProps = (state: AppState): StateProps => ({
   textSize: state.settings.textSize,
+  mediaPlaybackRate: state.settings.mediaPlaybackRate,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => ({
@@ -184,6 +227,8 @@ const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => ({
   },
   setTextSize: (textSize: number) =>
     dispatch(setTextSize({ textSize })),
+  setPlaybackRate: (mediaPlaybackRate: number) =>
+    dispatch(setMediaPlaybackRate({ mediaPlaybackRate })),
 })
 
 const withRedux = connect(mapStateToProps, mapDispatchToProps)
