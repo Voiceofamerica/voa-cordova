@@ -10,7 +10,7 @@ import MediaPlayer from 'containers/MediaPlayer'
 import CircumventionDrawer from 'containers/CircumventionDrawer'
 import Intro from 'containers/Intro'
 import client from 'helpers/graphql-client'
-import { scheduleDaily } from 'helpers/notifications'
+import { scheduleDaily } from 'helpers/localNotifications'
 
 import { app } from './App.scss'
 

@@ -4,7 +4,7 @@ import { Moment } from 'moment'
 import AppState from 'types/AppState'
 
 import toggleNotification from '../actions/toggleNotification'
-import { schedule, cancel } from 'helpers/notifications'
+import { schedule, cancel } from 'helpers/localNotifications'
 
 interface ToggleNotifierOptions {
   id: string

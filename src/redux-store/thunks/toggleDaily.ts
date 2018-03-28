@@ -3,7 +3,7 @@ import { Dispatch } from 'redux'
 import AppState from 'types/AppState'
 
 import toggleDailyNotification from '../actions/toggleDailyNotification'
-import { scheduleDaily, cancelDaily } from 'helpers/notifications'
+import { scheduleDaily, cancelDaily } from 'helpers/localNotifications'
 
 interface ToggleNotifierOptions {
   on?: boolean
