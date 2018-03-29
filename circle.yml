@@ -91,10 +91,7 @@ workflows:
   test_and_build:
     jobs:
       - test
-      - build_android:
-          filters:
-            branches:
-              only: master
+      - build_android
       #- build_ios:
       #    filters:
       #      branches:

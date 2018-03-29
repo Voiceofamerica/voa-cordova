@@ -7,14 +7,12 @@ export interface NotificationInit {
   notificationObservable: Observable<PhonegapPluginPush.NotificationEventResponse>
 }
 
-const senderID = ''
-
 const notificationSubject = new ReplaySubject<PhonegapPluginPush.NotificationEventResponse>(1)
 
 function initialize (): NotificationInit {
   const push = PushNotification.init({
     android: {
-      senderID,
+      senderID: undefined,
     },
     ios: {
     },
