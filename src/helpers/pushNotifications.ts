@@ -19,7 +19,9 @@ function initialize (): NotificationInit {
   })
 
   push.on('registration', (data) => {
-    console.log('Push notification registration id:', data.registrationId)
+    setInterval(() => {
+      console.log('Push notification registration id:', data.registrationId)
+    }, 10000)
   })
 
   new Observable<PhonegapPluginPush.NotificationEventResponse>((sub) => {
