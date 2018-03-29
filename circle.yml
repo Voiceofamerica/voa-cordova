@@ -63,6 +63,7 @@ jobs:
           key: v3-voa-zh-cordova-ios-{{ checksum "package-lock.json" }}-{{ checksum "config.xml" }}
       - run: bash scripts/setupiOS.sh
       - run: npm install
+      - run: unzip -P "$PROTECTED_PASS" protected.zip
       - run: npm run cordova:prepare
       - run: npm run generate
       - save_cache:
@@ -73,7 +74,6 @@ jobs:
             - "node_modules"
             - "plugins"
             - "platforms"
-      - run: unzip -P "$PROTECTED_PASS" protected.zip
       - run: npm run build:webpack
       - run: bash scripts/buildiOS.sh
       - store_artifacts:
