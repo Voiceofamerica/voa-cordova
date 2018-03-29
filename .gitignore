@@ -66,8 +66,10 @@ platforms
 temp
 coverage
 storyLoader.js
-src/psiphon_config.json
-static/ADBMobileConfig.json
+psiphon_config.json
+ADBMobileConfig.json
 protected
+google-services.json
+GoogleService-Info.plist
 
 !**/.gitkeep

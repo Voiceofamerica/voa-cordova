@@ -28,6 +28,7 @@ start().then(() => {
       cb,
     )
   }
+
   if (module.hot) {
     render = (Component, cb?) => {
       ReactDOM.render(
@@ -56,9 +57,3 @@ start().then(() => {
 }).catch(err => {
   console.error(err)
 })
-
-document.addEventListener(
-  'backbutton',
-  (ev) => { ev.preventDefault() },
-  false,
-)
