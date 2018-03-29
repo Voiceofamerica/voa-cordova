@@ -34,6 +34,7 @@
     "scss:types": "tcm -p './src/{components,containers,routes}/**/*.scss'",
     "scss:types:watch": "npm run scss:types -- -w",
     "cordova:prepare": "cordova prepare",
+    "cordova:prepare:ios": "cordova platform add ios && cordova prepare ios && cd platforms/ios && pod install",
     "protected:zip": "cd protected && zip -e ../protected.zip ./**/*.* ./**/**/*.*",
     "protected:unzip": "unzip protected.zip",
     "protected:prepare": "cd protected && unzip ../protected.zip",
@@ -130,7 +131,8 @@
     "typed-css-modules": "^0.3.0",
     "typescript": "^2.5.3",
     "url-loader": "^0.6.2",
-    "webpack": "^3.8.1"
+    "webpack": "^3.8.1",
+    "cordova-plugin-local-notification": "^0.9.0-beta.1"
   },
   "cordova": {
     "platforms": [
@@ -151,7 +153,8 @@
       "cordova-plugin-device": {},
       "phonegap-plugin-push": {
         "FCM_VERSION": "11.6.2"
-      }
+      },
+      "cordova-plugin-local-notification": {}
     }
   },
   "devDependencies": {

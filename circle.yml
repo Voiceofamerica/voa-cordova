@@ -32,6 +32,7 @@ jobs:
           paths:
             - "~/.npm"
             - "node_modules"
+      - run: unzip -P "$PROTECTED_PASS" protected.zip
       - run: npx cordova prepare android
       - run: npm run copy:assets:android
       - save_cache:
@@ -40,7 +41,6 @@ jobs:
             - "~/.android"
             - "plugins"
             - "platforms"
-      - run: unzip -P "$PROTECTED_PASS" protected.zip
       - run: npm run build:webpack
       - run: bash scripts/buildAndroid.sh
       - store_artifacts:
