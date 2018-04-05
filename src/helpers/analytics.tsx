@@ -38,7 +38,7 @@ export interface AdbInterface {
 
 export function favoriteArticle (opts: { id: string, articleTitle: string, authors: string }) {
   ADB && ADB.trackAction('ARTICLE_TO_FAV', {
-    language: 'zh-cn',
+    language: 'mandarin',
     content_type: 'article',
     article_uid: opts.id,
     page_title: opts.articleTitle,
@@ -50,7 +50,7 @@ export function favoriteArticle (opts: { id: string, articleTitle: string, autho
 
 export function shareArticle (opts: { id: string, articleTitle: string, authors: string }) {
   ADB && ADB.trackAction('ARTICLE_SHARED', {
-    language: 'zh-cn',
+    language: 'mandarin',
     content_type: 'article',
     article_uid: opts.id,
     page_title: opts.articleTitle,
@@ -104,7 +104,7 @@ export default function analytics<P = {}> (options: HOCAnalyticsOptions | ((prop
         }
 
         ADB && ADB.trackState(state, {
-          language: 'zh-cn',
+          language: 'mandarin',
           section: section,
           content_type: type,
           page_title: title,
@@ -126,7 +126,7 @@ export default function analytics<P = {}> (options: HOCAnalyticsOptions | ((prop
         }
 
         ADB && ADB.trackState(state, {
-          language: 'zh-cn',
+          language: 'mandarin',
           section: section,
           content_type: type,
           page_title: title,

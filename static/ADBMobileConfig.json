@@ -1,0 +1,36 @@
+{
+  "lastModified": "2018-03-28T20:48:40.013Z",
+  "target": {
+    "clientCode": "",
+    "timeout": 5
+  },
+  "audienceManager": {
+    "server": "",
+    "analyticsForwardingEnabled": false,
+    "timeout": 5
+  },
+  "acquisition": {
+    "server": "c00.adobe.com",
+    "appid": "88195dbef58d470d401359955931322a53db83d566e2185192c38e6080b65687"
+  },
+  "analytics": {
+    "rsids": "bbgvoa.mandarin.streaming.app",
+    "server": "bbg.sc.omtrdc.net",
+    "ssl": false,
+    "offlineEnabled": true,
+    "charset": "UTF-8",
+    "lifecycleTimeout": 300,
+    "privacyDefault": "optedin",
+    "batchLimit": 0,
+    "timezone": "EDT",
+    "timezoneOffset": -240,
+    "referrerTimeout": 0,
+    "backdateSessionInfo": false,
+    "poi": []
+  },
+  "messages": [],
+  "remotes": {
+    "analytics.poi": "https://assets.adobedtm.com/b213090c5204bf94318f4ef0539a38b487d10368/scripts/satellite-5abbffca64746d5370000c68.json",
+    "messages": "https://assets.adobedtm.com/b213090c5204bf94318f4ef0539a38b487d10368/scripts/satellite-5abbffca64746d4a02003974.json"
+  }
+}
