@@ -12,17 +12,18 @@
   background: transparent;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-  margin-bottom: $menu-height;
+  //margin-bottom: $menu-height;
+  padding-top: 45px;
 
   .inputs {
     position: fixed;
-    bottom: 0;
+    top: $menu-height;
     left: 0;
     right: 0;
     height: $menu-height;
     display: flex;
     flex-direction: row;
-    border-top: 1px solid $border-grey;
+    border-bottom: 1px solid $border-grey;
     background: white;
 
     .backButton {
@@ -97,20 +98,24 @@
       outline: none;
     }
 
-    .emptyText {
-      pointer-events: none;
-      position: absolute;
-      display: flex;
-      font-size: 1.2em;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 0 0.5em;
-      color: rgba(0, 0, 0, 0.5);
-      align-items: center;
-    }
+    // .emptyText {
+    //   pointer-events: none;
+    //   position: absolute;
+    //   display: flex;
+    //   font-size: 1.2em;
+    //   top: 0;
+    //   bottom: 0;
+    //   left: 0;
+    //   right: 0;
+    //   padding: 0 0.5em;
+    //   color: rgba(0, 0, 0, 0.5);
+    //   align-items: center;
+    // }
   }
+}
+
+.searchScreen > * {
+  -webkit-transform: translateZ(0px);
 }
 
 .searchArea {

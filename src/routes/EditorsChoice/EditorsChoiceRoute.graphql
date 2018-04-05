@@ -1,5 +1,5 @@
 query EditorsChoiceRoute {
-  content(source: zhcn, type: [Article, Video, PhotoGallery, Clip], zoneId: 5406) {
+  content(source: zhcn, type: [Article, Video, PhotoGallery, Clip], zoneId: 4210) {
     id
     title
     introduction

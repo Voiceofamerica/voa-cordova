@@ -14,7 +14,7 @@ import { searchLabels } from 'labels'
 
 import SearchArea from './SearchArea'
 
-import { searchScreen, inputs, inputsPill, backButton, dropdownPill, dropdown, dropdownArrow, searchInputContainer, searchInput, emptyText } from './Search.scss'
+import { searchScreen, inputs, inputsPill, backButton, dropdownPill, dropdown, dropdownArrow, searchInputContainer, searchInput } from './Search.scss'
 
 interface StateProps {
   categories: Category[]
@@ -95,8 +95,11 @@ class SearchBase extends React.Component<Props, State> {
             <span className={dropdownArrow}><i className='mdi mdi-chevron-down' /></span>
           </div>
           <div className={searchInputContainer}>
-            <input autoFocus className={searchInput} value={query} onChange={ev => this.setQuery(ev.currentTarget.value)} />
-            { query.length === 0 ? <div className={emptyText}>{searchLabels.query}</div> : null }
+            {/* <form onSubmit={ev => this.setQuery(ev.currentTarget.value)}> */}
+              <input autoFocus className={searchInput} value={query}
+              onChange={ev => this.setQuery(ev.currentTarget.value)}
+              placeholder={searchLabels.query} />
+            {/* </form> */}
           </div>
         </div>
       </div>
