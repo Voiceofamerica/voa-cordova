@@ -95,13 +95,19 @@
     background: $voa-blue;
     height: $size;
     width: $size;
-    font-size: $size - ($padding * 2);
     color: white;
     border-radius: $size / 2;
     overflow: hidden;
     margin-bottom: $margin;
     margin-right: $margin;
     opacity: 0.9;
+    padding-left: 0px !important; padding-right: 0px !important;
+  }
+
+  .mediaButtonIcon {
+    $size: 24px;
+    height: $size;
+    width: $size;
   }
 
   .articleText {

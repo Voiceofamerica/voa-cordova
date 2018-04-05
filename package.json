@@ -98,6 +98,7 @@
     "lodash": "^4.17.4",
     "mdi": "^2.0.46",
     "moment": "^2.19.2",
+    "nl.x-services.plugins.backgroundaudio": "^1.0.1",
     "node-sass": "^4.5.3",
     "npm-run-all": "^4.1.1",
     "psiphon-cordova-plugin": "^0.7.1",
@@ -146,7 +147,8 @@
       "cordova-plugin-x-socialsharing": {},
       "cordova-pdf-generator": {},
       "cordova-plugin-add-swift-support": {},
-      "cordova-plugin-device": {}
+      "cordova-plugin-device": {},
+      "nl.x-services.plugins.backgroundaudio": {}
     }
   },
   "devDependencies": {

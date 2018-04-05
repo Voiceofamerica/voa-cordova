@@ -4,16 +4,16 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: 'https://dev.voamobileendpoints.com/server/graphql',
+    uri: 'https://prod.voamobileendpoints.com/server/graphql',
   }),
   cache: new InMemoryCache(),
   defaultOptions: {
     watchQuery: {
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'cache-and-network',
       notifyOnNetworkStatusChange: true,
     },
     query: {
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'cache-and-network',
       notifyOnNetworkStatusChange: true,
     },
   },
