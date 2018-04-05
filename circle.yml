@@ -73,7 +73,7 @@ jobs:
             - "node_modules"
             - "plugins"
             - "platforms"
-    #   - run: unzip -P "$PROTECTED_PASS" protected.zip
+      - run: unzip -P "$PROTECTED_PASS" protected.zip
       - run: npm run build:webpack
       - run: bash scripts/buildiOS.sh
       - store_artifacts:
