@@ -61,13 +61,14 @@ buck-out/
 www/**/*
 plugins
 platforms
+/splash.png
+/icon.png
 
 # Temporary files
 temp
 coverage
 storyLoader.js
 src/psiphon_config.json
-
-protected
+protected/*
 
 !**/.gitkeep
