@@ -6,6 +6,7 @@ export default interface MediaState {
   mediaDescription?: string
   imageUrl?: string
   isVideo?: boolean
+  keepLocation?: boolean
   playing: boolean
   mediaOpen: boolean
 }

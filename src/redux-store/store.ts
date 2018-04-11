@@ -8,6 +8,16 @@ import history from 'containers/Router/history'
 import AppState from 'types/AppState'
 import rootReducer from './rootReducer'
 
+export let renderReady = false
+const readyCallbacks: (() => void)[] = []
+export function onRenderReady (cb: () => void) {
+  if (renderReady) {
+    cb()
+  } else {
+    readyCallbacks.push(cb)
+  }
+}
+
 const store = createStore<AppState>(
   rootReducer,
   compose(
@@ -15,12 +25,15 @@ const store = createStore<AppState>(
       routerMiddleware(history),
       thunk,
     ),
-    autoRehydrate(),
+    autoRehydrate({}),
   ) as any,
 )
 
 persistStore(store, {
   blacklist: ['media'],
+}, () => {
+  renderReady = true
+  readyCallbacks.forEach(cb => cb())
 })
 
 export default store

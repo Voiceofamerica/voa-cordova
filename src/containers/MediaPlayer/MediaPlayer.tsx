@@ -34,12 +34,23 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps
 
-class MediaPlayerBase extends React.Component<Props> {
+interface State {
+  defaultTime?: number
+}
+
+class MediaPlayerBase extends React.Component<Props, State> {
+  state: State = {}
+
   private player: MediaPlayer
 
   componentWillReceiveProps (nextProps: Props) {
-    if (this.props.media.playing !== nextProps.media.playing && this.player) {
-      this.player.togglePlay(nextProps.media.playing)
+    if (this.player) {
+      if (this.props.media.playing !== nextProps.media.playing) {
+        this.player.togglePlay(nextProps.media.playing)
+      }
+      if (nextProps.media.keepLocation && this.props.media.originalMediaUrl === this.props.media.originalMediaUrl) {
+        this.setState({ defaultTime: this.player.getTime() })
+      }
     }
   }
 
@@ -57,6 +68,7 @@ class MediaPlayerBase extends React.Component<Props> {
   }
 
   renderPlayer () {
+    const { defaultTime } = this.state
     const { media: { mediaUrl, playing, mediaOpen, isVideo }, mediaPlaybackRate, toggleMediaPlaying } = this.props
     if (!mediaUrl) {
       return null
@@ -75,6 +87,7 @@ class MediaPlayerBase extends React.Component<Props> {
           autoPlay={playing}
           onTogglePlay={toggleMediaPlaying}
           loadingText={mediaPlayerLabels.loading}
+          defaultTime={defaultTime}
         />
       </div>
     )

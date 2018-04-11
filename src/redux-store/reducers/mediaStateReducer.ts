@@ -18,7 +18,7 @@ import { ActorMap, buildReducer } from '../actorMap'
 import MediaState from 'types/MediaState'
 
 const actors: ActorMap<MediaState> = {
-  [playMediaType]: (prev, { mediaUrl, originalMediaUrl, mediaTitle, mediaDescription, imageUrl = null, isVideo }: PlayMediaAction) => ({
+  [playMediaType]: (prev, { mediaUrl, originalMediaUrl, mediaTitle, mediaDescription, imageUrl = null, isVideo, keepLocation }: PlayMediaAction) => ({
     ...prev,
     mediaUrl,
     originalMediaUrl,
@@ -26,6 +26,7 @@ const actors: ActorMap<MediaState> = {
     mediaDescription,
     imageUrl,
     isVideo,
+    keepLocation,
     playing: true,
     mediaOpen: true,
   }),

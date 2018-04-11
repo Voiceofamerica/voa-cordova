@@ -10,6 +10,7 @@ interface PlayMediaOptions {
   mediaDescription: string
   isVideo: boolean
   imageUrl?: string
+  keepLocation?: boolean
 }
 
 export type PlayMediaAction = PlayMediaOptions & Action

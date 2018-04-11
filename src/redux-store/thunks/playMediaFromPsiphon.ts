@@ -1,10 +1,16 @@
 
 import { Dispatch } from 'redux'
+import { Subscription } from 'rxjs/Subscription'
+import 'rxjs/add/operator/filter'
+import 'rxjs/add/operator/map'
 import AppState from 'types/AppState'
 
-import { port } from 'helpers/psiphon'
+import { portObservable, startObservable } from 'helpers/psiphon'
 import playMedia from '../actions/playMedia'
 import toggleMediaDrawer from '../actions/toggleMediaDrawer'
+
+let psiphonStartSubscription: Subscription
+let portSubscription: Subscription
 
 interface PlayMediaOptions {
   mediaUrl: string
@@ -13,9 +19,12 @@ interface PlayMediaOptions {
   isVideo: boolean
   imageUrl?: string
 }
+
 export default (options: PlayMediaOptions) =>
   (dispatch: Dispatch<AppState>, getState: () => AppState) => {
     dispatch(toggleMediaDrawer({ open: true }))
+    let alreadyRunning = false
+    let playing = false
 
     const {
       mediaUrl: originalMediaUrl,
@@ -23,25 +32,46 @@ export default (options: PlayMediaOptions) =>
 
     const state = getState()
     if (state.media.originalMediaUrl === originalMediaUrl) {
-      return Promise.resolve()
+      return
     }
 
-    if (typeof device === 'undefined' || device.platform !== 'iOS') {
-      dispatch(playMedia({
-        ...options,
-        originalMediaUrl,
-      }))
-      return Promise.resolve()
+    if (psiphonStartSubscription) {
+      psiphonStartSubscription.unsubscribe()
     }
 
-    const encodedUrl = encodeURIComponent(originalMediaUrl)
-    return port()
-      .then(portNum => `http://127.0.0.1:${portNum}/tunneled-rewrite/${encodedUrl}?m3u8=true`)
-      .then(mediaUrl => {
+    psiphonStartSubscription = startObservable.subscribe(psiphonRunning => {
+      if (alreadyRunning && psiphonRunning) {
+        return
+      }
+
+      alreadyRunning = psiphonRunning
+      if (portSubscription && !alreadyRunning) {
+        portSubscription.unsubscribe()
+      }
+
+      if (typeof device === 'undefined' || device.platform !== 'iOS' || !psiphonRunning) {
         dispatch(playMedia({
           ...options,
-          mediaUrl,
           originalMediaUrl,
+          keepLocation: playing,
         }))
-      })
+        playing = true
+        return
+      }
+
+      const encodedUrl = encodeURIComponent(originalMediaUrl)
+
+      portSubscription = portObservable
+        .filter(port => port !== null)
+        .map(portNum => `http://127.0.0.1:${portNum}/tunneled-rewrite/${encodedUrl}?m3u8=true`)
+        .subscribe(mediaUrl => {
+          dispatch(playMedia({
+            ...options,
+            mediaUrl,
+            originalMediaUrl,
+            keepLocation: playing,
+          }))
+          playing = true
+        })
+    })
   }

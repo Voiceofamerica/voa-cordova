@@ -44,44 +44,45 @@ const actors: ActorMap<AppSettings> = {
 export const INITIAL_STATE: AppSettings = {
   categories: [
     {
-      id: 1746,
-      name: '美国',
+      id: 1696,
+      name: 'سرخط خبرها',
     },
     {
-      id: 1757,
-      name: '中国',
+      id: 1041,
+      name: 'ايران',
     },
     {
-      id: 1769,
-      name: '台湾',
+      id: 1050,
+      name: 'آمريکا',
     },
     {
-      id: 1755,
-      name: '港澳',
+      id: 1058,
+      name: 'جهان',
     },
     {
-      id: 1740,
-      name: '国际',
+      id: 1080,
+      name: 'فرهنگ و زندگی',
     },
     {
-      id: 1748,
-      name: '经济·金融·贸易',
+      id: 1066,
+      name: 'اقتصادی',
     },
     {
-      id: 1756,
-      name: '人权',
+      id: 1035,
+      name: 'ورزش',
     },
     {
-      id: 1772,
-      name: '军事',
+      id: 1037,
+      name: 'علم و فن آوری',
     },
     {
-      id: 1737,
-      name: '学英语',
+      id: 1113,
+      name: 'گالری عکس',
     },
   ],
   mediaPlaybackRate: 1,
   dailyNotificationOn: true,
+  usePsiphon: true,
   textSize: 1,
 }
 

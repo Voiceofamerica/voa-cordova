@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Provider } from 'react-redux'
 import { ApolloProvider } from 'react-apollo'
 
-import store from 'redux-store'
+import store, { onRenderReady } from 'redux-store'
 import PsiphonIndicator from 'containers/PsiphonIndicator'
 import Router from 'containers/Router'
 import MediaPlayer from 'containers/MediaPlayer'
@@ -11,31 +11,63 @@ import CircumventionDrawer from 'containers/CircumventionDrawer'
 import Intro from 'containers/Intro'
 import client from 'helpers/graphql-client'
 import { scheduleDaily } from 'helpers/localNotifications'
+import { start } from 'helpers/psiphon'
 
 import { app } from './App.scss'
 
-export default class App extends React.Component {
+interface State {
+  appReady: boolean
+}
+
+export default class App extends React.Component<{}, State> {
+  state: State = {
+    appReady: false,
+  }
 
   componentDidMount () {
-    const appState = store.getState()
-    if (appState.settings.dailyNotificationOn) {
-      scheduleDaily().catch(err => console.error(err))
-    }
+    onRenderReady(() => {
+      const appState = store.getState()
+      if (appState.settings.dailyNotificationOn) {
+        scheduleDaily().catch(err => console.error(err))
+      }
+
+      if (appState.settings.usePsiphon) {
+        start().then(() => {
+          this.ready()
+        }).catch(console.error)
+      } else {
+        this.ready()
+      }
+    })
   }
 
   render () {
+    const { appReady } = this.state
     return (
       <ApolloProvider client={client}>
         <Provider store={store}>
-          <div className={app}>
-            <Intro />
-            <PsiphonIndicator />
-            <Router />
-            <MediaPlayer />
-            <CircumventionDrawer />
-          </div>
+          {
+            appReady
+            ? <div key='app' className={app}>
+                <Intro />
+                <PsiphonIndicator />
+                <Router />
+                <MediaPlayer />
+                <CircumventionDrawer />
+              </div>
+            : <div key='app' />
+          }
         </Provider>
       </ApolloProvider>
     )
+  }
+
+  private ready = () => {
+    this.setState({ appReady: true }, () => {
+      const splash = (navigator as any).splashscreen
+      if (splash) {
+        splash.hide()
+      }
+    })
   }
 }

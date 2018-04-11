@@ -61,7 +61,7 @@
     "@types/redux-thunk": "^2.1.0",
     "@types/webpack-env": "^1.13.2",
     "@voiceofamerica/voa-core-shared": "^1.53.0",
-    "@voiceofamerica/voa-shared": "^1.15.7",
+    "@voiceofamerica/voa-shared": "^1.16.1",
     "adobe-mobile-services": "^4.13.1-cor",
     "android-versions": "^1.2.1",
     "apollo-cache-inmemory": "^1.1.11",
