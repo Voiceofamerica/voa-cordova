@@ -32,6 +32,8 @@ const baseStartObservable = new Observable<boolean>((sub) => {
     console.log('starting psiphon')
     psiphon.start(() => sub.next(true), (err) => sub.error(err))
     document.addEventListener('resume', onResume)
+  }).catch((err) => {
+    console.error('something went wrong configuring psiphon', err)
   })
 
   return () => {
