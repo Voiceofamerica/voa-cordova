@@ -5,7 +5,7 @@ query Search($query: String!, $zoneId: Int) {
     introduction
     pubDate
     image {
-      url
+      tiny
     }
     video {
       url

@@ -14,11 +14,12 @@ query ArticleRoute($id: Int) {
       }
     }
     image {
-      url
+      tiny
+      hero
     }
     video {
       url
-      thumbnail
+      thumbnailTiny
       videoDescription
     }
     audio {

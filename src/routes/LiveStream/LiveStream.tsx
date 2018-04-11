@@ -82,7 +82,7 @@ class LiveStreamBase extends React.Component<Props, State> {
     const { playMedia } = this.props
 
     const onClick = prog.url
-                  ? () => playMedia(prog.url, prog.programTitle, prog.programDescription, true, prog.image && prog.image.url)
+                  ? () => playMedia(prog.url, prog.programTitle, prog.programDescription, true, prog.image && prog.image.tiny)
                   : null
 
     const showSwitch = this.deviceSupportsNotifications()
@@ -90,7 +90,7 @@ class LiveStreamBase extends React.Component<Props, State> {
     return (
       <div className={drawer}>
         <div onClick={onClick} className={drawerImage}>
-          <ResilientImage src={prog.image && prog.image.url}>
+          <ResilientImage src={prog.image && prog.image.tiny}>
             {this.renderIconFromType()}
           </ResilientImage>
         </div>

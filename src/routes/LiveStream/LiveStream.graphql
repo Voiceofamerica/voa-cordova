@@ -6,7 +6,7 @@ query LiveStream {
     programTitle
     programDescription
     image {
-      url
+      tiny
     }
     url
   }

@@ -3,7 +3,7 @@ query ProgramAudio($zone: Int) {
     id
     pubDate
     image {
-      url
+      tiny
     }
     audio {
       url

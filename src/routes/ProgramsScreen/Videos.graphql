@@ -3,7 +3,7 @@ query ProgramVideos($zone: Int) {
     id
     pubDate
     image {
-      url
+      tiny
     }
     video {
       url

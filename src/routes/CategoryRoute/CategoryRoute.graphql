@@ -5,7 +5,9 @@ query CategoryRoute($category: Int) {
     introduction
     pubDate
     image {
-      url
+      tiny
+      thumb
+      hero
     }
     video {
       url

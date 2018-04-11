@@ -9,7 +9,6 @@ import SvgIcon from '@voiceofamerica/voa-shared/components/SvgIcon'
 import Loader from 'components/Loader'
 
 import { SearchQuery, SearchQueryVariables } from 'helpers/graphql-types'
-import { mapImageUrl } from 'helpers/image'
 
 import { searchLabels } from 'labels'
 
@@ -80,7 +79,7 @@ class SearchAreaBase extends React.Component<Props> {
           onPress={() => this.goToArticle(blurb.id)}
           title={blurb.title}
           minorText={moment(blurb.pubDate).fromNow()}
-          imageUrl={blurb.image && blurb.image.url}
+          imageUrl={blurb.image && blurb.image.tiny}
           icon={this.renderIcon(blurb)}
         />
       </div>
@@ -105,22 +104,6 @@ const withSearchQuery = graphql<Props, SearchQuery>(
       variables: props,
       fetchPolicy: 'cache-and-network',
     }),
-    props: ({ data }) => {
-      const { search = [] } = data
-      if (!data.loading && !data.error && search) {
-        data.search = search.filter(c => c).map(c => {
-          return {
-            ...c,
-            image: c.image && {
-              ...c.image,
-              url: mapImageUrl(c.image.url, 'w100'),
-            },
-          }
-        })
-      }
-
-      return { data }
-    },
   },
 )
 

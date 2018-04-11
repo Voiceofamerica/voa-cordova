@@ -17,7 +17,6 @@ import { homeRoute, row, content, searchButton, iconCircle } from './CategoryRou
 import * as Query from './CategoryRoute.graphql'
 import { CategoryRouteQuery, CategoryRouteQueryVariables } from 'helpers/graphql-types'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
-import { mapImageUrl } from 'helpers/image'
 import { truncateTitleText } from 'helpers/truncation'
 import { homeLabels } from 'labels'
 
@@ -103,7 +102,7 @@ class HomeRouteBase extends React.Component<Props, State> {
           icon={icon}
           title={truncateTitleText(blurb.title, hasIcon)}
           minorText={moment(blurb.pubDate).format('lll')}
-          imageUrl={blurb.image && blurb.image.url}
+          imageUrl={blurb.image && blurb.image.hero}
         />
       </div>
     )
@@ -125,7 +124,7 @@ class HomeRouteBase extends React.Component<Props, State> {
               key={blurb.id}
               onPress={() => this.goToArticle(blurb.id)}
               title={<span>{this.renderIcon(blurb)} {blurb.title}</span>}
-              imageUrl={blurb.image && blurb.image.url}
+              imageUrl={blurb.image && blurb.image.thumb}
             />
           ))
         }
@@ -148,7 +147,7 @@ class HomeRouteBase extends React.Component<Props, State> {
             onPress={() => this.goToArticle(blurb.id)}
             title={blurb.title}
             minorText={moment(blurb.pubDate).format('lll')}
-            imageUrl={blurb.image && blurb.image.url}
+            imageUrl={blurb.image && blurb.image.tiny}
             icon={this.renderIconWithCircle(blurb)}
           />
         </div>
@@ -203,22 +202,6 @@ const withHomeQuery = graphql(
         category: parseInt(ownProps.match.params.category, 10),
       },
     }),
-    props: ({ data }) => {
-      let outputData = data as (typeof data) & CategoryRouteQuery
-      if (!data.loading && !data.error) {
-        outputData.content = outputData.content.filter(c => c).map(c => {
-          return {
-            ...c,
-            image: c.image && {
-              ...c.image,
-              url: mapImageUrl(c.image.url, 'w300'),
-            },
-          }
-        })
-      }
-
-      return { data: outputData }
-    },
   },
 )
 

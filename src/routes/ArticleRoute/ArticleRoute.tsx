@@ -17,7 +17,6 @@ import { ArticleRouteQuery, ArticleRouteQueryVariables } from 'helpers/graphql-t
 import playMedia from 'redux-store/thunks/playMediaFromPsiphon'
 import toggleFavoriteContent from 'redux-store/actions/toggleFavoriteContent'
 
-import { mapImageUrl } from 'helpers/image'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
 import { generatePDF } from 'helpers/articlePrinter'
 import MainBottomNav from 'containers/MainBottomNav'
@@ -197,11 +196,11 @@ class ArticleRouteBase extends React.Component<Props> {
 
   renderImage () {
     const { image } = this.props.data.content[0]
-    if (!image || !image.url) {
+    if (!image || !image.hero) {
       return null
     }
 
-    return <ResilientImage src={image.url} className={heroImage} />
+    return <ResilientImage src={image.hero} className={heroImage} />
   }
 
   renderHeading () {
@@ -258,7 +257,7 @@ class ArticleRouteBase extends React.Component<Props> {
     return (
       <IconItem
         className={mediaButton}
-        onClick={() => playMedia(video.url, article.title, video.videoDescription, true, video.thumbnail)}
+        onClick={() => playMedia(video.url, article.title, video.videoDescription, true, video.thumbnailTiny)}
       >
         <SvgIcon src={videoSvg} className={mediaButtonIcon} />
       </IconItem>
@@ -274,7 +273,7 @@ class ArticleRouteBase extends React.Component<Props> {
       return null
     }
 
-    const imgUrl = article.image && article.image.url
+    const imgUrl = article.image && article.image.tiny
 
     return (
       <IconItem
@@ -460,38 +459,6 @@ const withQuery = graphql(
         id: parseInt(ownProps.match.params.id, 10),
       },
     }),
-
-    props: ({ data }) => {
-      let outputData = data as (typeof data) & ArticleRouteQuery
-      if (!data.loading && !data.error) {
-        outputData.content = outputData.content.filter(c => c).map(c => {
-          return {
-            ...c,
-            image: c.image && {
-              ...c.image,
-              url: mapImageUrl(c.image.url, 'w600'),
-            },
-            photoGallery: c.photoGallery && c.photoGallery.map(gallery => {
-              return {
-                ...gallery,
-                photo: gallery.photo && gallery.photo.map(photo => {
-                  return {
-                    ...photo,
-                    url: mapImageUrl(photo.url, 'w600'),
-                  }
-                }),
-              }
-            }),
-            relatedStories: c.relatedStories.map(related => ({
-              ...related,
-              thumbnailUrl: mapImageUrl(related.thumbnailUrl, 'w300'),
-            })),
-          }
-        })
-      }
-
-      return { data: outputData }
-    },
   },
 )
 

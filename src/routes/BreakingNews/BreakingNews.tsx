@@ -16,7 +16,6 @@ import { homeRoute, row, contentArea, defaultText, ticketIcon } from './Breaking
 import * as Query from './BreakingNewsRoute.graphql'
 import { BreakingNewsRouteQuery } from 'helpers/graphql-types'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
-import { mapImageUrl } from 'helpers/image'
 import { breakingNewsLabels } from 'labels'
 
 type OwnProps = RouteComponentProps<void>
@@ -67,7 +66,7 @@ class HomeRouteBase extends React.Component<Props> {
           icon={this.renderIcon(blurb)}
           title={blurb.title}
           minorText={moment(blurb.pubDate).fromNow()}
-          imageUrl={blurb.image && blurb.image.url}
+          imageUrl={blurb.image && blurb.image.hero}
         />
       </div>
     )
@@ -89,7 +88,7 @@ class HomeRouteBase extends React.Component<Props> {
               key={blurb.id}
               onPress={() => this.goToArticle(blurb.id)}
               title={<span>{this.renderIcon(blurb)} {blurb.title}</span>}
-              imageUrl={blurb.image && blurb.image.url}
+              imageUrl={blurb.image && blurb.image.thumb}
             />
           ))
         }
@@ -112,7 +111,7 @@ class HomeRouteBase extends React.Component<Props> {
             onPress={() => this.goToArticle(blurb.id)}
             title={blurb.title}
             minorText={moment(blurb.pubDate).fromNow()}
-            imageUrl={blurb.image && blurb.image.url}
+            imageUrl={blurb.image && blurb.image.tiny}
             icon={this.renderIcon(blurb, ticketIcon)}
           />
         </div>
@@ -169,24 +168,6 @@ class HomeRouteBase extends React.Component<Props> {
 
 const withHomeQuery = graphql(
   Query,
-  {
-    props: ({ data }) => {
-      let outputData = data as (typeof data) & BreakingNewsRouteQuery
-      if (!data.loading && !data.error) {
-        outputData.breakingNews = outputData.breakingNews.filter(c => c).map(c => {
-          return {
-            ...c,
-            image: c.image && {
-              ...c.image,
-              url: mapImageUrl(c.image.url, 'w300'),
-            },
-          }
-        })
-      }
-
-      return { data: outputData }
-    },
-  },
 )
 
 const withAnalytics = analytics<Props>(({ data }) => ({

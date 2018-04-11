@@ -15,7 +15,6 @@ import playMedia from 'redux-store/thunks/playMediaFromPsiphon'
 
 // import { programsScreenLabels } from 'labels'
 import { ProgramVideosQuery, ProgramVideosQueryVariables } from 'helpers/graphql-types'
-import { mapImageUrl } from 'helpers/image'
 import { programsScreenLabels } from 'labels'
 
 import Params from './Params'
@@ -68,9 +67,9 @@ class VideoPrograms extends React.Component<Props> {
     return (
       <div key={key} style={style}>
         <Ticket
-          onPress={() => this.playVideo(video, image && image.url)}
+          onPress={() => this.playVideo(video, image && image.tiny)}
           title={video.videoTitle}
-          imageUrl={image && image.url}
+          imageUrl={image && image.tiny}
           minorText={moment(pubDate).format('lll')}
           suppressImage={isScrolling}
         />
@@ -104,21 +103,6 @@ class VideoPrograms extends React.Component<Props> {
 const withQuery = graphql<QueryProps, ProgramVideosQuery>(
   Query,
   {
-    props: ({ data }) => {
-      if (!data.loading && !data.error) {
-        data.content = data.content.filter(c => c && c.video && c.video.url).map(c => {
-          return {
-            ...c,
-            image: c.image && {
-              ...c.image,
-              url: mapImageUrl(c.image.url, 'w300'),
-            },
-          }
-        })
-      }
-
-      return { data }
-    },
     options: (ownProps: OwnProps): QueryOpts<ProgramVideosQueryVariables> => ({
       variables: {
         zone: parseInt(ownProps.match.params.zone || '0', 10),

@@ -14,7 +14,6 @@ import Loader from 'components/Loader'
 import playMedia from 'redux-store/thunks/playMediaFromPsiphon'
 
 import { ProgramAudioQuery, ProgramAudioQueryVariables } from 'helpers/graphql-types'
-import { mapImageUrl } from 'helpers/image'
 import { programsScreenLabels } from 'labels'
 
 import Params from './Params'
@@ -66,9 +65,9 @@ class AudioPrograms extends React.Component<Props> {
     return (
       <div key={key} style={style}>
         <Ticket
-            onPress={() => this.playAudio(audio, image && image.url)}
+            onPress={() => this.playAudio(audio, image && image.tiny)}
             title={audio.audioTitle}
-            imageUrl={image && image.url}
+            imageUrl={image && image.tiny}
             minorText={moment(pubDate).format('lll')}
           suppressImage={isScrolling}
         />
@@ -102,21 +101,6 @@ class AudioPrograms extends React.Component<Props> {
 const withQuery = graphql<QueryProps, ProgramAudioQuery>(
   Query,
   {
-    props: ({ data }) => {
-      if (!data.loading && !data.error) {
-        data.content = data.content.filter(c => c && c.audio && c.audio.url).map(c => {
-          return {
-            ...c,
-            image: c.image && {
-              ...c.image,
-              url: mapImageUrl(c.image.url, 'w300'),
-            },
-          }
-        })
-      }
-
-      return { data }
-    },
     options: (ownProps: OwnProps): QueryOpts<ProgramAudioQueryVariables> => ({
       variables: {
         zone: parseInt(ownProps.match.params.zone || '0', 10),

@@ -11,7 +11,6 @@ import Loader from 'components/Loader'
 
 // import { programsScreenLabels } from 'labels'
 import { ProgramGalleriesQuery } from 'helpers/graphql-types'
-import { mapImageUrl } from 'helpers/image'
 import * as Query from './Galleries.graphql'
 
 import { programContent } from './ProgramsScreen.scss'
@@ -55,7 +54,7 @@ class GalleryPrograms extends React.Component<Props> {
                 <Ticket
                   onPress={() => this.goToArticle(item.id)}
                   title={item.title}
-                  imageUrl={item.image && item.image.url}
+                  imageUrl={item.image && item.image.tiny}
                   minorText={moment(item.pubDate).format('lll')}
                 />
               </div>
@@ -69,23 +68,6 @@ class GalleryPrograms extends React.Component<Props> {
 
 const withQuery = graphql<Props, ProgramGalleriesQuery>(
   Query,
-  {
-    props: ({ data }) => {
-      if (!data.loading && !data.error) {
-        data.content = data.content.filter(c => c).map(c => {
-          return {
-            ...c,
-            image: c.image && {
-              ...c.image,
-              url: mapImageUrl(c.image.url, 'w100'),
-            },
-          }
-        })
-      }
-
-      return { data }
-    },
-  },
 )
 
 export default withQuery(GalleryPrograms)

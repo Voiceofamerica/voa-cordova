@@ -60,7 +60,7 @@
     "@types/redux-persist": "^4.3.1",
     "@types/redux-thunk": "^2.1.0",
     "@types/webpack-env": "^1.13.2",
-    "@voiceofamerica/voa-core-shared": "^1.49.0",
+    "@voiceofamerica/voa-core-shared": "^1.53.0",
     "@voiceofamerica/voa-shared": "^1.15.7",
     "adobe-mobile-services": "^4.13.1-cor",
     "android-versions": "^1.2.1",
@@ -127,7 +127,7 @@
     "tslint": "^5.8.0",
     "tslint-config-standard": "^6.0.1",
     "typed-css-modules": "^0.3.0",
-    "typescript": "^2.5.3",
+    "typescript": "^2.8.1",
     "url-loader": "^0.6.2",
     "webpack": "^3.8.1"
   },

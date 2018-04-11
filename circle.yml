@@ -41,7 +41,7 @@ jobs:
             - "plugins"
             - "platforms"
       - run: unzip -o -P "$PROTECTED_PASS" protected.zip
-      - run: npm run build:webpack
+      - run: NODE_ENV='production' npm run build:webpack
       - run: bash scripts/buildAndroid.sh
       - store_artifacts:
           path: platforms/android/build/outputs/apk/debug/android-local.apk
@@ -74,7 +74,7 @@ jobs:
             - "plugins"
             - "platforms"
       - run: unzip -o -P "$PROTECTED_PASS" protected.zip
-      - run: npm run build:webpack
+      - run: NODE_ENV='production' npm run build:webpack
       - run: bash scripts/buildiOS.sh
       - store_artifacts:
           path: builds/local/voa-cordova.ipa
