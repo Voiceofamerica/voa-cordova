@@ -18,6 +18,11 @@ const configPromise = new Promise((resolve, reject) => {
 })
 
 const baseStartObservable = new Observable<boolean>((sub) => {
+  if (__HOST__) {
+    sub.next(false)
+    return () => null
+  }
+
   const onResume = () => {
     console.log('resuming psiphon')
     psiphon.start(() => sub.next(true), (err) => sub.error(err))
