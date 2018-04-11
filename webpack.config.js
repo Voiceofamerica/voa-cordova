@@ -12,6 +12,15 @@ const env = (process.env.NODE_ENV && process.env.NODE_ENV.toLowerCase()) || ENV_
 
 const __DEV__ = env !== ENV_PROD
 const __HOST__ = env === ENV_HOST
+const GRAPHQL_URL = (() => {
+  if (process.env.GRAPHQL_URL) {
+    return process.env.GRAPHQL_URL
+  } else if (__DEV__) {
+    return 'https://dev.voamobileendpoints.com/server/graphql'
+  } else {
+    return 'https://prod.voamobileendpoints.com/server/graphql'
+  }
+})()
 
 const srcDir = path.join(__dirname, 'src')
 
@@ -110,6 +119,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(env),
+      'process.env.GRAPHQL_URL': JSON.stringify(GRAPHQL_URL),
       '__DEV__': JSON.stringify(__DEV__),
       '__HOST__': JSON.stringify(__HOST__),
     }),

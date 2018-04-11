@@ -4,7 +4,8 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: 'https://prod.voamobileendpoints.com/server/graphql',
+    // See webpack.config.js for actual GRAPHQL_URL endpoints
+    uri: process.env.GRAPHQL_URL || 'https://prod.voamobileendpoints.com/server/graphql',
   }),
   cache: new InMemoryCache(),
   defaultOptions: {
