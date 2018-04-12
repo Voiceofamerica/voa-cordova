@@ -2,6 +2,7 @@
 import * as React from 'react'
 import { push } from 'react-router-redux'
 import store from 'redux-store'
+import toggleCircumventionDrawer from 'redux-store/actions/toggleCircumventionDrawer'
 
 export const graphqlLanguage = 'zhcn'
 
@@ -41,7 +42,10 @@ export const circumventionDrawerLabels = {
         安全访问已启动
       </p>
       <p>
-        <a href='#' onClick={() => store.dispatch(push('/settings'))}>设置</a>
+        <a href='#' onClick={() => {
+          store.dispatch(push('/settings'))
+          store.dispatch(toggleCircumventionDrawer({ open: false }))
+        }}>设置</a>
       </p>
     </div>
   ),
@@ -51,7 +55,10 @@ export const circumventionDrawerLabels = {
         安全访问停止
       </p>
       <p>
-        <a href='#' onClick={() => store.dispatch(push('/settings'))}>设置</a>
+        <a href='#' onClick={() => {
+          store.dispatch(push('/settings'))
+          store.dispatch(toggleCircumventionDrawer({ open: false }))
+        }}>设置</a>
       </p>
     </div>
   ),
