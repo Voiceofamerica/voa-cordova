@@ -88,9 +88,9 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
 
   moveChosenCard (at: PillItem, chosenItem: PillItem) {
     const { chosenCategories } = this.state
-    const { changeOrder } = this.props
+    const { data: { zones = [] }, changeOrder } = this.props
 
-    const chosenCategory = chosenCategories.find(c => c.id === chosenItem.id)
+    const chosenCategory = zones.find(c => c.id === chosenItem.id)
 
     const removed = chosenCategories.filter(c => c.id !== chosenItem.id)
 
@@ -121,9 +121,9 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
 
   removeChosenCard (at: PillItem, chosenItem: PillItem) {
     const { chosenCategories, unChosenCategories } = this.state
-    const { changeOrder } = this.props
+    const { data: { zones = [] }, changeOrder } = this.props
 
-    const chosenCategory = chosenCategories.find(c => c.id === chosenItem.id)
+    const chosenCategory = zones.find(c => c.id === chosenItem.id)
     const removed = chosenCategories.filter(c => c.id !== chosenItem.id)
 
     const inserted = [
