@@ -1,5 +1,7 @@
 
 import * as React from 'react'
+import { push } from 'react-router-redux'
+import store from 'redux-store'
 
 export const graphqlLanguage = 'zhcn'
 
@@ -33,9 +35,24 @@ export const categorySettingsLabels = {
 }
 
 export const circumventionDrawerLabels = {
-  content: (
+  enabledContent: (
     <div>
-      安全访问已启动
+      <p>
+        安全访问已启动
+      </p>
+      <p>
+        <a href='#' onClick={() => store.dispatch(push('/settings'))}>设置</a>
+      </p>
+    </div>
+  ),
+  disabledContent: (
+    <div>
+      <p>
+        安全访问停止
+      </p>
+      <p>
+        <a href='#' onClick={() => store.dispatch(push('/settings'))}>设置</a>
+      </p>
     </div>
   ),
 }
@@ -138,9 +155,9 @@ export const settingsLabels = {
   feedbackSubject: encodeURIComponent('美国之音'),
   feedbackBody: encodeURIComponent(''),
   shareMessage: '',
-  psiphon: 'Use VPN?',
-  psiphonOn: 'Yes',
-  psiphonOff: 'No',
+  psiphon: '禁用安全访问',
+  psiphonOn: '打开',
+  psiphonOff: '关掉',
 }
 
 export const textSettingsLabels = {
