@@ -38,31 +38,61 @@ type Props = ChildProps<OwnProps & StateProps & DispatchProps, CategorySettingsQ
 
 interface LocalState {
   draggingIndex: number
+  unChosenCategories: Category[]
+  chosenCategories: Category[]
+}
+
+function categoriesDiffer (first: Category[], second: Category[]) {
+  return first !== second
 }
 
 class CategorySettingsBase extends React.Component<Props, LocalState> {
+  state: LocalState = {
+    draggingIndex: -1,
+    unChosenCategories: [],
+    chosenCategories: this.props.categories,
+  }
+
+  componentDidMount () {
+    this.setState({ unChosenCategories: this.filterCategories(this.props.categories, this.props.data.zones) })
+  }
+
+  componentWillReceiveProps (nextProps: Props) {
+    if (categoriesDiffer(this.props.data.zones, nextProps.data.zones)) {
+      this.setState({ unChosenCategories: this.filterCategories(nextProps.categories, nextProps.data.zones) })
+    }
+    this.setState({ chosenCategories: nextProps.categories })
+  }
+
+  filterCategories (chosenCategories: Category[], allCategories: Category[] = []) {
+    return allCategories
+      .filter(zone => chosenCategories.findIndex(category => category.id === zone.id) < 0)
+  }
+
   hoverOverChosen = (chosenItem: PillItem, at: PillItem) => {
-    const { categories } = this.props
-    if (categories.find(c => c.id === chosenItem.id)) {
-      this.moveCard(at, chosenItem)
+    const { chosenCategories } = this.state
+    if (chosenCategories.find(c => c.id === chosenItem.id)) {
+      this.moveChosenCard(at, chosenItem)
     } else {
-      this.insertCard(at, chosenItem)
+      this.insertChosenCard(at, chosenItem)
     }
   }
 
-  hoverOverUnchosen = (chosenItem: PillItem) => {
-    const { categories } = this.props
-    if (categories.find(c => c.id === chosenItem.id)) {
-      this.removeCard(chosenItem)
+  hoverOverUnchosen = (chosenItem: PillItem, at: PillItem) => {
+    const { chosenCategories } = this.state
+    if (chosenCategories.find(c => c.id === chosenItem.id)) {
+      this.removeChosenCard(at, chosenItem)
     }
+    this.moveUnchosenCard(at, chosenItem)
   }
 
-  moveCard (at: PillItem, chosenItem: PillItem) {
-    const { categories, changeOrder } = this.props
+  moveChosenCard (at: PillItem, chosenItem: PillItem) {
+    const { chosenCategories } = this.state
+    const { changeOrder } = this.props
 
-    const chosenCategory = categories.find(c => c.id === chosenItem.id)
+    const chosenCategory = chosenCategories.find(c => c.id === chosenItem.id)
 
-    const removed = categories.filter(c => c.id !== chosenItem.id)
+    const removed = chosenCategories.filter(c => c.id !== chosenItem.id)
 
     const moved = [
       ...removed.slice(0, at.index),
@@ -73,26 +103,56 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
     changeOrder(moved)
   }
 
-  removeCard (chosenItem: PillItem) {
-    const { categories, changeOrder } = this.props
-
-    const removed = categories.filter(c => c.id !== chosenItem.id)
-
-    changeOrder(removed)
-  }
-
-  insertCard (at: PillItem, chosenItem: PillItem) {
-    const { data: { zones = [] }, categories, changeOrder } = this.props
+  insertChosenCard (at: PillItem, chosenItem: PillItem) {
+    const { chosenCategories, unChosenCategories } = this.state
+    const { data: { zones = [] }, changeOrder } = this.props
 
     const chosenCategory = zones.find(z => z.id === chosenItem.id)
 
     const inserted = [
-      ...categories.slice(0, at.index),
+      ...chosenCategories.slice(0, at.index),
       chosenCategory,
-      ...categories.slice(at.index),
+      ...chosenCategories.slice(at.index),
     ]
 
+    this.setState({ unChosenCategories: unChosenCategories.filter(z => z.id !== chosenItem.id), chosenCategories: inserted })
     changeOrder(inserted)
+  }
+
+  removeChosenCard (at: PillItem, chosenItem: PillItem) {
+    const { chosenCategories, unChosenCategories } = this.state
+    const { changeOrder } = this.props
+
+    const chosenCategory = chosenCategories.find(c => c.id === chosenItem.id)
+    const removed = chosenCategories.filter(c => c.id !== chosenItem.id)
+
+    const inserted = [
+      ...unChosenCategories.slice(0, at.index),
+      chosenCategory,
+      ...unChosenCategories.slice(at.index),
+    ]
+
+    this.setState({ chosenCategories: removed, unChosenCategories: inserted })
+    changeOrder(removed)
+  }
+
+  moveUnchosenCard (at: PillItem, chosenItem: PillItem) {
+    const { chosenCategories } = this.state
+    const { data: { zones = [] } } = this.props
+    const { unChosenCategories } = this.state
+
+    const chosenCategory = zones.find(c => c.id === chosenItem.id)
+
+    const removed = unChosenCategories.filter(c => c.id !== chosenItem.id)
+    const index = at.index - (chosenCategories.length + 1)
+
+    const moved = [
+      ...removed.slice(0, index),
+      chosenCategory,
+      ...removed.slice(index),
+    ]
+
+    this.setState({ unChosenCategories: moved })
   }
 
   renderCategory = ({ id, name, chosen, separator }: Category & { chosen: boolean, separator: boolean }, index: number) => {
@@ -114,19 +174,15 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
   }
 
   render () {
-    const { data, categories, history } = this.props
-    const { zones = [] } = data
+    const { unChosenCategories, chosenCategories } = this.state
+    const { data, history } = this.props
 
-    const unchosenCategories = zones
-      .filter(zone => categories.findIndex(category => category.id === zone.id) < 0)
-      .sort((z1, z2) => z1.name > z2.name ? 1 : z1.name === z2.name ? 0 : -1)
+    const chosenCategoriesWithFlags = chosenCategories.map(c => ({ ...c, chosen: true, separator: false }))
+    const unchosenCategoriesWithFlags = unChosenCategories.map(c => ({ ...c, chosen: false, separator: false }))
 
-    const chosenCategoriesWithChosen = categories.map(c => ({ ...c, chosen: true, separator: false }))
-    const unchosenCategoriesWithChosen = unchosenCategories.map(c => ({ ...c, chosen: false, separator: false }))
-
-    const allCategoriesWithSeparator = chosenCategoriesWithChosen
+    const allCategoriesWithSeparator = chosenCategoriesWithFlags
       .concat([{ id: -1, name: '', chosen: false, separator: true }])
-      .concat(unchosenCategoriesWithChosen)
+      .concat(unchosenCategoriesWithFlags)
 
     return (
       <div className={categorySettings}>
@@ -165,9 +221,23 @@ const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => ({
   changeOrder: (categories: Category[]) => dispatch(setCategoryOrder({ categories })),
 })
 
+const withQuery = graphql(
+  Query,
+  {
+    props: ({ data }) => {
+      let outputData = data as (typeof data) & CategorySettingsQuery
+      if (!data.loading && !data.error) {
+        outputData.zones = outputData.zones || []
+      }
+
+      return { data: outputData }
+    },
+  },
+)
+
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  graphql(Query),
+  withQuery,
   DragDropContext(TouchBackend({
     delayTouchStart: DRAG_DELAY,
   })),
