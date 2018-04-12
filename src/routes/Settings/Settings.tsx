@@ -10,6 +10,7 @@ import { routerActions } from 'react-router-redux'
 
 import setMediaPlaybackRate from 'redux-store/actions/setMediaPlaybackRate'
 import setTextSize from 'redux-store/actions/setTextSize'
+import togglePsiphonThunk from 'redux-store/thunks/togglePsiphon'
 import AppState from 'types/AppState'
 
 import {
@@ -20,7 +21,7 @@ import {
   mediaSettingsLabels,
 } from 'labels'
 
-import { settings, panicButtonHolder, panicButton, panicButtonIcon, buttons, settingsRow, settingsButton, row, aboutVoa, content, settingsItem, settingsRowHeader, settingsValuesRow, active } from './Settings.scss'
+import { settings, panicButtonHolder, panicButton, panicButtonIcon, buttons, settingsRow, settingsButton, row, aboutVoa, content, settingsItem, settingsRowHeader, settingsValuesRow, active, disabled } from './Settings.scss'
 
 const SHARE_URL = 'https://www.voanews.com/p/5850.html'
 
@@ -58,19 +59,29 @@ const data = {
 interface StateProps {
   textSize: number
   mediaPlaybackRate: number
+  psiphonEnabled: boolean
 }
 
 interface DispatchProps {
   clearAll: () => void
   setTextSize: (size: number) => void
   setPlaybackRate: (speed: number) => void
+  togglePsiphon: (enabled: boolean) => void
 }
 
 type RouteProps = RouteComponentProps<void>
 
 type Props = RouteProps & AnalyticsProps & StateProps & DispatchProps
 
+interface State {
+  expectedPsiphonState: boolean
+}
+
 class SettingsRoute extends React.Component<Props> {
+  state: State = {
+    expectedPsiphonState: this.props.psiphonEnabled,
+  }
+
   renderPanicButton () {
     const { clearAll } = this.props
 
@@ -188,6 +199,34 @@ class SettingsRoute extends React.Component<Props> {
     )
   }
 
+  renderPsiphonToggle () {
+    const { psiphonEnabled, togglePsiphon } = this.props
+
+    const toggling = this.psiphonToggling()
+
+    return (
+      <div className={settingsRow}>
+        <div className={settingsRowHeader}>
+          {settingsLabels.psiphon}
+        </div>
+        <div className={settingsValuesRow}>
+          <div
+            className={`${settingsItem} ${toggling ? disabled : ''} ${psiphonEnabled ? active : ''}`}
+            onClick={() => !toggling && psiphonEnabled || togglePsiphon(true)}
+          >
+            {settingsLabels.psiphonOn}
+          </div>
+          <div
+            className={`${settingsItem} ${toggling ? disabled : ''} ${!psiphonEnabled ? active : ''}`}
+            onClick={() => !toggling && psiphonEnabled && togglePsiphon(false)}
+          >
+            {settingsLabels.psiphonOff}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   render () {
     return (
       <div className={settings}>
@@ -198,6 +237,7 @@ class SettingsRoute extends React.Component<Props> {
             { this.renderCategoriesSettings() }
             { this.renderTextSettings() }
             { this.renderPlaybackSpeed() }
+            { this.renderPsiphonToggle() }
             { this.renderSendToFriends() }
             { this.renderSendFeedback() }
             { this.renderAboutVoa() }
@@ -213,11 +253,18 @@ class SettingsRoute extends React.Component<Props> {
       url: SHARE_URL,
     })
   }
+
+  private psiphonToggling = () => {
+    const { expectedPsiphonState } = this.state
+    const { psiphonEnabled } = this.props
+    return expectedPsiphonState !== psiphonEnabled
+  }
 }
 
 const mapStateToProps = (state: AppState): StateProps => ({
   textSize: state.settings.textSize,
   mediaPlaybackRate: state.settings.mediaPlaybackRate,
+  psiphonEnabled: state.settings.psiphonEnabled,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => ({
@@ -225,10 +272,12 @@ const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => ({
     dispatch(clearAll())
     dispatch(routerActions.replace('/'))
   },
-  setTextSize: (textSize: number) =>
+  setTextSize: (textSize) =>
     dispatch(setTextSize({ textSize })),
-  setPlaybackRate: (mediaPlaybackRate: number) =>
+  setPlaybackRate: (mediaPlaybackRate) =>
     dispatch(setMediaPlaybackRate({ mediaPlaybackRate })),
+  togglePsiphon: (psiphonEnabled) =>
+    dispatch(togglePsiphonThunk({ psiphonEnabled })),
 })
 
 const withRedux = connect(mapStateToProps, mapDispatchToProps)

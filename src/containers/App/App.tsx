@@ -31,7 +31,7 @@ export default class App extends React.Component<{}, State> {
         scheduleDaily().catch(err => console.error(err))
       }
 
-      if (appState.settings.usePsiphon) {
+      if (appState.settings.psiphonEnabled) {
         start().then(() => {
           this.ready()
         }).catch(console.error)

@@ -1,5 +1,10 @@
 
 import {
+  type as setPsiphonEnabledType,
+  SetPsiphonEnabledAction,
+} from '../actions/setPsiphonEnabled'
+
+import {
   type as setCategoryOrderType,
   SetCategoryAction,
 } from '../actions/setCategoryOrder'
@@ -23,6 +28,10 @@ import { ActorMap, buildReducer } from '../actorMap'
 import AppSettings from 'types/AppSettings'
 
 const actors: ActorMap<AppSettings> = {
+  [setPsiphonEnabledType]: (prev, { psiphonEnabled }: SetPsiphonEnabledAction) => ({
+    ...prev,
+    psiphonEnabled,
+  }),
   [setCategoryOrderType]: (prev, { categories }: SetCategoryAction) => ({
     ...prev,
     categories,
@@ -82,7 +91,7 @@ export const INITIAL_STATE: AppSettings = {
   ],
   mediaPlaybackRate: 1,
   dailyNotificationOn: true,
-  usePsiphon: true,
+  psiphonEnabled: true,
   textSize: 1,
 }
 
