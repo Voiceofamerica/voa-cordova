@@ -44,6 +44,8 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <preference name="AllowInlineMediaPlayback" value="true" />
+        <preference name="StatusBarOverlaysWebView" value="false" />
+        <preference name="StatusBarBackgroundColor" value="#eeeeee" />
     </platform>
     <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
@@ -59,6 +61,7 @@
     <plugin name="cordova-plugin-device" spec="^2.0.1" />
     <plugin name="nl.x-services.plugins.backgroundaudio" spec="^1.0.1" />
     <plugin name="cordova-plugin-music-controls" spec="https://github.com/pniraula/cordova-music-controls-plugin" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
     <engine name="android" spec="^6.4.0" />
     <engine name="ios" spec="^4.5.4" />
 </widget>

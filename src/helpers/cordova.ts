@@ -12,7 +12,7 @@ export const deviceIsReady = new Promise<Event>(resolve => {
     })
     console.log('error handler registered')
     resolve(ev)
-  })
+  }, false)
 })
 
 export const appClosing = new Promise<Event>(resolve => {

@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Provider } from 'react-redux'
 import { ApolloProvider } from 'react-apollo'
 
-import store, { onRenderReady } from 'redux-store'
+import store, { renderReady } from 'redux-store'
 import PsiphonIndicator from 'containers/PsiphonIndicator'
 import Router from 'containers/Router'
 import MediaPlayer from 'containers/MediaPlayer'
@@ -14,7 +14,7 @@ import { showControls } from 'helpers/mediaControlHelper'
 import { scheduleDaily } from 'helpers/localNotifications'
 import { start } from 'helpers/psiphon'
 
-import { app, topper } from './App.scss'
+import { app } from './App.scss'
 
 interface State {
   appReady: boolean
@@ -26,7 +26,7 @@ export default class App extends React.Component<{}, State> {
   }
 
   componentDidMount () {
-    onRenderReady(() => {
+    renderReady.then(() => {
       const appState = store.getState()
       if (appState.settings.dailyNotificationOn) {
         scheduleDaily().catch(err => console.error(err))
@@ -56,20 +56,17 @@ export default class App extends React.Component<{}, State> {
     return (
       <ApolloProvider client={client}>
         <Provider store={store}>
-          <div>
-            <div className={topper}></div>
-            {
-              appReady
-              ? <div key='app' className={app}>
-                  <Intro />
-                  <PsiphonIndicator />
-                  <Router />
-                  <MediaPlayer />
-                  <CircumventionDrawer />
-                </div>
-              : <div key='app' />
-            }
-          </div>
+          {
+            appReady
+            ? <div key='app' className={app}>
+                <Intro />
+                <PsiphonIndicator />
+                <Router />
+                <MediaPlayer />
+                <CircumventionDrawer />
+              </div>
+            : <div key='app' />
+          }
         </Provider>
       </ApolloProvider>
     )
@@ -80,6 +77,11 @@ export default class App extends React.Component<{}, State> {
       const splash = (navigator as any).splashscreen
       if (splash) {
         splash.hide()
+      }
+      if (typeof StatusBar !== 'undefined') {
+        StatusBar.overlaysWebView(false)
+        StatusBar.backgroundColorByHexString('#eeeeee')
+        StatusBar.styleDefault()
       }
     })
   }
