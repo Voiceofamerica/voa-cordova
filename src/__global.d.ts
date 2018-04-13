@@ -92,7 +92,7 @@ declare module NotificationPlugin {
     person?: string
     message: string
   }
-  
+
   export interface Notification {
     title: string
     text?: string | (Message[])
@@ -125,3 +125,5 @@ interface CordovaPlugins {
     }
   }
 }
+
+declare const StatusBar

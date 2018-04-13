@@ -47,7 +47,6 @@ import {
   mediaButton,
   mediaButtonIcon,
   articleAuthors,
-  articleDate,
   byline,
   icon,
   iconActive,
@@ -221,7 +220,7 @@ class ArticleRouteBase extends React.Component<Props> {
             ))
           }
           </div>
-          <div className={articleDate}>
+          <div>
             <h3>{moment(pubDate).format('lll')}</h3>
           </div>
         </div>

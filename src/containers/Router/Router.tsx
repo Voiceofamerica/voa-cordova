@@ -1,7 +1,10 @@
 
 import * as React from 'react'
+import { Subscription } from 'rxjs/Subscription'
 import { Route, Switch } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
+
+import { backButtonObservable } from 'helpers/cordova'
 
 import HomeRoute from 'routes/HomeRoute'
 import CategoryRoute from 'routes/CategoryRoute'
@@ -34,25 +37,41 @@ import MainLayout from './layouts/MainLayout'
 
 import history from './history'
 
-export default () => (
-  <ConnectedRouter history={history}>
-    <Switch>
-      <Route path='/article/:id' component={ArticleRoute}/>
-      <HeadingOnlyLayout path='/search/:zoneId/:query' component={Search} heading={searchLabels.header}/>
-      <HeadingOnlyLayout path='/search/:zoneId' component={Search} heading={searchLabels.header}/>
-      <HeadingOnlyLayout path='/search' component={Search} heading={searchLabels.header}/>
-      <HeadingOnlyLayout path='/settings/favorites' component={FavoritesSettings} heading={favoritesSettingsLabels.header} />
-      <HeadingOnlyLayout path='/settings/notifications' component={NotificationSettings} heading={notificationSettingsLabels.header} />
-      <HeadingOnlyLayout path='/settings/categories' component={CategorySettings} heading={categorySettingsLabels.header} />
-      <HeadingLayout path='/settings' component={Settings} heading={settingsLabels.header} />
-      <HeadingLayout path='/liveStream' component={LiveStream} heading={liveStreamLabels.header} />
-      <HeadingLayout path='/breakingNews' component={BreakingNews} heading={breakingNewsLabels.header} />
-      <HeadingLayout path='/editorsChoice' component={EditorsChoice} heading={editorsChoiceLabels.header} />
-      <BottomOnlyLayout path='/programs/:type/:zone' component={ProgramsScreen} />
-      <BottomOnlyLayout path='/programs/:type' component={ProgramsScreen} />
-      <BottomOnlyLayout path='/programs' component={ProgramsScreen} />
-      <MainLayout path='/articles/:category' component={CategoryRoute}/>
-      <MainLayout path='/' component={HomeRoute}/>
-    </Switch>
-  </ConnectedRouter>
-)
+export default class Router extends React.Component {
+  private historySubscription: Subscription
+
+  componentDidMount () {
+    this.historySubscription = backButtonObservable.subscribe(() => {
+      history.goBack()
+    })
+  }
+
+  componentWillUnmount () {
+    this.historySubscription.unsubscribe()
+  }
+
+  render () {
+    return (
+      <ConnectedRouter history={history}>
+        <Switch>
+          <Route path='/article/:id' component={ArticleRoute}/>
+          <HeadingOnlyLayout path='/search/:zoneId/:query' component={Search} heading={searchLabels.header}/>
+          <HeadingOnlyLayout path='/search/:zoneId' component={Search} heading={searchLabels.header}/>
+          <HeadingOnlyLayout path='/search' component={Search} heading={searchLabels.header}/>
+          <HeadingOnlyLayout path='/settings/favorites' component={FavoritesSettings} heading={favoritesSettingsLabels.header} />
+          <HeadingOnlyLayout path='/settings/notifications' component={NotificationSettings} heading={notificationSettingsLabels.header} />
+          <HeadingOnlyLayout path='/settings/categories' component={CategorySettings} heading={categorySettingsLabels.header} />
+          <HeadingLayout path='/settings' component={Settings} heading={settingsLabels.header} />
+          <HeadingLayout path='/liveStream' component={LiveStream} heading={liveStreamLabels.header} />
+          <HeadingLayout path='/breakingNews' component={BreakingNews} heading={breakingNewsLabels.header} />
+          <HeadingLayout path='/editorsChoice' component={EditorsChoice} heading={editorsChoiceLabels.header} />
+          <BottomOnlyLayout path='/programs/:type/:zone' component={ProgramsScreen} />
+          <BottomOnlyLayout path='/programs/:type' component={ProgramsScreen} />
+          <BottomOnlyLayout path='/programs' component={ProgramsScreen} />
+          <MainLayout path='/articles/:category' component={CategoryRoute}/>
+          <MainLayout path='/' component={HomeRoute}/>
+        </Switch>
+      </ConnectedRouter>
+    )
+  }
+}

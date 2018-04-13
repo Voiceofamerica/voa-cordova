@@ -1,2 +1,2 @@
 
-export { default, renderReady, onRenderReady } from './store'
+export { default, renderReady } from './store'

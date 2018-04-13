@@ -84,8 +84,9 @@ module.exports = {
         test: /\.s?css$/,
         loaders: [
           'style-loader',
-          'css-loader?sourceMap&importLoaders=2&localIdentName=[name]__[local]___[hash:base64:5]',
-          'resolve-url-loader',
+          'css-loader?sourceMap&importLoaders=3&localIdentName=[name]__[local]___[hash:base64:5]',
+          'postcss-loader?sourceMap',
+          'resolve-url-loader?sourceMap',
           'sass-loader?sourceMap'
         ],
         include: GLOBAL_CSS
