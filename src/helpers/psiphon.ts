@@ -5,9 +5,11 @@ import { Subscription } from 'rxjs/Subscription'
 import 'rxjs/add/operator/mergeMap'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/first'
+import 'rxjs/add/operator/distinctUntilChanged'
 
 import * as psiphon from 'psiphon-cordova-plugin/www/psiphon'
-import { deviceIsReady } from './cordova'
+
+import { deviceIsReady, appResumeObservable } from './cordova'
 
 const psiphonConfig = require('../psiphon_config')
 
@@ -23,25 +25,25 @@ const baseStartObservable = new Observable<boolean>((sub) => {
     return () => null
   }
 
-  const onResume = () => {
+  const resumeSub = appResumeObservable.subscribe(() => {
     console.log('resuming psiphon')
     psiphon.start(() => sub.next(true), (err) => sub.error(err))
-  }
+  })
 
   configPromise.then(() => {
     console.log('starting psiphon')
     psiphon.start(() => sub.next(true), (err) => sub.error(err))
-    document.addEventListener('resume', onResume)
   }).catch((err) => {
     console.error('something went wrong configuring psiphon', err)
   })
 
   return () => {
-    document.removeEventListener('resume', onResume)
+    resumeSub.unsubscribe()
   }
 })
 
 export const startObservable = new BehaviorSubject(false)
+export const toggleObservable = startObservable.distinctUntilChanged()
 let startSubscription: Subscription
 
 export function start (): Promise<void> {
@@ -86,13 +88,3 @@ export function port (): Promise<number> {
     })
   })
 }
-
-export const portObservable = startObservable
-  .filter(started => started)
-  .mergeMap<boolean, number|null>((started) => {
-    if (started) {
-      return port()
-    } else {
-      return null
-    }
-  })

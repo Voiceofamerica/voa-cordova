@@ -1,11 +1,47 @@
 
-export const deviceIsReady = new Promise(resolve => {
-  document.addEventListener('deviceready', () => {
+import { Observable } from 'rxjs/Observable'
+import { Subject } from 'rxjs/Subject'
+
+export const deviceIsReady = new Promise<Event>(resolve => {
+  document.addEventListener('deviceready', (ev) => {
     console.log('device is ready')
-    resolve()
+    resolve(ev)
   })
 })
 
-export const appClosing = new Promise(resolve => {
-  window.addEventListener('unload', () => resolve())
+export const appClosing = new Promise<Event>(resolve => {
+  window.addEventListener('unload', (ev) => resolve(ev))
 })
+
+const baseAppResumeObservable = new Observable<Event>(sub => {
+  const listener = (ev: Event) => sub.next(ev)
+  document.addEventListener('resume', listener)
+  return () => {
+    document.removeEventListener('resume', listener)
+  }
+})
+
+export const appResumeObservable = new Subject<Event>()
+baseAppResumeObservable.subscribe(appResumeObservable)
+
+const baseAppPauseObservable = new Observable<Event>(sub => {
+  const listener = (ev: Event) => sub.next(ev)
+  document.addEventListener('pause', listener)
+  return () => {
+    document.removeEventListener('pause', listener)
+  }
+})
+
+export const appPauseObservable = new Subject<Event>()
+baseAppPauseObservable.subscribe(appPauseObservable)
+
+const baseBackButtonObservable = new Observable<Event>(sub => {
+  const listener = (ev: Event) => sub.next(ev)
+  document.addEventListener('backbutton', listener)
+  return () => {
+    document.removeEventListener('backbutton', listener)
+  }
+})
+
+export const backButtonObservable = new Subject<Event>()
+baseBackButtonObservable.subscribe(backButtonObservable)

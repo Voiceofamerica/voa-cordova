@@ -8,6 +8,7 @@ import ResilientImage from '@voiceofamerica/voa-shared/components/ResilientImage
 import Drawer from '@voiceofamerica/voa-shared/components/Drawer'
 
 import * as mediaControlHelper from 'helpers/mediaControlHelper'
+import { appPauseObservable, appClosing } from 'helpers/cordova'
 import AppState from 'types/AppState'
 import MediaState from 'types/MediaState'
 import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
@@ -46,10 +47,12 @@ class MediaPlayerBase extends React.Component<Props, State> {
 
   private player: MediaPlayer
 
-  private subscription: Subscription
+  private controlsSubscription: Subscription
+  private appPauseSubscription: Subscription
 
   componentDidMount () {
-    this.subscription = mediaControlHelper.eventObservable.subscribe(ev => {
+    this.controlsSubscription = mediaControlHelper.eventObservable.subscribe(ev => {
+      console.log('recieved:', ev)
       switch (ev) {
         case 'music-controls-pause':
           this.props.toggleMediaPlaying(false)
@@ -66,10 +69,19 @@ class MediaPlayerBase extends React.Component<Props, State> {
           this.props.toggleMediaPlaying()
       }
     })
+    this.appPauseSubscription = appPauseObservable.subscribe(() => {
+      if (this.props.media.isVideo) {
+        this.props.toggleMediaPlaying(false)
+      }
+    })
+    appClosing.then(() => {
+      this.props.toggleMediaPlaying(false)
+    })
   }
 
   componentWillUnmount () {
-    this.subscription.unsubscribe()
+    this.controlsSubscription.unsubscribe()
+    this.appPauseSubscription.unsubscribe()
   }
 
   componentWillReceiveProps (nextProps: Props) {

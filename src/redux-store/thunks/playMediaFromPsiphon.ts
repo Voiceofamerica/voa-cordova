@@ -6,12 +6,11 @@ import 'rxjs/add/operator/map'
 import AppState from 'types/AppState'
 
 import { showControls } from 'helpers/mediaControlHelper'
-import { portObservable, startObservable } from 'helpers/psiphon'
+import { port, toggleObservable } from 'helpers/psiphon'
 import playMedia from '../actions/playMedia'
 import toggleMediaDrawer from '../actions/toggleMediaDrawer'
 
 let psiphonStartSubscription: Subscription
-let portSubscription: Subscription
 
 interface PlayMediaOptions {
   mediaUrl: string
@@ -24,7 +23,6 @@ interface PlayMediaOptions {
 export default (options: PlayMediaOptions) =>
   (dispatch: Dispatch<AppState>, getState: () => AppState) => {
     dispatch(toggleMediaDrawer({ open: true }))
-    let alreadyRunning = false
     let playing = false
 
     const {
@@ -45,16 +43,7 @@ export default (options: PlayMediaOptions) =>
       playing: true,
     })
 
-    psiphonStartSubscription = startObservable.subscribe(psiphonRunning => {
-      if (alreadyRunning && psiphonRunning) {
-        return
-      }
-
-      alreadyRunning = psiphonRunning
-      if (portSubscription && !alreadyRunning) {
-        portSubscription.unsubscribe()
-      }
-
+    psiphonStartSubscription = toggleObservable.subscribe(psiphonRunning => {
       if (typeof device === 'undefined' || device.platform !== 'iOS' || !psiphonRunning) {
         dispatch(playMedia({
           ...options,
@@ -67,10 +56,9 @@ export default (options: PlayMediaOptions) =>
 
       const encodedUrl = encodeURIComponent(originalMediaUrl)
 
-      portSubscription = portObservable
-        .filter(port => port !== null)
-        .map(portNum => `http://127.0.0.1:${portNum}/tunneled-rewrite/${encodedUrl}?m3u8=true`)
-        .subscribe(mediaUrl => {
+      port()
+        .then(portNum => `http://127.0.0.1:${portNum}/tunneled-rewrite/${encodedUrl}?m3u8=true`)
+        .then(mediaUrl => {
           dispatch(playMedia({
             ...options,
             mediaUrl,
