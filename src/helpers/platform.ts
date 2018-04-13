@@ -28,4 +28,6 @@ deviceIsReady.then(() => {
   } else if (isWeb()) {
     document.body.classList.add('web')
   }
+}).catch(err => {
+  console.error('FATAL: cordova failed to initialize', err)
 })

@@ -74,7 +74,7 @@ const baseEventObservable = new Observable<MediaControls.SubscribeEvents>(sub =>
       sub.next(message)
     })
     MediaControls.listen()
-  })
+  }).catch()
 })
 
 export const eventObservable = new ReplaySubject(1)

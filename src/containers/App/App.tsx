@@ -35,7 +35,9 @@ export default class App extends React.Component<{}, State> {
       if (appState.settings.usePsiphon) {
         start().then(() => {
           this.ready()
-        }).catch(console.error)
+        }).catch(err => {
+          console.error('FATAL: psiphon failed to start correctly', err)
+        })
       } else {
         this.ready()
       }
@@ -48,6 +50,8 @@ export default class App extends React.Component<{}, State> {
           console.warn('media controls failed to load')
         })
       }
+    }).catch(err => {
+      console.error('FATAL: redux store failed to hyrate correctly', err)
     })
   }
 
