@@ -76,7 +76,7 @@ class MediaPlayerBase extends React.Component<Props, State> {
     })
     appClosing.then(() => {
       this.props.toggleMediaPlaying(false)
-    })
+    }).catch(() => null)
   }
 
   componentWillUnmount () {
@@ -90,6 +90,7 @@ class MediaPlayerBase extends React.Component<Props, State> {
         this.player.togglePlay(nextProps.media.playing)
         if (!this.state.destroying) {
           mediaControlHelper.setPlaying(nextProps.media.playing)
+            .catch(() => null)
         }
       }
       if (nextProps.media.keepLocation && this.props.media.originalMediaUrl === this.props.media.originalMediaUrl) {

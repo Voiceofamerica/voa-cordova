@@ -42,6 +42,9 @@ export default (options: PlayMediaOptions) =>
       title: options.mediaTitle,
       playing: true,
     })
+    .catch(() => {
+      console.warn('failed to show media controls')
+    })
 
     psiphonStartSubscription = toggleObservable.subscribe(psiphonRunning => {
       if (typeof device === 'undefined' || device.platform !== 'iOS' || !psiphonRunning) {
@@ -66,6 +69,10 @@ export default (options: PlayMediaOptions) =>
             keepLocation: playing,
           }))
           playing = true
+        })
+        .catch(err => {
+          console.error('something went wrong trying to play media', originalMediaUrl)
+          console.error(err)
         })
     })
   }

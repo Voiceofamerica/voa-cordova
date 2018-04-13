@@ -53,6 +53,7 @@ export const hideControls = (): Promise<void> => {
 }
 
 appClosing.then(() => hideControls())
+  .catch(() => null)
 
 export const setPlaying = (playing: boolean): Promise<void> => {
   if (isIos() || !showingControls) {

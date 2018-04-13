@@ -44,6 +44,8 @@ export default class App extends React.Component<{}, State> {
         showControls({
           title: appState.media.mediaTitle,
           playing: false,
+        }).catch(() => {
+          console.warn('media controls failed to load')
         })
       }
     })
