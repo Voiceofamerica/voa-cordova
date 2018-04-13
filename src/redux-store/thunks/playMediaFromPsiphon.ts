@@ -5,6 +5,7 @@ import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/map'
 import AppState from 'types/AppState'
 
+import { showControls } from 'helpers/mediaControlHelper'
 import { portObservable, startObservable } from 'helpers/psiphon'
 import playMedia from '../actions/playMedia'
 import toggleMediaDrawer from '../actions/toggleMediaDrawer'
@@ -38,6 +39,11 @@ export default (options: PlayMediaOptions) =>
     if (psiphonStartSubscription) {
       psiphonStartSubscription.unsubscribe()
     }
+
+    showControls({
+      title: options.mediaTitle,
+      playing: true,
+    })
 
     psiphonStartSubscription = startObservable.subscribe(psiphonRunning => {
       if (alreadyRunning && psiphonRunning) {

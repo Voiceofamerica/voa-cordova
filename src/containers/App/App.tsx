@@ -10,6 +10,7 @@ import MediaPlayer from 'containers/MediaPlayer'
 import CircumventionDrawer from 'containers/CircumventionDrawer'
 import Intro from 'containers/Intro'
 import client from 'helpers/graphql-client'
+import { showControls } from 'helpers/mediaControlHelper'
 import { scheduleDaily } from 'helpers/localNotifications'
 import { start } from 'helpers/psiphon'
 
@@ -37,6 +38,13 @@ export default class App extends React.Component<{}, State> {
         }).catch(console.error)
       } else {
         this.ready()
+      }
+
+      if (appState.media.mediaTitle) {
+        showControls({
+          title: appState.media.mediaTitle,
+          playing: false,
+        })
       }
     })
   }

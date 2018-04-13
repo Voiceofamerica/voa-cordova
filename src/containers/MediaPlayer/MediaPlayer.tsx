@@ -1,11 +1,13 @@
 
 import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
+import { Subscription } from 'rxjs/Subscription'
 
 import MediaPlayer from '@voiceofamerica/voa-shared/components/MediaPlayer'
 import ResilientImage from '@voiceofamerica/voa-shared/components/ResilientImage'
 import Drawer from '@voiceofamerica/voa-shared/components/Drawer'
 
+import * as mediaControlHelper from 'helpers/mediaControlHelper'
 import AppState from 'types/AppState'
 import MediaState from 'types/MediaState'
 import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
@@ -29,13 +31,14 @@ interface StateProps {
 
 interface DispatchProps {
   closeMedia: () => void
-  toggleMediaPlaying: (playing: boolean) => void
+  toggleMediaPlaying: (playing?: boolean) => void
 }
 
 type Props = StateProps & DispatchProps
 
 interface State {
   defaultTime?: number
+  destroying?: boolean
 }
 
 class MediaPlayerBase extends React.Component<Props, State> {
@@ -43,13 +46,45 @@ class MediaPlayerBase extends React.Component<Props, State> {
 
   private player: MediaPlayer
 
+  private subscription: Subscription
+
+  componentDidMount () {
+    this.subscription = mediaControlHelper.eventObservable.subscribe(ev => {
+      switch (ev) {
+        case 'music-controls-pause':
+          this.props.toggleMediaPlaying(false)
+          return
+        case 'music-controls-destroy':
+          this.setState({ destroying: true }, () => {
+            this.props.toggleMediaPlaying(false)
+          })
+          return
+        case 'music-controls-play':
+          this.props.toggleMediaPlaying(true)
+          return
+        case 'music-controls-media-button':
+          this.props.toggleMediaPlaying()
+      }
+    })
+  }
+
+  componentWillUnmount () {
+    this.subscription.unsubscribe()
+  }
+
   componentWillReceiveProps (nextProps: Props) {
     if (this.player) {
       if (this.props.media.playing !== nextProps.media.playing) {
         this.player.togglePlay(nextProps.media.playing)
+        if (!this.state.destroying) {
+          mediaControlHelper.setPlaying(nextProps.media.playing)
+        }
       }
       if (nextProps.media.keepLocation && this.props.media.originalMediaUrl === this.props.media.originalMediaUrl) {
         this.setState({ defaultTime: this.player.getTime() })
+      }
+      if (this.state.destroying && !nextProps.media.playing) {
+        this.setState({ destroying: false })
       }
     }
   }

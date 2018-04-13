@@ -7,15 +7,15 @@ import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/first'
 
 import * as psiphon from 'psiphon-cordova-plugin/www/psiphon'
+import { deviceIsReady } from './cordova'
 
 const psiphonConfig = require('../psiphon_config')
 
-const configPromise = new Promise((resolve, reject) => {
-  document.addEventListener('deviceready', () => {
+const configPromise = deviceIsReady
+  .then(() => new Promise((resolve, reject) => {
     console.log('configuring psiphon')
     psiphon.config(psiphonConfig, resolve, reject)
-  })
-})
+  }))
 
 const baseStartObservable = new Observable<boolean>((sub) => {
   if (__HOST__) {
