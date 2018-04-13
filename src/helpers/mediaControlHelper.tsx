@@ -1,7 +1,7 @@
 
 import { Observable } from 'rxjs/Observable'
 import { ReplaySubject } from 'rxjs/ReplaySubject'
-import * as MediaControls from 'cordova-plugin-music-controls/www/MusicControls'
+import { MusicControls, SubscribeEventMessage } from '@voiceofamerica/cordova-plugin-music-controls'
 import { isIos } from './platform'
 import { deviceIsReady, appClosing } from './cordova'
 
@@ -18,7 +18,7 @@ export const showControls = ({ title, playing }: ShowControlsOptions): Promise<v
   }
 
   return deviceIsReady.then(() => new Promise<void>((resolve, reject) => {
-    MediaControls.create(
+    MusicControls.create(
       {
         track: title,
         isPlaying: playing,
@@ -42,7 +42,7 @@ export const hideControls = (): Promise<void> => {
     return Promise.resolve()
   }
   return deviceIsReady.then(() => new Promise<void>((resolve, reject) => {
-    MediaControls.destroy(
+    MusicControls.destroy(
       () => {
         showingControls = false
         resolve()
@@ -60,20 +60,19 @@ export const setPlaying = (playing: boolean): Promise<void> => {
     return Promise.resolve()
   }
   return deviceIsReady.then(() => new Promise<void>((resolve, reject) => {
-    MediaControls.updateIsPlaying(playing, resolve, reject)
+    MusicControls.updateIsPlaying(playing, resolve, reject)
   }))
 }
 export const play = () => setPlaying(true)
 
 export const pause = () => setPlaying(false)
 
-const baseEventObservable = new Observable<MediaControls.SubscribeEvents>(sub => {
+const baseEventObservable = new Observable<SubscribeEventMessage>(sub => {
   deviceIsReady.then(() => {
-    MediaControls.subscribe((event) => {
-      const message: MediaControls.SubscribeEvents = JSON.parse(event).message
-      sub.next(message)
+    MusicControls.subscribe((event) => {
+      sub.next(event.message)
     })
-    MediaControls.listen()
+    MusicControls.listen()
   }).catch()
 })
 
