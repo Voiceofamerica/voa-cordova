@@ -1,10 +1,16 @@
 
+import { errorObservable } from './errorHandler'
 import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Subject'
 
 export const deviceIsReady = new Promise<Event>(resolve => {
   document.addEventListener('deviceready', (ev) => {
-    console.log('device is ready')
+    console.log('device is now ready')
+    errorObservable.subscribe(err => {
+      console.error('FATAL: An uncaught error occurred!', err.message)
+      console.error(err.stack)
+    })
+    console.log('error handler registered')
     resolve(ev)
   })
 })

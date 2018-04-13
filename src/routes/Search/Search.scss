@@ -3,7 +3,7 @@
 
 .searchScreen {
   display: flex;
-  position: fixed;
+  position: absolute;
   flex-direction: column;
   top: 0;
   left: 0;
@@ -16,7 +16,7 @@
   padding-top: 45px;
 
   .inputs {
-    position: fixed;
+    position: absolute;
     top: $menu-height;
     left: 0;
     right: 0;

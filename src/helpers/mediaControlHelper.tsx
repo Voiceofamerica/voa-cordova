@@ -68,11 +68,13 @@ export const play = () => setPlaying(true)
 export const pause = () => setPlaying(false)
 
 const baseEventObservable = new Observable<MediaControls.SubscribeEvents>(sub => {
-  MediaControls.subscribe((event) => {
-    const message: MediaControls.SubscribeEvents = JSON.parse(event).message
-    sub.next(message)
+  deviceIsReady.then(() => {
+    MediaControls.subscribe((event) => {
+      const message: MediaControls.SubscribeEvents = JSON.parse(event).message
+      sub.next(message)
+    })
+    MediaControls.listen()
   })
-  MediaControls.listen()
 })
 
 export const eventObservable = new ReplaySubject(1)

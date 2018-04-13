@@ -1,9 +1,34 @@
 
 @import "'~@voiceofamerica/voa-shared/commonStyles/index";
 
+$ios-padding: 20px;
+
 .app {
   flex: 1;
+  position: fixed;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  :global(.ios) & {
+    top: $ios-padding;
+  }
+}
+
+.topper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 0;
+  background: transparent;
+
+  :global(.ios) & {
+    height: $ios-padding;
+    background: $voa-light-grey;
+  }
 }

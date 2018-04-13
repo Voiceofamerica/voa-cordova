@@ -1,4 +1,6 @@
 
+import { deviceIsReady } from './cordova'
+
 export function isAndroid (): boolean {
   if (typeof device === 'undefined') {
     return false
@@ -17,3 +19,13 @@ export function isIos (): boolean {
 export function isWeb (): boolean {
   return typeof device === 'undefined'
 }
+
+deviceIsReady.then(() => {
+  if (isIos()) {
+    document.body.classList.add('ios')
+  } else if (isAndroid()) {
+    document.body.classList.add('android')
+  } else if (isWeb()) {
+    document.body.classList.add('web')
+  }
+})

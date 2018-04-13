@@ -3,7 +3,7 @@
 
 .categorySettings {
   display: flex;
-  position: fixed;
+  position: absolute;
   flex-direction: column;
   top: 0;
   left: 0;
@@ -11,6 +11,7 @@
   bottom: 0;
   background: white;
   user-select: none;
+  -webkit-user-select: none;
 
   .bottomNav {
     justify-content: flex-end;
@@ -33,7 +34,7 @@
 
     .pillOuter {
       padding: 5px;
-  
+
       .pill {
         width: 25vw;
         background: $voa-blue;

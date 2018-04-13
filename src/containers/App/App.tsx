@@ -14,7 +14,7 @@ import { showControls } from 'helpers/mediaControlHelper'
 import { scheduleDaily } from 'helpers/localNotifications'
 import { start } from 'helpers/psiphon'
 
-import { app } from './App.scss'
+import { app, topper } from './App.scss'
 
 interface State {
   appReady: boolean
@@ -56,17 +56,20 @@ export default class App extends React.Component<{}, State> {
     return (
       <ApolloProvider client={client}>
         <Provider store={store}>
-          {
-            appReady
-            ? <div key='app' className={app}>
-                <Intro />
-                <PsiphonIndicator />
-                <Router />
-                <MediaPlayer />
-                <CircumventionDrawer />
-              </div>
-            : <div key='app' />
-          }
+          <div>
+            <div className={topper}></div>
+            {
+              appReady
+              ? <div key='app' className={app}>
+                  <Intro />
+                  <PsiphonIndicator />
+                  <Router />
+                  <MediaPlayer />
+                  <CircumventionDrawer />
+                </div>
+              : <div key='app' />
+            }
+          </div>
         </Provider>
       </ApolloProvider>
     )
