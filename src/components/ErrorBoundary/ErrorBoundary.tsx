@@ -8,7 +8,7 @@ interface Props extends React.Props<any> {
 }
 
 export default ({ children }: Props) => (
-  <ErrorBoundary error={errorBoundaryLabels.error} retry={errorBoundaryLabels.retry}>
+  <ErrorBoundary error={errorBoundaryLabels.error} retry={errorBoundaryLabels.retry} debug>
     {children}
   </ErrorBoundary>
 )
