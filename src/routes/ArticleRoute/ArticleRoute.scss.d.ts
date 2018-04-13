@@ -4,7 +4,6 @@ export const heroImage: string;
 export const heading: string;
 export const byline: string;
 export const articleAuthors: string;
-export const articleDate: string;
 export const contentIcon: string;
 export const mediaButtonContainer: string;
 export const mediaButton: string;
