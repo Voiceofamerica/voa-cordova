@@ -9,6 +9,7 @@ export const articleLabels = {
   updatedOn: (date: string) => `${date}更新`,
   relatedContent: '相关内容',
   shareMessage: '',
+  galleryLoading: '加载照片',
 }
 
 export const categorySettingsLabels = {

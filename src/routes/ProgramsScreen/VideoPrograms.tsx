@@ -7,7 +7,7 @@ import { graphql, ChildProps, QueryOpts } from 'react-apollo'
 import { connect, Dispatch } from 'react-redux'
 
 import TicketList from '@voiceofamerica/voa-shared/components/TicketList'
-import { fromVideoList } from '@voiceofamerica/voa-shared/helpers/itemList'
+import { fromVideoArticleList } from '@voiceofamerica/voa-shared/helpers/itemList'
 
 import Loader from 'components/Loader'
 import playMedia from 'redux-store/thunks/playMediaFromPsiphon'
@@ -39,7 +39,7 @@ class VideoPrograms extends React.Component<Props> {
       <div className={programContent}>
         <Loader data={data}>
           <TicketList
-            items={fromVideoList(data.content)}
+            items={fromVideoArticleList(data.content)}
             onItemClick={this.playVideo}
             emptyContent={this.renderEmpty()}
           />

@@ -4,7 +4,7 @@ import { compose } from 'redux'
 import { RouteComponentProps } from 'react-router'
 import { graphql, ChildProps } from 'react-apollo'
 
-import MixedList from '@voiceofamerica/voa-shared/components/MixedList'
+import DefaultList from '@voiceofamerica/voa-shared/components/DefaultList'
 import { fromArticleList } from '@voiceofamerica/voa-shared/helpers/itemList'
 
 import { homeRoute, row, content, searchButton } from './HomeRoute.scss'
@@ -56,7 +56,7 @@ class HomeRouteBase extends React.Component<Props, State> {
       <div className={content}>
         <PullToRefresh data={data}>
           { this.renderSearchButton() }
-          <MixedList.Static
+          <DefaultList.Static
             items={fromArticleList(data.content)}
             onItemClick={this.goToArticle}
           />

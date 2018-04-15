@@ -35,7 +35,8 @@ query ArticleRoute($id: Int) {
         id
         photoTitle
         photoDescription
-        url
+        tiny
+        hero
         order
       }
     }
