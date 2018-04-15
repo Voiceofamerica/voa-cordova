@@ -12,7 +12,6 @@
   background: transparent;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-  //margin-bottom: $menu-height;
   padding-top: 45px;
 
   .inputs {
@@ -97,37 +96,20 @@
       padding: 0 0.5em;
       outline: none;
     }
-
-    // .emptyText {
-    //   pointer-events: none;
-    //   position: absolute;
-    //   display: flex;
-    //   font-size: 1.2em;
-    //   top: 0;
-    //   bottom: 0;
-    //   left: 0;
-    //   right: 0;
-    //   padding: 0 0.5em;
-    //   color: rgba(0, 0, 0, 0.5);
-    //   align-items: center;
-    // }
   }
 }
 
 .searchScreen > * {
   -webkit-transform: translateZ(0px);
+  transform: translateZ(0px);
 }
 
 .searchArea {
   height: 100%;
   padding-top: $menu-height;
+  display: flex;
 
-  .row {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .loadingText {
+  .emptyText {
     display: flex;
     flex: 1;
     justify-content: center;
@@ -135,24 +117,5 @@
     font-size: 10vw;
     padding-top: 100px;
     transition: color 0.3s;
-  }
-
-  .loader {
-    height: 100%;
-  }
-
-  .iconCircle {
-    $size: 40px;
-    $padding: 8px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(64, 64, 64, 0.5);
-    width: $size;
-    height: $size;
-    font-size: $size - ($padding * 2);
-    color: white;
-    border-radius: $size / 2;
   }
 }

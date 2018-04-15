@@ -1,10 +1,9 @@
 
 import * as React from 'react'
-import * as moment from 'moment'
 import { graphql, ChildProps } from 'react-apollo'
 
-import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
-import SvgIcon from '@voiceofamerica/voa-shared/components/SvgIcon'
+import TicketList from '@voiceofamerica/voa-shared/components/TicketList'
+import { fromArticleList } from '@voiceofamerica/voa-shared/helpers/itemList'
 
 import Loader from 'components/Loader'
 
@@ -14,7 +13,7 @@ import { searchLabels } from 'labels'
 
 import * as Query from './Search.graphql'
 
-import { searchArea, row, loadingText, loader, iconCircle } from './Search.scss'
+import { searchArea, emptyText } from './Search.scss'
 
 interface OwnProps extends SearchQueryVariables {
   goTo: (route: string) => void
@@ -23,77 +22,31 @@ interface OwnProps extends SearchQueryVariables {
 type Props = ChildProps<OwnProps, SearchQuery>
 
 class SearchAreaBase extends React.Component<Props> {
-  goToArticle (id: number) {
-    this.props.goTo(`/article/${id}`)
+  render () {
+    const { data } = this.props
+    return (
+      <div className={searchArea}>
+        <Loader data={this.props.data}>
+          <TicketList
+            items={fromArticleList(data.search)}
+            onItemClick={this.goToArticle}
+            emptyContent={this.renderEmpty()}
+          />
+        </Loader>
+      </div>
+    )
   }
 
-  renderEmpty () {
+  private renderEmpty = () => {
     return (
-      <div className={loadingText}>
+      <div className={emptyText}>
         {searchLabels.empty}
       </div>
     )
   }
 
-  renderIcon = (blurb: SearchQuery['search'][0]) => {
-    if (blurb.video && blurb.video.url) {
-      return <SvgIcon src={require('svg/video.svg')} />
-    } else if (blurb.audio && blurb.audio.url) {
-      return <SvgIcon src={require('svg/audio.svg')} />
-    } else if (blurb.photoGallery && blurb.photoGallery.length > 0) {
-      return <SvgIcon src={require('svg/gallery.svg')} />
-    } else {
-      return null
-    }
-  }
-
-  renderIconWithCircle = (blurb: SearchQuery['search'][0]) => {
-    const icon = this.renderIcon(blurb)
-
-    if (icon) {
-      return (
-        <div className={iconCircle}>
-          {this.renderIcon(blurb)}
-        </div>
-      )
-    } else {
-      return null
-    }
-  }
-
-  renderContent () {
-    const { search = [], loading, error } = this.props.data
-    const filteredSearch = search.filter(b => b)
-
-    if (loading || error) {
-      return null
-    }
-
-    if (filteredSearch.length === 0) {
-      return this.renderEmpty()
-    }
-
-    return filteredSearch.map(blurb => (
-      <div className={row} key={blurb.id}>
-        <Ticket
-          onPress={() => this.goToArticle(blurb.id)}
-          title={blurb.title}
-          minorText={moment(blurb.pubDate).fromNow()}
-          imageUrl={blurb.image && blurb.image.tiny}
-          icon={this.renderIcon(blurb)}
-        />
-      </div>
-    ))
-  }
-
-  render () {
-    return (
-      <div className={searchArea}>
-        <Loader className={loader} data={this.props.data}>
-          {this.renderContent()}
-        </Loader>
-      </div>
-    )
+  private goToArticle = (id: number) => {
+    this.props.goTo(`/article/${id}`)
   }
 }
 

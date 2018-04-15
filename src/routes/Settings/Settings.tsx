@@ -116,7 +116,7 @@ class SettingsRoute extends React.Component<Props> {
     return (
       <div className={settingsRow}>
         <div className={settingsRowHeader}>
-          {textSettingsLabels.header}
+          {textSettingsLabels.textSize}
         </div>
         <div className={settingsValuesRow}>
           {

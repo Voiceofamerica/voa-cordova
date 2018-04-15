@@ -2,18 +2,18 @@
 import * as React from 'react'
 import { History } from 'history'
 import { graphql, ChildProps } from 'react-apollo'
-import * as moment from 'moment'
 
-import TopNav, { TopNavItem, StaticItem } from '@voiceofamerica/voa-shared/components/TopNav'
-import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
+import TicketList from '@voiceofamerica/voa-shared/components/TicketList'
+import { fromPhotoGalleryArticleList } from '@voiceofamerica/voa-shared/helpers/itemList'
 
 import Loader from 'components/Loader'
 
 // import { programsScreenLabels } from 'labels'
 import { ProgramGalleriesQuery } from 'helpers/graphql-types'
+import { programsScreenLabels } from 'labels'
 import * as Query from './Galleries.graphql'
 
-import { programContent } from './ProgramsScreen.scss'
+import { programContent, emptyContent } from './ProgramsScreen.scss'
 
 interface OwnProps {
   history: History
@@ -22,47 +22,38 @@ interface OwnProps {
 type Props = ChildProps<OwnProps, ProgramGalleriesQuery>
 
 class GalleryPrograms extends React.Component<Props> {
-  goTo (route: string) {
-    const { history } = this.props
-    history.push(route)
-  }
 
-  goToArticle (id: number) {
-    this.goTo(`/article/${id}`)
-  }
   render () {
     const { data } = this.props
 
     return (
       <div className={programContent}>
-        <TopNav>
-          <StaticItem />
-          <TopNavItem selected>
-            Test
-          </TopNavItem>
-          <TopNavItem>
-            Test 1
-          </TopNavItem>
-          <TopNavItem>
-            +
-          </TopNavItem>
-        </TopNav>
         <Loader data={data}>
-          {
-            data.content && data.content.map(item => (
-              <div key={item.id}>
-                <Ticket
-                  onPress={() => this.goToArticle(item.id)}
-                  title={item.title}
-                  imageUrl={item.image && item.image.tiny}
-                  minorText={moment(item.pubDate).format('lll')}
-                />
-              </div>
-            ))
-          }
+          <TicketList
+            items={fromPhotoGalleryArticleList(data.content)}
+            onItemClick={this.goToArticle}
+            emptyContent={this.renderEmpty()}
+          />
         </Loader>
       </div>
     )
+  }
+
+  private renderEmpty = () => {
+    return (
+      <div className={emptyContent}>
+        {programsScreenLabels.empty}
+      </div>
+    )
+  }
+
+  private goTo = (route: string) => {
+    const { history } = this.props
+    history.push(route)
+  }
+
+  private goToArticle = (id: number) => {
+    this.goTo(`/article/${id}`)
   }
 }
 

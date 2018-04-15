@@ -44,19 +44,4 @@
       border: none;
     }
   }
-
-  .iconCircle {
-    $size: 40px;
-    $padding: 8px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(64, 64, 64, 0.5);
-    width: $size;
-    height: $size;
-    font-size: $size - ($padding * 2);
-    color: white;
-    border-radius: $size / 2;
-  }
 }

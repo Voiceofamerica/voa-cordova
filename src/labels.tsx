@@ -11,19 +11,6 @@ export const articleLabels = {
   shareMessage: '',
 }
 
-export const bottomNavLabels = {
-  home: '首页',
-  breakingNews: '突发新闻',
-  media: '多媒体',
-  liveStream: '直播',
-  settings: '我',
-}
-
-export const breakingNewsLabels = {
-  header: '突发新闻',
-  noNews: '目前没有重突发新闻',
-}
-
 export const categorySettingsLabels = {
   header: '新闻分类排序',
   myCategories: '我的分类',
@@ -61,14 +48,8 @@ export const homeLabels = {
 }
 
 export const introLabels = {
-  heading: 'Welcome to VoA!',
   content: '您好',
   continue: '继续',
-}
-
-export const liveStreamLabels = {
-  header: '直播时间表',
-  notifyMe: 'Notify Me',
 }
 
 const hilight: React.CSSProperties = {
@@ -96,22 +77,15 @@ export const mediaPlayerLabels = {
 }
 
 export const mediaSettingsLabels = {
-  header: '视频设置',
   normalSpeed: '常速',
   halfAgainSpeed: '1.5倍速',
   doubleSpeed: '2倍速',
   chooseSpeed: '播放速度',
 }
 
-export const notificationSettingsLabels = {
-  header: '通知',
-  dailyToggle: '每日提醒',
-}
-
 export const programsScreenLabels = {
   videos: '视频',
   audio: '音频',
-  all: '卫视',
   empty: '什么都没有',
 }
 
@@ -135,13 +109,13 @@ export const settingsLabels = {
   sendFeedback: '发送反馈',
   aboutVoa: '美国之音(VOA)向国际受众发送准确、平衡和全面的新闻与信息。美国之音创建于1942年，用电台向封闭和被战火蹂躏的地区播送新闻。目前美国之音已发展成为一个多媒体新闻部门，通过网络、移动设备和社交媒体，以40多种语言为人们服务。',
   feedbackEmail: 'zhapp@voanews.com',
-  feedbackSubject: '美国之音',
-  feedbackBody: '',
+  feedbackSubject: encodeURIComponent('美国之音'),
+  feedbackBody: encodeURIComponent(''),
   shareMessage: '',
 }
 
 export const textSettingsLabels = {
-  header: '设置字体大小',
+  textSize: '设置字体大小',
   normalSize: '1x',
   largeSize: '1.5x',
   hugeSize: '2x',

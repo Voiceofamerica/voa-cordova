@@ -2,18 +2,16 @@
 import * as React from 'react'
 import { compose } from 'redux'
 import { History } from 'history'
-import * as moment from 'moment'
 import { match } from 'react-router'
 import { graphql, ChildProps, QueryOpts } from 'react-apollo'
 import { connect, Dispatch } from 'react-redux'
-import { List, ListRowProps } from 'react-virtualized'
 
-import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
+import TicketList from '@voiceofamerica/voa-shared/components/TicketList'
+import { fromVideoList } from '@voiceofamerica/voa-shared/helpers/itemList'
 
 import Loader from 'components/Loader'
 import playMedia from 'redux-store/thunks/playMediaFromPsiphon'
 
-// import { programsScreenLabels } from 'labels'
 import { ProgramVideosQuery, ProgramVideosQueryVariables } from 'helpers/graphql-types'
 import { programsScreenLabels } from 'labels'
 
@@ -34,50 +32,23 @@ type QueryProps = ChildProps<OwnProps, ProgramVideosQuery>
 type Props = QueryProps & DispatchProps
 
 class VideoPrograms extends React.Component<Props> {
-
-  playVideo (item: ProgramVideosQuery['content'][0]['video'], imageUrl) {
-    this.props.playMedia(
-      item.url,
-      item.videoTitle,
-      item.videoDescription,
-      imageUrl,
-    )
-  }
-
-  renderVirtualContent () {
-    const { data: { content } } = this.props
-    const rowHeight = 105
+  render () {
+    const { data } = this.props
 
     return (
-      <List
-        height={window.innerHeight - 150}
-        rowHeight={rowHeight}
-        rowCount={content.length}
-        width={window.innerWidth}
-        rowRenderer={this.renderRow}
-      />
-    )
-  }
-
-  renderRow = ({ index, isScrolling, key, style }: ListRowProps) => {
-    const { data: { content } } = this.props
-
-    const { image, video, pubDate } = content[index]
-
-    return (
-      <div key={key} style={style}>
-        <Ticket
-          onPress={() => this.playVideo(video, image && image.tiny)}
-          title={video.videoTitle}
-          imageUrl={image && image.tiny}
-          minorText={moment(pubDate).format('lll')}
-          suppressImage={isScrolling}
-        />
+      <div className={programContent}>
+        <Loader data={data}>
+          <TicketList
+            items={fromVideoList(data.content)}
+            onItemClick={this.playVideo}
+            emptyContent={this.renderEmpty()}
+          />
+        </Loader>
       </div>
     )
   }
 
-  renderEmpty () {
+  private renderEmpty = () => {
     return (
       <div className={emptyContent}>
         {programsScreenLabels.empty}
@@ -85,17 +56,15 @@ class VideoPrograms extends React.Component<Props> {
     )
   }
 
-  render () {
-    const { data } = this.props
-
-    const content = data.content && data.content.length ? this.renderVirtualContent() : this.renderEmpty()
-
-    return (
-      <div className={programContent}>
-        <Loader data={data}>
-          {content}
-        </Loader>
-      </div>
+  private playVideo = (id: number) => {
+    const { data: { content } } = this.props
+    const article = content.find(item => item.id === id)
+    const { url, videoTitle, videoDescription, thumbnailTiny } = article.video
+    this.props.playMedia(
+      url,
+      videoTitle,
+      videoDescription,
+      thumbnailTiny,
     )
   }
 }

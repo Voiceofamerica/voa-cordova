@@ -70,31 +70,6 @@ export type ArticleRouteQuery = {
   } | null > | null,
 };
 
-export type BreakingNewsRouteQuery = {
-  breakingNews:  Array< {
-    id: number,
-    title: string,
-    introduction: string,
-    pubDate: string,
-    image:  {
-      tiny: string,
-      thumb: string,
-      hero: string,
-    } | null,
-    video:  {
-      url: string | null,
-    } | null,
-    audio:  {
-      url: string | null,
-    } | null,
-    photoGallery:  Array< {
-      photo:  Array< {
-        id: number | null,
-      } | null > | null,
-    } | null > | null,
-  } | null > | null,
-};
-
 export type CategoryRouteQueryVariables = {
   category?: number | null,
 };
@@ -182,20 +157,6 @@ export type HomeRouteQuery = {
   } | null > | null,
 };
 
-export type LiveStreamQuery = {
-  program:  Array< {
-    id: number,
-    date: string | null,
-    timeLeft: number | null,
-    programTitle: string | null,
-    programDescription: string | null,
-    image:  {
-      tiny: string,
-    } | null,
-    url: string | null,
-  } | null > | null,
-};
-
 export type ProgramAudioQueryVariables = {
   zone?: number | null,
 };
@@ -206,6 +167,7 @@ export type ProgramAudioQuery = {
     pubDate: string,
     image:  {
       tiny: string,
+      hero: string,
     } | null,
     audio:  {
       url: string | null,
@@ -240,11 +202,9 @@ export type ProgramVideosQuery = {
   content:  Array< {
     id: number,
     pubDate: string,
-    image:  {
-      tiny: string,
-    } | null,
     video:  {
       url: string | null,
+      thumbnailTiny: string | null,
       videoTitle: string | null,
       videoDescription: string | null,
     } | null,
@@ -272,7 +232,9 @@ export type SearchQuery = {
       url: string | null,
     } | null,
     photoGallery:  Array< {
-      id: number,
+      photo:  Array< {
+        id: number | null,
+      } | null > | null,
     } | null > | null,
   } | null > | null,
 };

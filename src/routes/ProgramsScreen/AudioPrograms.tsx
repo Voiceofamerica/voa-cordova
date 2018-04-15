@@ -2,13 +2,12 @@
 import * as React from 'react'
 import { compose } from 'redux'
 import { History } from 'history'
-import * as moment from 'moment'
 import { match } from 'react-router'
 import { graphql, ChildProps, QueryOpts } from 'react-apollo'
 import { connect, Dispatch } from 'react-redux'
-import { List, ListRowProps } from 'react-virtualized'
 
-import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
+import TicketList from '@voiceofamerica/voa-shared/components/TicketList'
+import { fromAudioArticleList } from '@voiceofamerica/voa-shared/helpers/itemList'
 
 import Loader from 'components/Loader'
 import playMedia from 'redux-store/thunks/playMediaFromPsiphon'
@@ -33,49 +32,23 @@ type QueryProps = ChildProps<OwnProps, ProgramAudioQuery>
 type Props = QueryProps & DispatchProps
 
 class AudioPrograms extends React.Component<Props> {
-  playAudio (item: ProgramAudioQuery['content'][0]['audio'], imageUrl: string) {
-    this.props.playMedia(
-      item.url,
-      item.audioTitle,
-      item.audioDescription,
-      imageUrl,
-    )
-  }
-
-  renderVirtualContent () {
-    const { data: { content } } = this.props
-    const rowHeight = 105
+  render () {
+    const { data } = this.props
 
     return (
-      <List
-        height={window.innerHeight - 150}
-        rowHeight={rowHeight}
-        rowCount={content.length}
-        width={window.innerWidth}
-        rowRenderer={this.renderRow}
-      />
-    )
-  }
-
-  renderRow = ({ index, isScrolling, key, style }: ListRowProps) => {
-    const { data: { content } } = this.props
-
-    const { audio, image, pubDate } = content[index]
-
-    return (
-      <div key={key} style={style}>
-        <Ticket
-            onPress={() => this.playAudio(audio, image && image.tiny)}
-            title={audio.audioTitle}
-            imageUrl={image && image.tiny}
-            minorText={moment(pubDate).format('lll')}
-          suppressImage={isScrolling}
-        />
+      <div className={programContent}>
+        <Loader data={data}>
+          <TicketList
+            items={fromAudioArticleList(data.content)}
+            onItemClick={this.playAudio}
+            emptyContent={this.renderEmpty()}
+          />
+        </Loader>
       </div>
     )
   }
 
-  renderEmpty () {
+  private renderEmpty = () => {
     return (
       <div className={emptyContent}>
         {programsScreenLabels.empty}
@@ -83,17 +56,15 @@ class AudioPrograms extends React.Component<Props> {
     )
   }
 
-  render () {
-    const { data } = this.props
-
-    const content = data.content && data.content.length ? this.renderVirtualContent() : this.renderEmpty()
-
-    return (
-      <div className={programContent}>
-        <Loader data={data}>
-          {content}
-        </Loader>
-      </div>
+  private playAudio = (id: number) => {
+    const { data: { content } } = this.props
+    const article = content.find(item => item.id === id)
+    const { url, audioTitle, audioDescription } = article.audio
+    this.props.playMedia(
+      url,
+      audioTitle,
+      audioDescription,
+      article.image && article.image.hero,
     )
   }
 }

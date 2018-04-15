@@ -4,6 +4,7 @@ query ProgramAudio($zone: Int) {
     pubDate
     image {
       tiny
+      hero
     }
     audio {
       url
