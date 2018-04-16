@@ -9,12 +9,12 @@ import { fromArticleList } from '@voiceofamerica/voa-shared/helpers/itemList'
 
 import { homeRoute, row, content, searchButton } from './HomeRoute.scss'
 import * as Query from './HomeRoute.graphql'
-import { HomeRouteQuery } from 'helpers/graphql-types'
+import { HomeRouteQuery, HomeRouteQueryVariables } from 'helpers/graphql-types'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
 
 import Loader from 'components/Loader'
 import PullToRefresh from 'components/PullToRefresh'
-import { homeLabels } from 'labels'
+import { graphqlAudience, homeLabels } from 'labels'
 
 type QueryProps = ChildProps<RouteComponentProps<void>, HomeRouteQuery>
 
@@ -83,6 +83,13 @@ const withAnalytics = analytics<QueryProps>(({ data }) => ({
 
 const withHomeQuery = graphql(
   Query,
+  {
+    options: {
+      variables: {
+        source: graphqlAudience,
+      } as HomeRouteQueryVariables,
+    },
+  },
 )
 
 export default compose(

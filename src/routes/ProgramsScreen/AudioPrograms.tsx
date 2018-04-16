@@ -13,7 +13,7 @@ import Loader from 'components/Loader'
 import playMedia from 'redux-store/thunks/playMediaFromPsiphon'
 
 import { ProgramAudioQuery, ProgramAudioQueryVariables } from 'helpers/graphql-types'
-import { programsScreenLabels } from 'labels'
+import { graphqlAudience, programsScreenLabels } from 'labels'
 
 import Params from './Params'
 import * as Query from './Audio.graphql'
@@ -74,6 +74,7 @@ const withQuery = graphql<QueryProps, ProgramAudioQuery>(
   {
     options: (ownProps: OwnProps): QueryOpts<ProgramAudioQueryVariables> => ({
       variables: {
+        source: graphqlAudience,
         zone: parseInt(ownProps.match.params.zone || '0', 10),
       },
     }),

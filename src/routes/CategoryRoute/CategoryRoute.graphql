@@ -1,5 +1,5 @@
-query CategoryRoute($category: Int) {
-  content(source: zhcn, zoneId: $category, type: [Article, Video, PhotoGallery, Clip]) {
+query CategoryRoute($source: Audience!, $category: Int) {
+  content(source: $source, zoneId: $category, type: [Article, Video, PhotoGallery, Clip]) {
     id
     title
     introduction

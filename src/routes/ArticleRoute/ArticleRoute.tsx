@@ -23,7 +23,7 @@ import { generatePDF } from 'helpers/articlePrinter'
 import MainBottomNav from 'containers/MainBottomNav'
 import ErrorBoundary from 'components/ErrorBoundary'
 import Loader from 'components/Loader'
-import { articleLabels } from 'labels'
+import { graphqlAudience, articleLabels } from 'labels'
 import { audio as audioSvg, back, share, favorite, download, video as videoSvg } from '../../svg'
 
 import AppState from 'types/AppState'
@@ -378,6 +378,7 @@ const withQuery = graphql(
   {
     options: (ownProps: OwnProps): QueryOpts<ArticleRouteQueryVariables> => ({
       variables: {
+        source: graphqlAudience,
         id: parseInt(ownProps.match.params.id, 10),
       },
     }),

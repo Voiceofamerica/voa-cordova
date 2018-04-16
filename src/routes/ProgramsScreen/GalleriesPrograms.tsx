@@ -9,8 +9,8 @@ import { fromPhotoGalleryArticleList } from '@voiceofamerica/voa-shared/helpers/
 import Loader from 'components/Loader'
 
 // import { programsScreenLabels } from 'labels'
-import { ProgramGalleriesQuery } from 'helpers/graphql-types'
-import { programsScreenLabels } from 'labels'
+import { ProgramGalleriesQuery, ProgramGalleriesQueryVariables } from 'helpers/graphql-types'
+import { graphqlAudience, programsScreenLabels } from 'labels'
 import * as Query from './Galleries.graphql'
 
 import { programContent, emptyContent } from './ProgramsScreen.scss'
@@ -59,6 +59,13 @@ class GalleryPrograms extends React.Component<Props> {
 
 const withQuery = graphql<Props, ProgramGalleriesQuery>(
   Query,
+  {
+    options: {
+      variables: {
+        source: graphqlAudience,
+      } as ProgramGalleriesQueryVariables,
+    },
+  },
 )
 
 export default withQuery(GalleryPrograms)

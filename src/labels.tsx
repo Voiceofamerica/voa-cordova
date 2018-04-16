@@ -1,7 +1,8 @@
 
 import * as React from 'react'
+import { Audience } from 'helpers/graphql-types'
 
-export const graphqlLanguage = 'zhcn'
+export const graphqlAudience = Audience.zhcn
 
 export const momentLocale = 'zh-cn'
 

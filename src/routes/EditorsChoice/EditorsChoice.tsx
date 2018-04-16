@@ -9,12 +9,12 @@ import { fromArticleList } from '@voiceofamerica/voa-shared/helpers/itemList'
 
 import { editorsChoice, row, content, searchButton } from './EditorsChoice.scss'
 import * as Query from './EditorsChoiceRoute.graphql'
-import { EditorsChoiceRouteQuery } from 'helpers/graphql-types'
+import { EditorsChoiceRouteQuery, EditorsChoiceRouteQueryVariables } from 'helpers/graphql-types'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
 
 import Loader from 'components/Loader'
 import PullToRefresh from 'components/PullToRefresh'
-import { homeLabels } from 'labels'
+import { graphqlAudience, homeLabels } from 'labels'
 
 type QueryProps = ChildProps<RouteComponentProps<void>, EditorsChoiceRouteQuery>
 
@@ -83,6 +83,13 @@ const withAnalytics = analytics<QueryProps>(({ data }) => ({
 
 const withEditorsChoiceQuery = graphql(
   Query,
+  {
+    options: {
+      variables: {
+        source: graphqlAudience,
+      } as EditorsChoiceRouteQueryVariables,
+    },
+  },
 )
 
 export default compose(

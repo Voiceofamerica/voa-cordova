@@ -14,7 +14,7 @@ import { homeRoute, row, content, searchButton } from './CategoryRoute.scss'
 import * as Query from './CategoryRoute.graphql'
 import { CategoryRouteQuery, CategoryRouteQueryVariables } from 'helpers/graphql-types'
 import analytics, { AnalyticsProps } from 'helpers/analytics'
-import { homeLabels } from 'labels'
+import { graphqlAudience, homeLabels } from 'labels'
 
 export interface Params {
   category: string
@@ -98,6 +98,7 @@ const withHomeQuery = graphql(
   {
     options: (ownProps: OwnProps): QueryOpts<CategoryRouteQueryVariables> => ({
       variables: {
+        source: graphqlAudience,
         category: parseInt(ownProps.match.params.category, 10),
       },
     }),

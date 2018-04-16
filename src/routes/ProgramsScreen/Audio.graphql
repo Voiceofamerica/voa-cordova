@@ -1,5 +1,5 @@
-query ProgramAudio($zone: Int) {
-  content(source: zhcn, type: [Article], zoneId: $zone) {
+query ProgramAudio($source: Audience!, $zone: Int) {
+  content(source: $source, type: [Article], zoneId: $zone) {
     id
     pubDate
     image {

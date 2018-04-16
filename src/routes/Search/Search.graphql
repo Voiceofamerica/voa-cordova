@@ -1,5 +1,5 @@
-query Search($query: String!, $zoneId: Int) {
-  search(source: zhcn, keywords: $query, zoneId: $zoneId) {
+query Search($source: Audience!, $query: String!, $zoneId: Int) {
+  search(source: $source, keywords: $query, zoneId: $zoneId) {
     id
     title
     introduction

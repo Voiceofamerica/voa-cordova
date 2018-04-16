@@ -1,6 +1,14 @@
 /* tslint:disable */
 //  This file was automatically generated and should not be edited.
 
+export enum Audience {
+  en = "en",
+  zhcn = "zhcn",
+  zhtw = "zhtw",
+  fa = "fa",
+}
+
+
 export enum ContentType {
   Article = "Article",
   Video = "Video",
@@ -17,6 +25,7 @@ export enum ArticleVideoRelationship {
 
 
 export type ArticleRouteQueryVariables = {
+  source: Audience,
   id?: number | null,
 };
 
@@ -72,6 +81,7 @@ export type ArticleRouteQuery = {
 };
 
 export type CategoryRouteQueryVariables = {
+  source: Audience,
   category?: number | null,
 };
 
@@ -100,11 +110,19 @@ export type CategoryRouteQuery = {
   } | null > | null,
 };
 
+export type CategorySettingsQueryVariables = {
+  source: Audience,
+};
+
 export type CategorySettingsQuery = {
   zones:  Array< {
     id: number,
     name: string,
   } | null > | null,
+};
+
+export type EditorsChoiceRouteQueryVariables = {
+  source: Audience,
 };
 
 export type EditorsChoiceRouteQuery = {
@@ -130,6 +148,10 @@ export type EditorsChoiceRouteQuery = {
       } | null > | null,
     } | null > | null,
   } | null > | null,
+};
+
+export type HomeRouteQueryVariables = {
+  source: Audience,
 };
 
 export type HomeRouteQuery = {
@@ -159,6 +181,7 @@ export type HomeRouteQuery = {
 };
 
 export type ProgramAudioQueryVariables = {
+  source: Audience,
   zone?: number | null,
 };
 
@@ -176,6 +199,10 @@ export type ProgramAudioQuery = {
       audioDescription: string | null,
     } | null,
   } | null > | null,
+};
+
+export type ProgramGalleriesQueryVariables = {
+  source: Audience,
 };
 
 export type ProgramGalleriesQuery = {
@@ -196,6 +223,7 @@ export type ProgramGalleriesQuery = {
 };
 
 export type ProgramVideosQueryVariables = {
+  source: Audience,
   zone?: number | null,
 };
 
@@ -213,6 +241,7 @@ export type ProgramVideosQuery = {
 };
 
 export type SearchQueryVariables = {
+  source: Audience,
   query: string,
   zoneId?: number | null,
 };

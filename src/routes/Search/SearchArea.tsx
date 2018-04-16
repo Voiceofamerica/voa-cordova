@@ -1,6 +1,6 @@
 
 import * as React from 'react'
-import { graphql, ChildProps } from 'react-apollo'
+import { graphql, ChildProps, QueryOpts } from 'react-apollo'
 
 import TicketList from '@voiceofamerica/voa-shared/components/TicketList'
 import { fromArticleList } from '@voiceofamerica/voa-shared/helpers/itemList'
@@ -9,14 +9,16 @@ import Loader from 'components/Loader'
 
 import { SearchQuery, SearchQueryVariables } from 'helpers/graphql-types'
 
-import { searchLabels } from 'labels'
+import { graphqlAudience, searchLabels } from 'labels'
 
 import * as Query from './Search.graphql'
 
 import { searchArea, emptyText } from './Search.scss'
 
-interface OwnProps extends SearchQueryVariables {
+interface OwnProps {
   goTo: (route: string) => void
+  query: string
+  zoneId?: number | null
 }
 
 type Props = ChildProps<OwnProps, SearchQuery>
@@ -53,8 +55,12 @@ class SearchAreaBase extends React.Component<Props> {
 const withSearchQuery = graphql<Props, SearchQuery>(
   Query,
   {
-    options: (props: OwnProps) => ({
-      variables: props,
+    options: (props: OwnProps): QueryOpts<SearchQueryVariables> => ({
+      variables: {
+        source: graphqlAudience,
+        query: props.query,
+        zoneId: props.zoneId,
+      },
       fetchPolicy: 'cache-and-network',
     }),
   },
