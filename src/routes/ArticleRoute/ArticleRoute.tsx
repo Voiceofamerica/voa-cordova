@@ -182,7 +182,7 @@ class ArticleRouteBase extends React.Component<Props> {
       return null
     }
 
-    const imgUrl = article.image && article.image.tiny
+    const imgUrl = article.image && article.image.hero
 
     return (
       <IconItem
