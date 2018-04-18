@@ -34,7 +34,9 @@
     "scss:types": "tcm -p './src/{components,containers,routes}/**/*.scss'",
     "scss:types:watch": "npm run scss:types -- -w",
     "cordova:prepare": "cordova prepare",
-    "zip": "cd protected && zip -e ../protected.zip src/psiphon_config.json static/ADBMobileConfig.json",
+    "protected:zip": "cd protected && zip -e ../protected.zip ./**/*.* ./**/**/*.*",
+    "protected:unzip": "unzip protected.zip",
+    "protected:prepare": "cd protected && unzip ../protected.zip",
     "gql:types": "apollo-codegen generate src/**/*.graphql --schema node_modules/@voiceofamerica/voa-core-shared/introspect/schema.json --target typescript --output src/helpers/graphql-types.ts"
   },
   "author": "Voice of America",
