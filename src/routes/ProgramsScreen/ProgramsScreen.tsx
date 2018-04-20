@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router'
 import TopNav, { TopNavItem, StaticItem } from '@voiceofamerica/voa-shared/components/TopNav'
 import ThemeProvider from '@voiceofamerica/voa-shared/components/ThemeProvider'
 
-import analytics, { AnalyticsProps } from 'helpers/analytics'
+import analytics, { AnalyticsProps } from '@voiceofamerica/voa-shared/helpers/analyticsHelper'
 import ErrorBoundary from 'components/ErrorBoundary'
 import Category from 'types/Category'
 import { programsScreenLabels } from 'labels'

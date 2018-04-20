@@ -7,7 +7,7 @@ import { graphql, ChildProps, QueryOpts } from 'react-apollo'
 import { connect, Dispatch } from 'react-redux'
 
 import TicketList from '@voiceofamerica/voa-shared/components/TicketList'
-import { fromVideoArticleList } from '@voiceofamerica/voa-shared/helpers/itemList'
+import { fromVideoArticleList } from '@voiceofamerica/voa-shared/helpers/itemListHelper'
 
 import Loader from 'components/Loader'
 import playMedia from 'redux-store/thunks/playMediaFromPsiphon'

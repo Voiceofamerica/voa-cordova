@@ -5,12 +5,12 @@ import { RouteComponentProps } from 'react-router'
 import { graphql, ChildProps } from 'react-apollo'
 
 import DefaultList from '@voiceofamerica/voa-shared/components/DefaultList'
-import { fromArticleList } from '@voiceofamerica/voa-shared/helpers/itemList'
+import { fromArticleList } from '@voiceofamerica/voa-shared/helpers/itemListHelper'
 
 import { editorsChoice, row, content, searchButton } from './EditorsChoice.scss'
 import * as Query from './EditorsChoiceRoute.graphql'
 import { EditorsChoiceRouteQuery, EditorsChoiceRouteQueryVariables } from 'helpers/graphql-types'
-import analytics, { AnalyticsProps } from 'helpers/analytics'
+import analytics, { AnalyticsProps } from '@voiceofamerica/voa-shared/helpers/analyticsHelper'
 
 import Loader from 'components/Loader'
 import PullToRefresh from 'components/PullToRefresh'

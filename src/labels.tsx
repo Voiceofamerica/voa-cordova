@@ -1,10 +1,20 @@
 
 import * as React from 'react'
+import * as moment from 'moment'
+
+import { setAnalyticsOptions } from '@voiceofamerica/voa-shared/helpers/analyticsHelper'
+import { setDirection } from '@voiceofamerica/voa-shared/helpers/textDirectionHelper'
+
 import { Audience } from 'helpers/graphql-types'
+
+setAnalyticsOptions({
+  language: 'mandarin',
+})
+setDirection('ltr')
 
 export const graphqlAudience = Audience.zhcn
 
-export const momentLocale = 'zh-cn'
+moment.locale('zh-cn')
 
 export const articleLabels = {
   updatedOn: (date: string) => `${date}更新`,

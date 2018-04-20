@@ -3,17 +3,14 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 
-import { momentLocale } from 'labels'
-
-import * as moment from 'moment'
+import { isWebHost } from '@voiceofamerica/voa-shared/helpers/cordovaHelper'
 
 import './globalStyle.scss'
 
 import App from './containers/App'
 
+isWebHost(__HOST__)
 const rootElement = document.getElementById('app')
-
-moment.locale(momentLocale)
 
 let render = (Component, cb?) => {
   ReactDOM.render(

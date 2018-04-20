@@ -7,7 +7,7 @@ import { RouteComponentProps } from 'react-router'
 import { graphql, ChildProps, QueryOpts } from 'react-apollo'
 import * as moment from 'moment'
 
-import { fromRelatedArticleList } from '@voiceofamerica/voa-shared/helpers/itemList'
+import { fromRelatedArticleList } from '@voiceofamerica/voa-shared/helpers/itemListHelper'
 import PhotoGallery from '@voiceofamerica/voa-shared/components/PhotoGallery'
 import TicketList from '@voiceofamerica/voa-shared/components/TicketList'
 import ResilientImage from '@voiceofamerica/voa-shared/components/ResilientImage'
@@ -18,7 +18,7 @@ import { ArticleRouteQuery, ArticleRouteQueryVariables } from 'helpers/graphql-t
 import playMedia from 'redux-store/thunks/playMediaFromPsiphon'
 import toggleFavoriteContent from 'redux-store/actions/toggleFavoriteContent'
 
-import analytics, { AnalyticsProps } from 'helpers/analytics'
+import analytics, { AnalyticsProps } from '@voiceofamerica/voa-shared/helpers/analyticsHelper'
 import { generatePDF } from 'helpers/articlePrinter'
 import MainBottomNav from 'containers/MainBottomNav'
 import ErrorBoundary from 'components/ErrorBoundary'

@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/Subscription'
 import { Route, Switch } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
 
-import { backButtonObservable } from 'helpers/cordova'
+import { backButtonObservable } from '@voiceofamerica/voa-shared/helpers/cordovaHelper'
 
 import HomeRoute from 'routes/HomeRoute'
 import CategoryRoute from 'routes/CategoryRoute'

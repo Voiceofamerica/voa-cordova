@@ -1,12 +1,12 @@
 
-import { Theme } from '@voiceofamerica/voa-shared/components/ThemeProvider'
+import { TopNavTheme } from '@voiceofamerica/voa-shared/components/ThemeProvider'
 
-const TOP_NAV_THEME: Theme = {
-  mainBackground: '#0061B0',
-  mainColor: '#FFFFFF',
-  staticColor: '#FFFFFF',
-  selectedBackground: '#FFFFFF',
-  selectedColor: '#000000',
+const TOP_NAV_THEME: TopNavTheme = {
+  topNavBackground: '#0061B0',
+  topNavColor: '#FFFFFF',
+  topNavStaticColor: '#FFFFFF',
+  topNavSelectedBackground: '#FFFFFF',
+  topNavSelectedColor: '#000000',
 }
 
 export default TOP_NAV_THEME

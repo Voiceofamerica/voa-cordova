@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router'
 import { connect, Dispatch } from 'react-redux'
 import { compose } from 'redux'
 
-import analytics, { AnalyticsProps } from 'helpers/analytics'
+import analytics, { AnalyticsProps } from '@voiceofamerica/voa-shared/helpers/analyticsHelper'
 import clearAll from 'redux-store/actions/clearAll'
 import { routerActions } from 'react-router-redux'
 
