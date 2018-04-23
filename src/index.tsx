@@ -4,12 +4,15 @@ import * as ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 
 import { isWebHost } from '@voiceofamerica/voa-shared/helpers/cordovaHelper'
+import { setPsiphonConfig } from '@voiceofamerica/voa-shared/helpers/psiphonHelper'
 
 import './globalStyle.scss'
 
 import App from './containers/App'
 
 isWebHost(__HOST__)
+setPsiphonConfig(require('./psiphon_config.json'))
+
 const rootElement = document.getElementById('app')
 
 let render = (Component, cb?) => {
