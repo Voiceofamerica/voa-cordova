@@ -2,7 +2,6 @@
 import * as React from 'react'
 import { compose } from 'redux'
 import { History } from 'history'
-import { match } from 'react-router'
 import { graphql, ChildProps, QueryOpts } from 'react-apollo'
 import { connect, Dispatch } from 'react-redux'
 
@@ -15,13 +14,12 @@ import playMedia from 'redux-store/thunks/playMediaFromPsiphon'
 import { ProgramVideosQuery, ProgramVideosQueryVariables } from 'helpers/graphql-types'
 import { graphqlAudience, programsScreenLabels } from 'labels'
 
-import Params from './Params'
 import * as Query from './Videos.graphql'
 import { programContent, emptyContent } from './ProgramsScreen.scss'
 
 interface OwnProps {
   history: History
-  match: match<Params>
+  zoneId: number
 }
 
 interface DispatchProps {
@@ -75,7 +73,7 @@ const withQuery = graphql<QueryProps, ProgramVideosQuery>(
     options: (ownProps: OwnProps): QueryOpts<ProgramVideosQueryVariables> => ({
       variables: {
         source: graphqlAudience,
-        zone: parseInt(ownProps.match.params.zone || '0', 10),
+        zone: ownProps.zoneId,
       },
     }),
   },
