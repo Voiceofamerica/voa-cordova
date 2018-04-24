@@ -1,5 +1,8 @@
 
 import * as React from 'react'
+import { push } from 'react-router-redux'
+import store from 'redux-store'
+import toggleCircumventionDrawer from 'redux-store/actions/toggleCircumventionDrawer'
 import * as moment from 'moment'
 
 import { setAnalyticsOptions } from '@voiceofamerica/voa-shared/helpers/analyticsHelper'
@@ -32,9 +35,30 @@ export const categorySettingsLabels = {
 }
 
 export const circumventionDrawerLabels = {
-  content: (
+  enabledContent: (
     <div>
-      安全访问已启动
+      <p>
+        安全访问已启动
+      </p>
+      <p>
+        <a href='#' onClick={() => {
+          store.dispatch(push('/settings'))
+          store.dispatch(toggleCircumventionDrawer({ open: false }))
+        }}>设置</a>
+      </p>
+    </div>
+  ),
+  disabledContent: (
+    <div>
+      <p>
+        安全访问停止
+      </p>
+      <p>
+        <a href='#' onClick={() => {
+          store.dispatch(push('/settings'))
+          store.dispatch(toggleCircumventionDrawer({ open: false }))
+        }}>设置</a>
+      </p>
     </div>
   ),
 }
@@ -124,6 +148,11 @@ export const settingsLabels = {
   feedbackSubject: encodeURIComponent('美国之音'),
   feedbackBody: encodeURIComponent(''),
   shareMessage: '',
+  psiphon: '禁用安全访问',
+  psiphonOn: '打开',
+  psiphonOff: '关掉',
+  takeEffectOnRestart: '您必须重新启动才能生效',
+  okay: '好的',
 }
 
 export const textSettingsLabels = {

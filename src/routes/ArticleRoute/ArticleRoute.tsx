@@ -296,7 +296,7 @@ class ArticleRouteBase extends React.Component<Props> {
       id,
       articleTitle,
       authors,
-    })
+    }).catch()
 
     const { url } = this.props.data.content[0]
 
@@ -335,7 +335,7 @@ class ArticleRouteBase extends React.Component<Props> {
       id,
       articleTitle,
       authors,
-    })
+    }).catch()
     this.props.toggleFavorite()
   }
 
