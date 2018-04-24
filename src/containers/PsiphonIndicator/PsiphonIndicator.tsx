@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Subscription } from 'rxjs/Subscription'
 import { connect, Dispatch } from 'react-redux'
 
-import { startObservable } from 'helpers/psiphon'
+import { startObservable } from '@voiceofamerica/voa-shared/helpers/psiphonHelper'
 import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
 import toggleCircumventionDrawer from 'redux-store/actions/toggleCircumventionDrawer'
 

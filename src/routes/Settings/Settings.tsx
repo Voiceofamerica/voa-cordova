@@ -5,6 +5,7 @@ import { connect, Dispatch } from 'react-redux'
 import { compose } from 'redux'
 
 import analytics, { AnalyticsProps } from '@voiceofamerica/voa-shared/helpers/analyticsHelper'
+import Modal, { ModalButton } from '@voiceofamerica/voa-shared/components/Modal'
 import clearAll from 'redux-store/actions/clearAll'
 import { routerActions } from 'react-router-redux'
 
@@ -21,7 +22,7 @@ import {
   mediaSettingsLabels,
 } from 'labels'
 
-import { settings, panicButtonHolder, panicButton, panicButtonIcon, buttons, settingsRow, settingsButton, row, aboutVoa, content, settingsItem, settingsRowHeader, settingsValuesRow, active, disabled } from './Settings.scss'
+import { settings, panicButtonHolder, panicButton, panicButtonIcon, buttons, settingsRow, settingsButton, row, aboutVoa, content, settingsItem, settingsRowHeader, settingsValuesRow, active } from './Settings.scss'
 
 const SHARE_URL = 'https://www.voanews.com/p/5850.html'
 
@@ -73,14 +74,8 @@ type RouteProps = RouteComponentProps<void>
 
 type Props = RouteProps & AnalyticsProps & StateProps & DispatchProps
 
-interface State {
-  expectedPsiphonState: boolean
-}
-
 class SettingsRoute extends React.Component<Props> {
-  state: State = {
-    expectedPsiphonState: this.props.psiphonEnabled,
-  }
+  private modal: Modal | null
 
   renderPanicButton () {
     const { clearAll } = this.props
@@ -200,9 +195,7 @@ class SettingsRoute extends React.Component<Props> {
   }
 
   renderPsiphonToggle () {
-    const { psiphonEnabled, togglePsiphon } = this.props
-
-    const toggling = this.psiphonToggling()
+    const { psiphonEnabled } = this.props
 
     return (
       <div className={settingsRow}>
@@ -211,14 +204,14 @@ class SettingsRoute extends React.Component<Props> {
         </div>
         <div className={settingsValuesRow}>
           <div
-            className={`${settingsItem} ${toggling ? disabled : ''} ${psiphonEnabled ? active : ''}`}
-            onClick={() => !toggling && psiphonEnabled || togglePsiphon(true)}
+            className={`${settingsItem} ${psiphonEnabled ? active : ''}`}
+            onClick={this.togglePsiphon(true)}
           >
             {settingsLabels.psiphonOn}
           </div>
           <div
-            className={`${settingsItem} ${toggling ? disabled : ''} ${!psiphonEnabled ? active : ''}`}
-            onClick={() => !toggling && psiphonEnabled && togglePsiphon(false)}
+            className={`${settingsItem} ${!psiphonEnabled ? active : ''}`}
+            onClick={this.togglePsiphon(false)}
           >
             {settingsLabels.psiphonOff}
           </div>
@@ -231,6 +224,7 @@ class SettingsRoute extends React.Component<Props> {
     return (
       <div className={settings}>
         <div className={content}>
+          { this.renderRestartModal() }
           { this.renderPanicButton() }
           <div className={buttons}>
             { this.renderFavoritesSettings() }
@@ -247,6 +241,13 @@ class SettingsRoute extends React.Component<Props> {
     )
   }
 
+  private renderRestartModal = () => (
+    <Modal ref={this.setModal}>
+      {settingsLabels.takeEffectOnRestart}
+      <ModalButton id='ok'>{settingsLabels.okay}</ModalButton>
+    </Modal>
+  )
+
   private shareApp = () => {
     window.plugins.socialsharing.shareWithOptions({
       message: settingsLabels.shareMessage,
@@ -254,10 +255,22 @@ class SettingsRoute extends React.Component<Props> {
     })
   }
 
-  private psiphonToggling = () => {
-    const { expectedPsiphonState } = this.state
-    const { psiphonEnabled } = this.props
-    return expectedPsiphonState !== psiphonEnabled
+  private togglePsiphon = (value: boolean) => () => {
+    const { psiphonEnabled, togglePsiphon } = this.props
+
+    if (value === psiphonEnabled) {
+      return
+    }
+
+    if (this.modal) {
+      this.modal.show()
+    }
+
+    togglePsiphon(value)
+  }
+
+  private setModal = (el: Modal | null) => {
+    this.modal = el
   }
 }
 

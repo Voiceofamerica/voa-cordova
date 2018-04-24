@@ -151,6 +151,8 @@ export const settingsLabels = {
   psiphon: '禁用安全访问',
   psiphonOn: '打开',
   psiphonOff: '关掉',
+  takeEffectOnRestart: '您必须重新启动才能生效',
+  okay: '好的',
 }
 
 export const textSettingsLabels = {
