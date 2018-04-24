@@ -3,17 +3,17 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 
-import { momentLocale } from 'labels'
-
-import * as moment from 'moment'
+import { isWebHost } from '@voiceofamerica/voa-shared/helpers/cordovaHelper'
+import { setPsiphonConfig } from '@voiceofamerica/voa-shared/helpers/psiphonHelper'
 
 import './globalStyle.scss'
 
 import App from './containers/App'
 
-const rootElement = document.getElementById('app')
+isWebHost(__HOST__)
+setPsiphonConfig(require('./psiphon_config.json'))
 
-moment.locale(momentLocale)
+const rootElement = document.getElementById('app')
 
 let render = (Component, cb?) => {
   ReactDOM.render(

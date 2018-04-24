@@ -28,10 +28,6 @@
     overflow: hidden;
     -webkit-overflow-scrolling: touch;
 
-    &.contentLoading {
-      opacity: 0;
-    }
-
     .searchButton {
       @include touchable();
 
@@ -48,33 +44,5 @@
       border-radius: 0.6em;
       border: none;
     }
-  }
-
-  .loadingText {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    align-content: flex-start;
-    padding-top: 100px;
-    transition: color 0.3s;
-  }
-
-  .startup {
-    color: white;
-  }
-
-  .iconCircle {
-    $size: 40px;
-    $padding: 8px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(64, 64, 64, 0.5);
-    width: $size;
-    height: $size;
-    font-size: $size - ($padding * 2);
-    color: white;
-    border-radius: $size / 2;
   }
 }

@@ -3,26 +3,27 @@ import * as React from 'react'
 import { compose } from 'redux'
 import { connect, Dispatch } from 'react-redux'
 import { RouteComponentProps } from 'react-router'
-import Carousel from 'react-slick'
 
 import { graphql, ChildProps, QueryOpts } from 'react-apollo'
 import * as moment from 'moment'
 
+import { fromRelatedArticleList } from '@voiceofamerica/voa-shared/helpers/itemListHelper'
+import PhotoGallery from '@voiceofamerica/voa-shared/components/PhotoGallery'
+import TicketList from '@voiceofamerica/voa-shared/components/TicketList'
 import ResilientImage from '@voiceofamerica/voa-shared/components/ResilientImage'
 import { IconItem } from '@voiceofamerica/voa-shared/components/BottomNav'
 import SvgIcon from '@voiceofamerica/voa-shared/components/SvgIcon'
-import Ticket from '@voiceofamerica/voa-shared/components/Ticket'
 
 import { ArticleRouteQuery, ArticleRouteQueryVariables } from 'helpers/graphql-types'
 import playMedia from 'redux-store/thunks/playMediaFromPsiphon'
 import toggleFavoriteContent from 'redux-store/actions/toggleFavoriteContent'
 
-import analytics, { AnalyticsProps } from 'helpers/analytics'
+import analytics, { AnalyticsProps } from '@voiceofamerica/voa-shared/helpers/analyticsHelper'
 import { generatePDF } from 'helpers/articlePrinter'
 import MainBottomNav from 'containers/MainBottomNav'
 import ErrorBoundary from 'components/ErrorBoundary'
 import Loader from 'components/Loader'
-import { articleLabels } from 'labels'
+import { graphqlAudience, articleLabels } from 'labels'
 import { audio as audioSvg, back, share, favorite, download, video as videoSvg } from '../../svg'
 
 import AppState from 'types/AppState'
@@ -35,14 +36,6 @@ import {
   paragraph,
   relatedArticles,
   relatedContentHeading,
-  gallery,
-  photoContent,
-  photoContainer,
-  photoText,
-  photoTitle,
-  photoItem,
-  photoTextContainer,
-  fadeOut,
   mediaButtonContainer,
   mediaButton,
   mediaButtonIcon,
@@ -51,11 +44,6 @@ import {
   icon,
   iconActive,
   heroImage,
-  thumb,
-  galleryDots,
-  galleryButton,
-  next,
-  prev,
 } from './ArticleRoute.scss'
 import * as Query from './ArticleRoute.graphql'
 
@@ -78,29 +66,6 @@ type QueryProps = ChildProps<BaseProps, ArticleRouteQuery>
 type OwnProps = QueryProps
 type Props = QueryProps & DispatchProps & StateProps & AnalyticsProps
 
-interface ArrowProps {
-  onClick?: () => void
-  next?: boolean
-  prev?: boolean
-}
-
-function GalleryArrow ({ onClick, next: nextButton, prev: prevButton }: ArrowProps) {
-  const nextClass = nextButton ? next : ''
-  const prevClass = prevButton ? prev : ''
-
-  let content: string
-
-  if (nextButton) {
-    content = '>'
-  } else if (prevButton) {
-    content = '<'
-  }
-
-  return (
-    <div className={`${galleryButton} ${nextClass} ${prevClass}`} onClick={onClick}>{content}</div>
-  )
-}
-
 class ArticleRouteBase extends React.Component<Props> {
   componentWillReceiveProps (newProps: Props) {
     if (newProps.match.params.id !== this.props.match.params.id) {
@@ -109,61 +74,6 @@ class ArticleRouteBase extends React.Component<Props> {
         containerElement.scrollTop = 0
       }
     }
-  }
-
-  share = () => {
-    if (!this.props.data.content || !this.props.data.content[0]) {
-      return
-    }
-    const id = this.props.match.params.id
-    const articleTitle = this.props.data.content[0].title
-    const authors = this.props.data.content[0].authors.map(({ name: { first, last } }) => `${first} ${last}`).join('; ')
-
-    this.props.analytics.shareArticle({
-      id,
-      articleTitle,
-      authors,
-    })
-
-    const { url } = this.props.data.content[0]
-
-    window.plugins.socialsharing.shareWithOptions({
-      message: articleLabels.shareMessage,
-      url,
-    })
-  }
-
-  download = () => {
-    if (!this.props.data.content || !this.props.data.content[0]) {
-      return
-    }
-    const { title, authors, pubDate, content } = this.props.data.content[0]
-    const authorNames = authors
-      .map(auth => auth.name)
-      .map(name => `${name.first} ${name.last}`)
-
-    generatePDF({
-      title,
-      by: authorNames.join('; '),
-      pubDate: moment(pubDate).format('lll'),
-      content,
-    }).catch(console.error)
-  }
-
-  toggleFavorite = () => {
-    if (!this.props.data.content || !this.props.data.content[0]) {
-      return
-    }
-    const id = this.props.match.params.id
-    const articleTitle = this.props.data.content[0].title
-    const authors = this.props.data.content[0].authors.map(({ name: { first, last } }) => `${first} ${last}`).join('; ')
-
-    this.props.analytics.favoriteArticle({
-      id,
-      articleTitle,
-      authors,
-    })
-    this.props.toggleFavorite()
   }
 
   renderBottomNav () {
@@ -272,7 +182,7 @@ class ArticleRouteBase extends React.Component<Props> {
       return null
     }
 
-    const imgUrl = article.image && article.image.tiny
+    const imgUrl = article.image && article.image.hero
 
     return (
       <IconItem
@@ -325,87 +235,6 @@ class ArticleRouteBase extends React.Component<Props> {
     )
   }
 
-  renderGallery () {
-    const { data } = this.props
-    const article = data.content[0]
-
-    if (!article.photoGallery || article.photoGallery.length === 0) {
-      return null
-    }
-
-    return (
-      <div>
-        {
-          article.photoGallery.map(gal => {
-            const sorted = gal.photo.slice().sort((a, b) => a.order - b.order)
-            const customPaging = (i) => (
-              <a>
-                <img src={sorted[i].url} className={thumb} />
-              </a>
-            )
-
-            return (
-              <div key={gal.id} className={gallery}>
-                <Carousel dots dotsClass={galleryDots} customPaging={customPaging} nextArrow={<GalleryArrow next />} prevArrow={<GalleryArrow prev />}>
-                  {
-                    sorted.map(photo => (
-                      <div key={photo.id} className={photoContent}>
-                        <div className={photoContainer}>
-                          <ResilientImage src={photo.url} className={photoItem} contain />
-                        </div>
-                        <div className={photoTextContainer}>
-                          <div className={photoText}>
-                            <div className={photoTitle}>
-                              {photo.photoTitle}
-                            </div>
-                            {photo.photoDescription}
-                          </div>
-                          <div className={fadeOut} />
-                        </div>
-                      </div>
-                    ))
-                  }
-                </Carousel>
-              </div>
-            )
-          })
-        }
-      </div>
-    )
-  }
-
-  renderRelatedArticles () {
-    const { data, history } = this.props
-    if (data.loading || data.error || !(data.content && data.content[0])) {
-      return null
-    }
-
-    const article = data.content[0]
-    if (article.relatedStories.length === 0) {
-      return null
-    }
-
-    return (
-      <div className={relatedArticles}>
-        <span className={relatedContentHeading}>
-          {articleLabels.relatedContent}
-        </span>
-        {
-          article.relatedStories.map(related => (
-            <div key={related.id}>
-              <Ticket
-                onPress={() => history.push(`/article/${related.id}`)}
-                title={related.storyTitle}
-                imageUrl={related.thumbnailUrl}
-                minorText={moment(related.pubDate).fromNow()}
-              />
-            </div>
-          ))
-        }
-      </div>
-    )
-  }
-
   render () {
     const { textSize } = this.props
 
@@ -419,6 +248,100 @@ class ArticleRouteBase extends React.Component<Props> {
         { this.renderBottomNav() }
       </div>
     )
+  }
+
+  private renderRelatedArticles = () => {
+    const { data } = this.props
+    const article = data.content[0]
+    if (article.relatedStories.length === 0) {
+      return null
+    }
+
+    return (
+      <div className={relatedArticles}>
+        <span className={relatedContentHeading}>
+          {articleLabels.relatedContent}
+        </span>
+        <TicketList.Static
+          items={fromRelatedArticleList(article.relatedStories)}
+          onItemClick={this.goToArticle}
+        />
+      </div>
+    )
+  }
+
+  private renderGallery = () => {
+    const { data } = this.props
+    const article = data.content[0]
+    if (!article.photoGallery) {
+      return null
+    }
+
+    return (
+      article.photoGallery.map(gallery => (
+        <PhotoGallery key={gallery.id} gallery={gallery} loadingText={articleLabels.galleryLoading} />
+      ))
+    )
+  }
+
+  private share = () => {
+    if (!this.props.data.content || !this.props.data.content[0]) {
+      return
+    }
+    const id = this.props.match.params.id
+    const articleTitle = this.props.data.content[0].title
+    const authors = this.props.data.content[0].authors.map(({ name: { first, last } }) => `${first} ${last}`).join('; ')
+
+    this.props.analytics.shareArticle({
+      id,
+      articleTitle,
+      authors,
+    })
+
+    const { url } = this.props.data.content[0]
+
+    window.plugins.socialsharing.shareWithOptions({
+      message: articleLabels.shareMessage,
+      url,
+    })
+  }
+
+  private download = () => {
+    if (!this.props.data.content || !this.props.data.content[0]) {
+      return
+    }
+    const { title, authors, pubDate, content } = this.props.data.content[0]
+    const authorNames = authors
+      .map(auth => auth.name)
+      .map(name => `${name.first} ${name.last}`)
+
+    generatePDF({
+      title,
+      by: authorNames.join('; '),
+      pubDate: moment(pubDate).format('lll'),
+      content,
+    }).catch(console.error)
+  }
+
+  private toggleFavorite = () => {
+    if (!this.props.data.content || !this.props.data.content[0]) {
+      return
+    }
+    const id = this.props.match.params.id
+    const articleTitle = this.props.data.content[0].title
+    const authors = this.props.data.content[0].authors.map(({ name: { first, last } }) => `${first} ${last}`).join('; ')
+
+    this.props.analytics.favoriteArticle({
+      id,
+      articleTitle,
+      authors,
+    })
+    this.props.toggleFavorite()
+  }
+
+  private goToArticle = (id: number) => {
+    const { history } = this.props
+    history.push(`/article/${id}`)
   }
 }
 
@@ -455,6 +378,7 @@ const withQuery = graphql(
   {
     options: (ownProps: OwnProps): QueryOpts<ArticleRouteQueryVariables> => ({
       variables: {
+        source: graphqlAudience,
         id: parseInt(ownProps.match.params.id, 10),
       },
     }),

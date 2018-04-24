@@ -1,6 +1,6 @@
 
-query ArticleRoute($id: Int) {
-  content(source: zhcn, type: [], id: $id) {
+query ArticleRoute($source: Audience!, $id: Int) {
+  content(source: $source, type: [], id: $id) {
     id
     title
     pubDate
@@ -35,14 +35,15 @@ query ArticleRoute($id: Int) {
         id
         photoTitle
         photoDescription
-        url
+        tiny
+        hero
         order
       }
     }
     relatedStories {
       id
       storyTitle
-      thumbnailUrl
+      thumbnailTiny
       pubDate
     }
     type

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="106000" id="com.voanews.voazh" version="1.6.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="106020" id="com.voanews.voazh" version="1.6.2" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name short="美国之音">VOAChinese</name>
     <description>
         美国之音将代表整个美国，而不是美国社会的个别阶层。所以，美国之音将平衡、全面地反映重要的美国思想和体制。
@@ -49,7 +49,6 @@
     </platform>
     <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
-    <plugin name="cordova-wheel-selector-plugin" spec="^1.0.9" />
     <plugin name="adobe-mobile-services" spec="^4.13.1-cor" />
     <plugin name="psiphon-cordova-plugin" spec="^0.8.0" />
     <plugin name="cordova-plugin-fullscreen" spec="^1.2.0" />
@@ -61,7 +60,7 @@
     <plugin name="cordova-plugin-device" spec="^2.0.1" />
     <plugin name="nl.x-services.plugins.backgroundaudio" spec="^1.0.1" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
+    <plugin name="cordova-plugin-music-controls" spec="@voiceofamerica/cordova-plugin-music-controls@^3.0.5" />
     <engine name="android" spec="^6.4.0" />
     <engine name="ios" spec="^4.5.4" />
-    <plugin name="cordova-plugin-music-controls" spec="@voiceofamerica/cordova-plugin-music-controls@^3.0.4" />
 </widget>

@@ -24,7 +24,7 @@ const GRAPHQL_URL = (() => {
 
 const srcDir = path.join(__dirname, 'src')
 
-const GLOBAL_CSS = /globalStyle\.scss|node_modules\/mdi|node_modules\/slick-carousel/
+const GLOBAL_CSS = /globalStyle\.scss|node_modules\/mdi/
 
 module.exports = {
   entry: [

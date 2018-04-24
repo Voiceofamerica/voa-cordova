@@ -1,5 +1,5 @@
-query ProgramGalleries {
-  content(source: zhcn, type: [PhotoGallery]) {
+query ProgramGalleries($source: Audience!) {
+  content(source: $source, type: [PhotoGallery]) {
     id
     title
     introduction

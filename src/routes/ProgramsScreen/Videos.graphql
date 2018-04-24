@@ -1,12 +1,10 @@
-query ProgramVideos($zone: Int) {
-  content(source: zhcn, type: [Video], zoneId: $zone) {
+query ProgramVideos($source: Audience!, $zone: Int) {
+  content(source: $source, type: [Video], zoneId: $zone) {
     id
     pubDate
-    image {
-      tiny
-    }
     video {
       url
+      thumbnailTiny
       videoTitle
       videoDescription
     }

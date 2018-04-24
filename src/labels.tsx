@@ -3,28 +3,27 @@ import * as React from 'react'
 import { push } from 'react-router-redux'
 import store from 'redux-store'
 import toggleCircumventionDrawer from 'redux-store/actions/toggleCircumventionDrawer'
+import * as moment from 'moment'
 
-export const graphqlLanguage = 'zhcn'
+import { setAnalyticsOptions } from '@voiceofamerica/voa-shared/helpers/analyticsHelper'
+import { setDirection } from '@voiceofamerica/voa-shared/helpers/textDirectionHelper'
 
-export const momentLocale = 'zh-cn'
+import { Audience } from 'helpers/graphql-types'
+
+setAnalyticsOptions({
+  language: 'mandarin',
+})
+setDirection('ltr')
+
+export const graphqlAudience = Audience.zhcn
+
+moment.locale('zh-cn')
 
 export const articleLabels = {
   updatedOn: (date: string) => `${date}更新`,
   relatedContent: '相关内容',
   shareMessage: '',
-}
-
-export const bottomNavLabels = {
-  home: '首页',
-  breakingNews: '突发新闻',
-  media: '多媒体',
-  liveStream: '直播',
-  settings: '我',
-}
-
-export const breakingNewsLabels = {
-  header: '突发新闻',
-  noNews: '目前没有重突发新闻',
+  galleryLoading: '加载照片',
 }
 
 export const categorySettingsLabels = {
@@ -85,14 +84,8 @@ export const homeLabels = {
 }
 
 export const introLabels = {
-  heading: 'Welcome to VoA!',
   content: '您好',
   continue: '继续',
-}
-
-export const liveStreamLabels = {
-  header: '直播时间表',
-  notifyMe: 'Notify Me',
 }
 
 const hilight: React.CSSProperties = {
@@ -120,22 +113,15 @@ export const mediaPlayerLabels = {
 }
 
 export const mediaSettingsLabels = {
-  header: '视频设置',
   normalSpeed: '常速',
   halfAgainSpeed: '1.5倍速',
   doubleSpeed: '2倍速',
   chooseSpeed: '播放速度',
 }
 
-export const notificationSettingsLabels = {
-  header: '通知',
-  dailyToggle: '每日提醒',
-}
-
 export const programsScreenLabels = {
   videos: '视频',
   audio: '音频',
-  all: '卫视',
   empty: '什么都没有',
 }
 
@@ -168,7 +154,7 @@ export const settingsLabels = {
 }
 
 export const textSettingsLabels = {
-  header: '设置字体大小',
+  textSize: '设置字体大小',
   normalSize: '1x',
   largeSize: '1.5x',
   hugeSize: '2x',

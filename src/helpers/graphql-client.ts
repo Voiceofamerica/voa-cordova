@@ -4,6 +4,8 @@ import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 
+import { graphqlAudience } from 'labels'
+
 const client = new ApolloClient({
   link: new HttpLink({
     // See webpack.config.js for actual GRAPHQL_URL endpoints
@@ -17,6 +19,9 @@ const client = new ApolloClient({
       notifyOnNetworkStatusChange: true,
     },
     query: {
+      variables: {
+        source: graphqlAudience,
+      },
       fetchPolicy: 'cache-and-network',
       notifyOnNetworkStatusChange: true,
     },

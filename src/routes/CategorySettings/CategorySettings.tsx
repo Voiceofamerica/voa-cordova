@@ -14,9 +14,9 @@ import AppState from 'types/AppState'
 import Category from 'types/Category'
 
 import * as Query from './CategorySettings.graphql'
-import { CategorySettingsQuery } from 'helpers/graphql-types'
+import { CategorySettingsQuery, CategorySettingsQueryVariables } from 'helpers/graphql-types'
 import Loader from 'components/Loader'
-import { categorySettingsLabels, homeLabels } from 'labels'
+import { graphqlAudience, categorySettingsLabels, homeLabels } from 'labels'
 
 import { categorySettings, pill, pillOuter, pillContainer, bottomNav, icon, headlinesSubtitle, sectionHeader, sectionName, sectionSubtitle } from './CategorySettings.scss'
 
@@ -224,6 +224,11 @@ const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => ({
 const withQuery = graphql(
   Query,
   {
+    options: {
+      variables: {
+        source: graphqlAudience,
+      } as CategorySettingsQueryVariables,
+    },
     props: ({ data }) => {
       let outputData = data as (typeof data) & CategorySettingsQuery
       if (!data.loading && !data.error) {

@@ -10,9 +10,9 @@ import MediaPlayer from 'containers/MediaPlayer'
 import CircumventionDrawer from 'containers/CircumventionDrawer'
 import Intro from 'containers/Intro'
 import client from 'helpers/graphql-client'
-import { showControls } from 'helpers/mediaControlHelper'
+import { showControls } from '@voiceofamerica/voa-shared/helpers/mediaControlHelper'
 import { scheduleDaily } from 'helpers/localNotifications'
-import { start } from 'helpers/psiphon'
+import { start } from '@voiceofamerica/voa-shared/helpers/psiphonHelper'
 
 import { app } from './App.scss'
 

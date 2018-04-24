@@ -1,6 +1,6 @@
 
-query CategorySettings {
-  zones(source: zhcn) {
+query CategorySettings($source: Audience!) {
+  zones(source: $source) {
     id
     name
   }

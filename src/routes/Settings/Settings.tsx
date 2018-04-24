@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router'
 import { connect, Dispatch } from 'react-redux'
 import { compose } from 'redux'
 
-import analytics, { AnalyticsProps } from 'helpers/analytics'
+import analytics, { AnalyticsProps } from '@voiceofamerica/voa-shared/helpers/analyticsHelper'
 import clearAll from 'redux-store/actions/clearAll'
 import { routerActions } from 'react-router-redux'
 
@@ -127,7 +127,7 @@ class SettingsRoute extends React.Component<Props> {
     return (
       <div className={settingsRow}>
         <div className={settingsRowHeader}>
-          {textSettingsLabels.header}
+          {textSettingsLabels.textSize}
         </div>
         <div className={settingsValuesRow}>
           {

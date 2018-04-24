@@ -1,6 +1,14 @@
 /* tslint:disable */
 //  This file was automatically generated and should not be edited.
 
+export enum Audience {
+  en = "en",
+  zhcn = "zhcn",
+  zhtw = "zhtw",
+  fa = "fa",
+}
+
+
 export enum ContentType {
   Article = "Article",
   Video = "Video",
@@ -17,6 +25,7 @@ export enum ArticleVideoRelationship {
 
 
 export type ArticleRouteQueryVariables = {
+  source: Audience,
   id?: number | null,
 };
 
@@ -56,7 +65,8 @@ export type ArticleRouteQuery = {
         id: number | null,
         photoTitle: string | null,
         photoDescription: string | null,
-        url: string,
+        tiny: string,
+        hero: string,
         order: number | null,
       } | null > | null,
     } | null > | null,
@@ -70,32 +80,8 @@ export type ArticleRouteQuery = {
   } | null > | null,
 };
 
-export type BreakingNewsRouteQuery = {
-  breakingNews:  Array< {
-    id: number,
-    title: string,
-    introduction: string,
-    pubDate: string,
-    image:  {
-      tiny: string,
-      thumb: string,
-      hero: string,
-    } | null,
-    video:  {
-      url: string | null,
-    } | null,
-    audio:  {
-      url: string | null,
-    } | null,
-    photoGallery:  Array< {
-      photo:  Array< {
-        id: number | null,
-      } | null > | null,
-    } | null > | null,
-  } | null > | null,
-};
-
 export type CategoryRouteQueryVariables = {
+  source: Audience,
   category?: number | null,
 };
 
@@ -124,11 +110,19 @@ export type CategoryRouteQuery = {
   } | null > | null,
 };
 
+export type CategorySettingsQueryVariables = {
+  source: Audience,
+};
+
 export type CategorySettingsQuery = {
   zones:  Array< {
     id: number,
     name: string,
   } | null > | null,
+};
+
+export type EditorsChoiceRouteQueryVariables = {
+  source: Audience,
 };
 
 export type EditorsChoiceRouteQuery = {
@@ -154,6 +148,10 @@ export type EditorsChoiceRouteQuery = {
       } | null > | null,
     } | null > | null,
   } | null > | null,
+};
+
+export type HomeRouteQueryVariables = {
+  source: Audience,
 };
 
 export type HomeRouteQuery = {
@@ -182,21 +180,8 @@ export type HomeRouteQuery = {
   } | null > | null,
 };
 
-export type LiveStreamQuery = {
-  program:  Array< {
-    id: number,
-    date: string | null,
-    timeLeft: number | null,
-    programTitle: string | null,
-    programDescription: string | null,
-    image:  {
-      tiny: string,
-    } | null,
-    url: string | null,
-  } | null > | null,
-};
-
 export type ProgramAudioQueryVariables = {
+  source: Audience,
   zone?: number | null,
 };
 
@@ -206,6 +191,7 @@ export type ProgramAudioQuery = {
     pubDate: string,
     image:  {
       tiny: string,
+      hero: string,
     } | null,
     audio:  {
       url: string | null,
@@ -213,6 +199,10 @@ export type ProgramAudioQuery = {
       audioDescription: string | null,
     } | null,
   } | null > | null,
+};
+
+export type ProgramGalleriesQueryVariables = {
+  source: Audience,
 };
 
 export type ProgramGalleriesQuery = {
@@ -233,6 +223,7 @@ export type ProgramGalleriesQuery = {
 };
 
 export type ProgramVideosQueryVariables = {
+  source: Audience,
   zone?: number | null,
 };
 
@@ -240,11 +231,9 @@ export type ProgramVideosQuery = {
   content:  Array< {
     id: number,
     pubDate: string,
-    image:  {
-      tiny: string,
-    } | null,
     video:  {
       url: string | null,
+      thumbnailTiny: string | null,
       videoTitle: string | null,
       videoDescription: string | null,
     } | null,
@@ -252,6 +241,7 @@ export type ProgramVideosQuery = {
 };
 
 export type SearchQueryVariables = {
+  source: Audience,
   query: string,
   zoneId?: number | null,
 };
@@ -272,7 +262,9 @@ export type SearchQuery = {
       url: string | null,
     } | null,
     photoGallery:  Array< {
-      id: number,
+      photo:  Array< {
+        id: number | null,
+      } | null > | null,
     } | null > | null,
   } | null > | null,
 };
