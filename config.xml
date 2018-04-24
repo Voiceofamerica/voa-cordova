@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="106010" id="com.voanews.voazh" version="1.6.1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="106020" id="com.voanews.voazh" version="1.6.2" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name short="美国之音">VOAChinese</name>
     <description>
         美国之音将代表整个美国，而不是美国社会的个别阶层。所以，美国之音将平衡、全面地反映重要的美国思想和体制。
