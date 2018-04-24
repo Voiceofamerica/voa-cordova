@@ -42,7 +42,11 @@ export default class App extends React.Component<{}, State> {
             console.error('FATAL: psiphon failed to start correctly', err)
           })
       } else {
-        deviceIsReady.then(this.ready)
+        deviceIsReady
+          .then(this.ready)
+          .catch(err => {
+            console.error('FATAL: something went wrong during initialization', err)
+          })
       }
 
       if (appState.media.mediaTitle) {

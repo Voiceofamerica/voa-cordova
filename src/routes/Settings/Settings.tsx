@@ -263,7 +263,7 @@ class SettingsRoute extends React.Component<Props> {
     }
 
     if (this.modal) {
-      this.modal.show()
+      this.modal.show().catch()
     }
 
     togglePsiphon(value)
