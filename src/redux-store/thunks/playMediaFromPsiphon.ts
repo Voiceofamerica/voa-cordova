@@ -5,8 +5,8 @@ import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/map'
 import AppState from 'types/AppState'
 
-import { showControls } from 'helpers/mediaControlHelper'
-import { port, toggleObservable } from 'helpers/psiphon'
+import { showControls } from '@voiceofamerica/voa-shared/helpers/mediaControlHelper'
+import { port, toggleObservable } from '@voiceofamerica/voa-shared/helpers/psiphonHelper'
 import playMedia from '../actions/playMedia'
 import toggleMediaDrawer from '../actions/toggleMediaDrawer'
 
@@ -52,6 +52,7 @@ export default (options: PlayMediaOptions) =>
           ...options,
           originalMediaUrl,
           keepLocation: playing,
+          noDrawerToggle: playing,
         }))
         playing = true
         return
@@ -67,6 +68,7 @@ export default (options: PlayMediaOptions) =>
             mediaUrl,
             originalMediaUrl,
             keepLocation: playing,
+            noDrawerToggle: playing,
           }))
           playing = true
         })

@@ -10,9 +10,10 @@ import MediaPlayer from 'containers/MediaPlayer'
 import CircumventionDrawer from 'containers/CircumventionDrawer'
 import Intro from 'containers/Intro'
 import client from 'helpers/graphql-client'
-import { showControls } from 'helpers/mediaControlHelper'
+import { showControls } from '@voiceofamerica/voa-shared/helpers/mediaControlHelper'
 import { scheduleDaily } from 'helpers/localNotifications'
-import { start } from 'helpers/psiphon'
+import { setPsiphonConfig, start } from '@voiceofamerica/voa-shared/helpers/psiphonHelper'
+import { deviceIsReady } from '@voiceofamerica/voa-shared/helpers/cordovaHelper'
 
 import { app } from './App.scss'
 
@@ -32,14 +33,20 @@ export default class App extends React.Component<{}, State> {
         scheduleDaily().catch(err => console.error(err))
       }
 
-      if (appState.settings.usePsiphon) {
-        start().then(() => {
-          this.ready()
-        }).catch(err => {
-          console.error('FATAL: psiphon failed to start correctly', err)
-        })
+      console.log('psiphon enabled?', appState.settings.psiphonEnabled)
+      if (appState.settings.psiphonEnabled) {
+        setPsiphonConfig(require('../../psiphon_config.json'))
+        start()
+          .then(this.ready)
+          .catch(err => {
+            console.error('FATAL: psiphon failed to start correctly', err)
+          })
       } else {
-        this.ready()
+        deviceIsReady
+          .then(this.ready)
+          .catch(err => {
+            console.error('FATAL: something went wrong during initialization', err)
+          })
       }
 
       if (appState.media.mediaTitle) {

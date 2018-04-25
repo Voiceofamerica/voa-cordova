@@ -43,7 +43,7 @@ query ArticleRoute($source: Audience!, $id: Int) {
     relatedStories {
       id
       storyTitle
-      thumbnailUrl
+      thumbnailTiny
       pubDate
     }
     type

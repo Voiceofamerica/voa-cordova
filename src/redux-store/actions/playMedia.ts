@@ -11,6 +11,7 @@ interface PlayMediaOptions {
   isVideo: boolean
   imageUrl?: string
   keepLocation?: boolean
+  noDrawerToggle?: boolean
 }
 
 export type PlayMediaAction = PlayMediaOptions & Action

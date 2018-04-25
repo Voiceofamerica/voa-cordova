@@ -5,7 +5,7 @@ import { compose } from 'redux'
 import { graphql, ChildProps, QueryOpts } from 'react-apollo'
 
 import DefaultList from '@voiceofamerica/voa-shared/components/DefaultList'
-import { fromArticleList } from '@voiceofamerica/voa-shared/helpers/itemList'
+import { fromArticleList } from '@voiceofamerica/voa-shared/helpers/itemListHelper'
 
 import Loader from 'components/Loader'
 import PullToRefresh from 'components/PullToRefresh'
@@ -13,7 +13,7 @@ import PullToRefresh from 'components/PullToRefresh'
 import { homeRoute, row, content, searchButton } from './CategoryRoute.scss'
 import * as Query from './CategoryRoute.graphql'
 import { CategoryRouteQuery, CategoryRouteQueryVariables } from 'helpers/graphql-types'
-import analytics, { AnalyticsProps } from 'helpers/analytics'
+import analytics, { AnalyticsProps } from '@voiceofamerica/voa-shared/helpers/analyticsHelper'
 import { graphqlAudience, homeLabels } from 'labels'
 
 export interface Params {

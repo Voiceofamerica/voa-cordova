@@ -13,6 +13,7 @@ import { content } from './CircumventionDrawer.scss'
 
 interface StateProps {
   open: boolean
+  psiphonEnabled: boolean
 }
 
 interface DispatchProps {
@@ -23,18 +24,23 @@ type Props = StateProps & DispatchProps
 
 class CircumventionDrawerBase extends React.Component<Props> {
   render () {
-    const { open, close } = this.props
+    const { open, close, psiphonEnabled } = this.props
     return (
       <Drawer open={open} onClose={close} className={content}>
-        {circumventionDrawerLabels.content}
+        {
+          psiphonEnabled
+          ? circumventionDrawerLabels.enabledContent
+          : circumventionDrawerLabels.disabledContent
+        }
       </Drawer>
     )
   }
 }
 
-const mapStateToProps = ({ circumventionDrawer: { open } }: AppState): StateProps => {
+const mapStateToProps = ({ circumventionDrawer: { open }, settings: { psiphonEnabled } }: AppState): StateProps => {
   return {
     open,
+    psiphonEnabled,
   }
 }
 

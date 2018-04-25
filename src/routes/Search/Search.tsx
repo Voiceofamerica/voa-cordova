@@ -9,7 +9,7 @@ import shallowCompare from 'shallow-compare'
 import AppState from 'types/AppState'
 import Category from 'types/Category'
 
-import analytics, { AnalyticsProps } from 'helpers/analytics'
+import analytics, { AnalyticsProps } from '@voiceofamerica/voa-shared/helpers/analyticsHelper'
 import { searchLabels } from 'labels'
 
 import SearchArea from './SearchArea'

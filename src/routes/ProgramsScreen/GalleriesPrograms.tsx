@@ -4,7 +4,7 @@ import { History } from 'history'
 import { graphql, ChildProps } from 'react-apollo'
 
 import TicketList from '@voiceofamerica/voa-shared/components/TicketList'
-import { fromPhotoGalleryArticleList } from '@voiceofamerica/voa-shared/helpers/itemList'
+import { fromPhotoGalleryArticleList } from '@voiceofamerica/voa-shared/helpers/itemListHelper'
 
 import Loader from 'components/Loader'
 

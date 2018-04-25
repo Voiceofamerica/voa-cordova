@@ -10,7 +10,7 @@ import SwipeToDelete from '@voiceofamerica/voa-shared/components/SwipeToDelete'
 import BottomNav, { IconItem } from '@voiceofamerica/voa-shared/components/BottomNav'
 import SvgIcon from '@voiceofamerica/voa-shared/components/SvgIcon'
 
-import analytics, { AnalyticsProps } from 'helpers/analytics'
+import analytics, { AnalyticsProps } from '@voiceofamerica/voa-shared/helpers/analyticsHelper'
 import AppState from 'types/AppState'
 import FavoriteContent from 'types/FavoriteContent'
 import FlatMap from 'types/FlatMap'

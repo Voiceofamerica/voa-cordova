@@ -3,7 +3,7 @@ import * as React from 'react'
 import { graphql, ChildProps, QueryOpts } from 'react-apollo'
 
 import TicketList from '@voiceofamerica/voa-shared/components/TicketList'
-import { fromArticleList } from '@voiceofamerica/voa-shared/helpers/itemList'
+import { fromArticleList } from '@voiceofamerica/voa-shared/helpers/itemListHelper'
 
 import Loader from 'components/Loader'
 
