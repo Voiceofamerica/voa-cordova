@@ -1,5 +1,5 @@
 
-# Voice Of America Farsi App
+# Voice Of America Mandarin App
 
 ## Download the App
 * ...
