@@ -4,6 +4,7 @@ import { push } from 'react-router-redux'
 import store from 'redux-store'
 import toggleCircumventionDrawer from 'redux-store/actions/toggleCircumventionDrawer'
 import * as moment from 'moment'
+import 'moment/locale/zh-cn'
 
 import { setAnalyticsOptions } from '@voiceofamerica/voa-shared/helpers/analyticsHelper'
 import { setDirection } from '@voiceofamerica/voa-shared/helpers/textDirectionHelper'
@@ -12,7 +13,14 @@ import { Audience } from 'helpers/graphql-types'
 
 setAnalyticsOptions({
   language: 'mandarin',
+  languageService: 'voa mandarin',
+  propertyName: 'voa mandarin news app',
+  propertyId: '412',
+  rsidAccount: 'bbgvoa.mandarin.streaming.app',
+  reportSuite: 'bbgvoa.mandarin.streaming.app',
+  googleAnalyticsId: 'UA-118161473-1',
 })
+
 setDirection('ltr')
 
 export const graphqlAudience = Audience.zhcn
