@@ -1,5 +1,5 @@
 query HomeRoute($source: Audience!) {
-  content(source: $source, type: [PhotoGallery, Article, Clip], topNews: false) {
+  content(source: $source, type: [Article], topNews: false) {
     id
     title
     introduction

@@ -15,8 +15,8 @@
 
 To set up:
 * `npm install`
-* `cordova prepare`
-> If you encounter plugin installation errors, re-run `cordova prepare` until you get no errors
+* `npx cordova prepare`
+> If you encounter plugin installation errors, re-run `npx cordova prepare` until you get no errors
 
 To build & run:
 * `npm run start:web` - to run in the browser
@@ -53,3 +53,29 @@ bash "${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/PsiphonTunnel.framework/st
         - Yes
       2. Does your app qualify for any of the exemptions provided in Category 5, Part 2 of the U.S. Export Administration Regulations?
         - Yes
+
+## Using this as a base
+
+### Files to update
+
+* `package.json`
+  - change the name to be unique for your project
+  - change the app id in the `deploy:android` script to be the same as the app id in your `config.xml`
+* `config.xml`
+  - change the app id to be unique for your project
+  - reset the version code and version number to `100000` and `1.0.0` respectively
+  - change the name of the app (both short and long) for your project
+  - change all of the author fields to the correct information for your project
+* `circle.yml`
+  - update the cache keys to be unique for your project
+    (ex. `v1-your-project-npm-{{ checksum "package-lock.json" }}`)
+* `scripts/buildAndroid.sh`
+  - update the `--alias` cli argument to be the same as chosen for your [keystore](#generating-a-keystore)
+* `src/labels.tsx`
+  - this is where all of the static labels for the app live
+  - language-specific configuration (date locale, text direction, etc.) lives here, too
+
+### Generating a keystore
+
+Run the following command and follow the prompts:
+`keytool -genkey -v -keystore build.keystore -alias [app-name] -keyalg RSA -keysize 2048 -validity 10000`
