@@ -31,7 +31,9 @@
       "graqhql-types": ["graqhql-types"],
       "types/*": ["types/*"],
       "svg/*": ["svg/*"],
-      "react": ["../node_modules/@types/react"]
+      "react": ["../node_modules/@types/react"],
+      "rxjs/*": ["../node_modules/rxjs/*"],
+      "rxjs": ["../node_modules/rxjs"]
     }
   },
   "include": [
