@@ -66,12 +66,33 @@ type QueryProps = ChildProps<BaseProps, ArticleRouteQuery>
 type OwnProps = QueryProps
 type Props = QueryProps & DispatchProps & StateProps & AnalyticsProps
 
-class ArticleRouteBase extends React.Component<Props> {
-  componentWillReceiveProps (newProps: Props) {
-    if (newProps.match.params.id !== this.props.match.params.id) {
+interface State {
+  detailAnalyticsSent: boolean
+}
+
+class ArticleRouteBase extends React.Component<Props, State> {
+  state: State = {
+    detailAnalyticsSent: false,
+  }
+
+  componentDidUpdate (prevProps: Props) {
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+      this.setState({ detailAnalyticsSent: false })
       const containerElement = this.refs.container as HTMLDivElement
       if (containerElement) {
         containerElement.scrollTop = 0
+      }
+    } else if (!this.state.detailAnalyticsSent) {
+      const { loading, content } = this.props.data
+      if (!loading && content && content[0]) {
+        this.setState({ detailAnalyticsSent: true })
+        const article = content[0]
+        this.props.analytics.articleDetail({
+          articleId: `${article.id}`,
+          articleTitle: article.title,
+          authors: this.getAuthorsString(),
+          pubDate: article.pubDate,
+        })
       }
     }
   }
@@ -155,18 +176,28 @@ class ArticleRouteBase extends React.Component<Props> {
   }
 
   renderVideo () {
-    const { data, playMedia } = this.props
+    const { data, playMedia, analytics } = this.props
     const article = data.content[0]
     const { video } = article
 
     if (!video || !video.url) {
       return null
     }
+    const onClick = () => {
+      playMedia(video.url, article.title, video.videoDescription, true, video.thumbnailTiny)
+      analytics.articleVideoStart({
+        articleId: `${article.id}`,
+        articleTitle: article.title,
+        videoTitle: article.title,
+        authors: this.getAuthorsString(),
+        pubDate: article.pubDate,
+      })
+    }
 
     return (
       <IconItem
         className={mediaButton}
-        onClick={() => playMedia(video.url, article.title, video.videoDescription, true, video.thumbnailTiny)}
+        onClick={onClick}
       >
         <SvgIcon src={videoSvg} className={mediaButtonIcon} />
       </IconItem>
@@ -174,7 +205,7 @@ class ArticleRouteBase extends React.Component<Props> {
   }
 
   renderAudio () {
-    const { data, playMedia } = this.props
+    const { data, playMedia, analytics } = this.props
     const article = data.content[0]
     const { audio } = article
 
@@ -183,11 +214,21 @@ class ArticleRouteBase extends React.Component<Props> {
     }
 
     const imgUrl = article.image && article.image.hero
+    const onClick = () => {
+      playMedia(audio.url, audio.audioTitle, audio.audioDescription, false, imgUrl)
+      analytics.articleAudioStart({
+        articleId: `${article.id}`,
+        articleTitle: article.title,
+        audioTitle: audio.audioTitle,
+        authors: this.getAuthorsString(),
+        pubDate: article.pubDate,
+      })
+    }
 
     return (
       <IconItem
         className={mediaButton}
-        onClick={() => playMedia(audio.url, audio.audioTitle, audio.audioDescription, false, imgUrl)}
+        onClick={onClick}
       >
         <SvgIcon src={audioSvg} className={mediaButtonIcon}/>
       </IconItem>
@@ -289,7 +330,7 @@ class ArticleRouteBase extends React.Component<Props> {
       return
     }
     const article = this.props.data.content[0]
-    const id = this.props.match.params.id
+    const articleId = this.props.match.params.id
     const authors = article.authors.map(({ name: { first, last } }) => `${first} ${last}`).join('; ')
 
     const {
@@ -305,7 +346,7 @@ class ArticleRouteBase extends React.Component<Props> {
       console.log('shared with:', app)
       if (completed) {
         this.props.analytics.shareArticle({
-          id,
+          articleId,
           articleTitle,
           authors,
           pubDate,
@@ -337,7 +378,7 @@ class ArticleRouteBase extends React.Component<Props> {
     }
 
     const article = this.props.data.content[0]
-    const id = this.props.match.params.id
+    const articleId = this.props.match.params.id
     const authors = article.authors
       .map(({ name: { first, last } }) => `${first} ${last}`).join('; ')
 
@@ -347,7 +388,7 @@ class ArticleRouteBase extends React.Component<Props> {
     } = article
 
     this.props.analytics.favoriteArticle({
-      id,
+      articleId,
       articleTitle,
       authors,
       pubDate,
@@ -358,6 +399,14 @@ class ArticleRouteBase extends React.Component<Props> {
   private goToArticle = (id: number) => {
     const { history } = this.props
     history.push(`/article/${id}`)
+  }
+
+  private getAuthorsString = () => {
+    if (!this.props.data.content || !this.props.data.content[0]) {
+      return ''
+    }
+    const article = this.props.data.content[0]
+    return article.authors.map(({ name: { first, last } }) => `${first} ${last}`).join('; ')
   }
 }
 
