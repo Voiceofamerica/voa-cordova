@@ -52,7 +52,7 @@ class SearchBase extends React.Component<Props, State> {
         this.props.analytics.searched({
           pageTitle: title,
           searchQuery,
-        })
+        }).catch()
       },
       ANALYTICS_TIMEOUT,
     )

@@ -26,6 +26,8 @@ import { settings, panicButtonHolder, panicButton, panicButtonIcon, buttons, set
 
 const SHARE_URL = 'https://www.voanews.com/p/5850.html'
 
+const title = 'Settings'
+
 const data = {
   textSize: [
     {
@@ -267,6 +269,11 @@ class SettingsRoute extends React.Component<Props> {
     }
 
     togglePsiphon(value)
+
+    this.props.analytics.setProxy({
+      pageTitle: title,
+      enabled: value,
+    }).catch()
   }
 
   private setModal = (el: Modal | null) => {
@@ -296,8 +303,8 @@ const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => ({
 const withRedux = connect(mapStateToProps, mapDispatchToProps)
 
 const withAnalytics = analytics<Props>({
-  state: 'Settings',
-  title: 'Settings',
+  state: title,
+  title: title,
 })
 
 export default compose(
