@@ -20,6 +20,8 @@ interface StateProps {
   categories: Category[]
 }
 
+const title = 'Search Results'
+
 type OwnProps = RouteComponentProps<{ query: string, zoneId: string }>
 
 type Props = OwnProps & StateProps & AnalyticsProps
@@ -29,6 +31,7 @@ interface State {
 }
 
 const THROTTLE_TIMEOUT = 1000
+const ANALYTICS_TIMEOUT = 3000
 
 class SearchBase extends React.Component<Props, State> {
   state: State = {
@@ -44,6 +47,16 @@ class SearchBase extends React.Component<Props, State> {
       THROTTLE_TIMEOUT,
     )
 
+  private throttleAnalytics = throttle(
+      (searchQuery: string) => {
+        this.props.analytics.searched({
+          pageTitle: title,
+          searchQuery,
+        }).catch()
+      },
+      ANALYTICS_TIMEOUT,
+    )
+
   componentWillReceiveProps (nextProps: Props) {
     if (!shallowCompare(this, nextProps, this.state)) {
       return false
@@ -51,6 +64,7 @@ class SearchBase extends React.Component<Props, State> {
 
     const { query } = nextProps.match.params
     this.setDebouncedQuery(query)
+    this.throttleAnalytics(query)
 
     return true
   }
@@ -122,8 +136,8 @@ class SearchBase extends React.Component<Props, State> {
 }
 
 const withAnalytics = analytics<Props>({
-  state: 'Search Results',
-  title: 'Search Results',
+  state: title,
+  title: title,
 })
 
 const mapStateToProps = ({ settings: { categories } }: AppState): StateProps => ({
