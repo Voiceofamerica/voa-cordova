@@ -6,7 +6,7 @@ import toggleCircumventionDrawer from 'redux-store/actions/toggleCircumventionDr
 import * as moment from 'moment'
 import 'moment/locale/zh-cn'
 
-import { setAnalyticsOptions } from '@voiceofamerica/voa-shared/helpers/analyticsHelper'
+import { setAnalyticsOptions } from '@voiceofamerica/voa-shared/helpers/analyticsBindings'
 import { setDirection } from '@voiceofamerica/voa-shared/helpers/textDirectionHelper'
 
 import { Audience } from 'helpers/graphql-types'
