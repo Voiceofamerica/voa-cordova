@@ -92,7 +92,7 @@ class ArticleRouteBase extends React.Component<Props, State> {
           articleTitle: article.title,
           authors: this.getAuthorsString(),
           pubDate: article.pubDate,
-        })
+        }).catch()
       }
     }
   }
@@ -191,7 +191,7 @@ class ArticleRouteBase extends React.Component<Props, State> {
         videoTitle: article.title,
         authors: this.getAuthorsString(),
         pubDate: article.pubDate,
-      })
+      }).catch()
     }
 
     return (
@@ -222,7 +222,7 @@ class ArticleRouteBase extends React.Component<Props, State> {
         audioTitle: audio.audioTitle,
         authors: this.getAuthorsString(),
         pubDate: article.pubDate,
-      })
+      }).catch()
     }
 
     return (
