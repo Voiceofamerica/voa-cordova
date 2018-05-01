@@ -8,15 +8,19 @@
 
 * NodeJS LTS (Download)[https://nodejs.org/en/]
 * If you have a globally installed version of Cordova, uninstall.
-* src/psiphon_config.json
-* static/ADBMobileConfig.json
+* Content from `protected.zip`:
+  * src/psiphon_config.json
+  * static/ADBMobileConfig.json
+* For iOS build/development, install XCode (only available on MacOS)
+* For Android build/development, install [Android Studio](https://developer.android.com/studio/) ([additional setup required](#android-setup))
 
 ## Quickstart
 
 To set up:
 * `npm install`
 * `npx cordova prepare`
-> If you encounter plugin installation errors, re-run `npx cordova prepare` until you get no errors
+  - If you encounter plugin installation errors, re-run `npx cordova prepare` until you get no errors
+* If you have the password to `protected.zip`, you can run `npm run protected:unzip` and supply the password when prompted
 
 To build & run:
 * `npm run start:web` - to run in the browser
@@ -53,6 +57,21 @@ bash "${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/PsiphonTunnel.framework/st
         - Yes
       2. Does your app qualify for any of the exemptions provided in Category 5, Part 2 of the U.S. Export Administration Regulations?
         - Yes
+
+## Android setup
+In order to be able to build and run Android, you'll need to do have the following:
+* From SDK Platforms:
+  1. At least Android 7.1.1 (api level 25)
+* From SDK Tools:
+  1. Android SDK Build-Tools
+  1. Android Emulator
+  1. Android SDK Platform-Tools
+  1. Android SDK Tools
+  1. Intel x86 Emulator Accelerator (HAXM installer)
+* Either a working ADV or a physical device that can be connected to the computer
+  - When you run `npm run start:android`, you should either see the text `AVD Discovered` or a CLI menu
+    - If you see the CLI menu but you see no ADVs (nothing is selectable besides `Quit`), you either need to ensure your physical device is connected properly or create a working ADV
+    - If instead, you see text warning of an unhandled promise rejection, cancel the command and try again
 
 ## Using this as a base
 
