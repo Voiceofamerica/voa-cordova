@@ -13,44 +13,14 @@
   user-select: none;
   -webkit-user-select: none;
 
-  .bottomNav {
-    justify-content: flex-end;
+  .content {
+    overflow-y: scroll;
+    padding-bottom: calc(#{$menu-height} + 10px);
   }
 
   .icon {
     font-size: calc(#{$menu-font-size} * 2);
     color: $mid-grey;
-  }
-
-  .pillContainer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    background: transparent;
-
-    margin: 10px 0;
-    overflow: scroll;
-    padding: $menu-height 20px;
-
-    .pillOuter {
-      padding: 5px;
-
-      .pill {
-        width: 25vw;
-        background: $voa-blue;
-        color: white;
-        padding: 3px;
-        border-radius: 100px;
-        text-align: center;
-        height: calc(1.5em);
-        font-size: 0.8em;
-
-        &.dragged {
-          transform: scale(1.4);
-          background: lighten($voa-blue, 5);
-        }
-      }
-    }
   }
 
   .headlinesSubtitle {
@@ -76,9 +46,5 @@
 
   .sectionName {
     font-size: 24px;
-  }
-
-  .sectionSubtitle {
-    font-size: 14px;
   }
 }

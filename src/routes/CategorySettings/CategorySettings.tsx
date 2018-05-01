@@ -3,11 +3,12 @@ import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
 import { graphql, ChildProps, compose } from 'react-apollo'
 import { connect, Dispatch } from 'react-redux'
-import { DragDropContext } from 'react-dnd'
-import TouchBackend from 'react-dnd-touch-backend'
 
 import BottomNav, { IconItem } from '@voiceofamerica/voa-shared/components/BottomNav'
+import PillManager, { Pill, PillSpacer } from '@voiceofamerica/voa-shared/components/PillManager'
+import PopupButtonGroup, { PopupButton } from '@voiceofamerica/voa-shared/components/PopupButtonGroup'
 import SvgIcon from '@voiceofamerica/voa-shared/components/SvgIcon'
+import { themed, ThemeProps } from '@voiceofamerica/voa-shared/components/ThemeProvider'
 
 import setCategoryOrder from 'redux-store/actions/setCategoryOrder'
 import AppState from 'types/AppState'
@@ -18,11 +19,7 @@ import { CategorySettingsQuery, CategorySettingsQueryVariables } from 'helpers/g
 import Loader from 'components/Loader'
 import { graphqlAudience, categorySettingsLabels, homeLabels } from 'labels'
 
-import { categorySettings, pill, pillOuter, pillContainer, bottomNav, icon, headlinesSubtitle, sectionHeader, sectionName, sectionSubtitle } from './CategorySettings.scss'
-
-import CategoryPill, { PillItem , DRAG_DELAY } from './CategoryPill'
-
-const CATEGORY = 'CATEGORY'
+import { categorySettings, content, icon, headlinesSubtitle, sectionHeader, sectionName } from './CategorySettings.scss'
 
 type OwnProps = RouteComponentProps<void>
 
@@ -34,182 +31,159 @@ interface DispatchProps {
   changeOrder: (categories: Category[]) => void
 }
 
-type Props = ChildProps<OwnProps & StateProps & DispatchProps, CategorySettingsQuery>
+type Props = ChildProps<OwnProps & StateProps & DispatchProps, CategorySettingsQuery> & ThemeProps
 
 interface LocalState {
-  draggingIndex: number
-  unChosenCategories: Category[]
-  chosenCategories: Category[]
-}
-
-function categoriesDiffer (first: Category[], second: Category[]) {
-  return first !== second
+  selectedId: number | null
+  buttonPosition: number
 }
 
 class CategorySettingsBase extends React.Component<Props, LocalState> {
   state: LocalState = {
-    draggingIndex: -1,
-    unChosenCategories: [],
-    chosenCategories: this.props.categories,
+    selectedId: null,
+    buttonPosition: 0,
   }
 
-  componentDidMount () {
-    this.setState({ unChosenCategories: this.filterCategories(this.props.categories, this.props.data.zones) })
-  }
-
-  componentWillReceiveProps (nextProps: Props) {
-    if (categoriesDiffer(this.props.data.zones, nextProps.data.zones)) {
-      this.setState({ unChosenCategories: this.filterCategories(nextProps.categories, nextProps.data.zones) })
-    }
-    this.setState({ chosenCategories: nextProps.categories })
-  }
-
-  filterCategories (chosenCategories: Category[], allCategories: Category[] = []) {
-    return allCategories
-      .filter(zone => chosenCategories.findIndex(category => category.id === zone.id) < 0)
-  }
-
-  hoverOverChosen = (chosenItem: PillItem, at: PillItem) => {
-    const { chosenCategories } = this.state
-    if (chosenCategories.find(c => c.id === chosenItem.id)) {
-      this.moveChosenCard(at, chosenItem)
-    } else {
-      this.insertChosenCard(at, chosenItem)
-    }
-  }
-
-  hoverOverUnchosen = (chosenItem: PillItem, at: PillItem) => {
-    const { chosenCategories } = this.state
-    if (chosenCategories.find(c => c.id === chosenItem.id)) {
-      this.removeChosenCard(at, chosenItem)
-    }
-    this.moveUnchosenCard(at, chosenItem)
-  }
-
-  moveChosenCard (at: PillItem, chosenItem: PillItem) {
-    const { chosenCategories } = this.state
-    const { data: { zones = [] }, changeOrder } = this.props
-
-    const chosenCategory = zones.find(c => c.id === chosenItem.id)
-
-    const removed = chosenCategories.filter(c => c.id !== chosenItem.id)
-
-    const moved = [
-      ...removed.slice(0, at.index),
-      chosenCategory,
-      ...removed.slice(at.index),
-    ]
-
-    changeOrder(moved)
-  }
-
-  insertChosenCard (at: PillItem, chosenItem: PillItem) {
-    const { chosenCategories, unChosenCategories } = this.state
-    const { data: { zones = [] }, changeOrder } = this.props
-
-    const chosenCategory = zones.find(z => z.id === chosenItem.id)
-
-    const inserted = [
-      ...chosenCategories.slice(0, at.index),
-      chosenCategory,
-      ...chosenCategories.slice(at.index),
-    ]
-
-    this.setState({ unChosenCategories: unChosenCategories.filter(z => z.id !== chosenItem.id), chosenCategories: inserted })
-    changeOrder(inserted)
-  }
-
-  removeChosenCard (at: PillItem, chosenItem: PillItem) {
-    const { chosenCategories, unChosenCategories } = this.state
-    const { data: { zones = [] }, changeOrder } = this.props
-
-    const chosenCategory = zones.find(c => c.id === chosenItem.id)
-    const removed = chosenCategories.filter(c => c.id !== chosenItem.id)
-
-    const inserted = [
-      ...unChosenCategories.slice(0, at.index),
-      chosenCategory,
-      ...unChosenCategories.slice(at.index),
-    ]
-
-    this.setState({ chosenCategories: removed, unChosenCategories: inserted })
-    changeOrder(removed)
-  }
-
-  moveUnchosenCard (at: PillItem, chosenItem: PillItem) {
-    const { chosenCategories } = this.state
-    const { data: { zones = [] } } = this.props
-    const { unChosenCategories } = this.state
-
-    const chosenCategory = zones.find(c => c.id === chosenItem.id)
-
-    const removed = unChosenCategories.filter(c => c.id !== chosenItem.id)
-    const index = at.index - (chosenCategories.length + 1)
-
-    const moved = [
-      ...removed.slice(0, index),
-      chosenCategory,
-      ...removed.slice(index),
-    ]
-
-    this.setState({ unChosenCategories: moved })
-  }
-
-  renderCategory = ({ id, name, chosen, separator }: Category & { chosen: boolean, separator: boolean }, index: number) => {
-    if (separator) {
-      return (
-        <div key={'separator'} className={sectionHeader}>
-          <div className={sectionName}>{categorySettingsLabels.allCategories}</div>
-        </div>
-      )
-    } else {
-      const dragHandler = chosen ? this.hoverOverChosen : this.hoverOverUnchosen
-
-      return (
-        <CategoryPill itemId={id} key={id} index={index} cardType={CATEGORY} draggedOver={dragHandler}>
-          {name}
-        </CategoryPill>
-      )
-    }
-  }
+  private contentDiv: HTMLDivElement | null
 
   render () {
-    const { unChosenCategories, chosenCategories } = this.state
-    const { data, history } = this.props
-
-    const chosenCategoriesWithFlags = chosenCategories.map(c => ({ ...c, chosen: true, separator: false }))
-    const unchosenCategoriesWithFlags = unChosenCategories.map(c => ({ ...c, chosen: false, separator: false }))
-
-    const allCategoriesWithSeparator = chosenCategoriesWithFlags
-      .concat([{ id: -1, name: '', chosen: false, separator: true }])
-      .concat(unchosenCategoriesWithFlags)
+    const { data, history, categories: chosenCategories, theme = {} } = this.props
+    const { selectedId, buttonPosition } = this.state
+    const unChosenCategories = this.filterCategories(chosenCategories, data.zones)
 
     return (
       <div className={categorySettings}>
         <Loader data={data}>
-          <div className={pillContainer}>
-            <div className={pillOuter}>
-              <div className={pill}>{homeLabels.headlines}</div>
-            </div>
+          <div ref={this.setContentDiv} className={content}>
+            <PillManager>
+              <Pill>{homeLabels.headlines}</Pill>
+            </PillManager>
             <div className={headlinesSubtitle}>
               <div>{categorySettingsLabels.headlinesFirst}</div>
             </div>
-            <div className={sectionHeader}>
-              <div className={sectionName}>{categorySettingsLabels.myCategories}</div>
-              <div className={sectionSubtitle}>{categorySettingsLabels.dragAndDrop}</div>
-            </div>
-            {
-              allCategoriesWithSeparator.map(this.renderCategory)
-            }
+            <PillManager>
+              <PillSpacer>
+                <div className={sectionHeader}>
+                  <div className={sectionName}>{categorySettingsLabels.myCategories}</div>
+                </div>
+              </PillSpacer>
+              {
+                chosenCategories.map(({ id, name }) => (
+                  <Pill key={id} onClick={this.onChosenClick(id)} selected={id === selectedId}>
+                    {name}
+                  </Pill>
+                ))
+              }
+              <PillSpacer>
+                <div key={'separator'} className={sectionHeader}>
+                  <div className={sectionName}>{categorySettingsLabels.allCategories}</div>
+                </div>
+              </PillSpacer>
+              {
+                unChosenCategories.map(({ id, name }) => (
+                  <Pill key={id} onClick={this.onUnchosenClick(id)}>
+                    {name}
+                  </Pill>
+                ))
+              }
+            </PillManager>
+            <PopupButtonGroup verticalPosition={buttonPosition} show={selectedId !== null}>
+              <PopupButton onClick={this.onKillClick}>
+                <SvgIcon src='close' style={{ color: theme.red }} />
+              </PopupButton>
+              <PopupButton onClick={this.onUpClick}>
+                <SvgIcon src='chevronUp' />
+              </PopupButton>
+              <PopupButton onClick={this.onDownClick}>
+                <SvgIcon src='chevronDown' />
+              </PopupButton>
+              <PopupButton onClick={this.onCancelClick} style={{ fontSize: 10 }}>
+                Cancel
+              </PopupButton>
+            </PopupButtonGroup>
           </div>
         </Loader>
-        <BottomNav className={bottomNav}>
+        <BottomNav>
           <IconItem onClick={() => history.goBack()}>
             <SvgIcon src={require('svg/back.svg')} className={icon} />
           </IconItem>
         </BottomNav>
       </div>
     )
+  }
+
+  private setContentDiv = (div: HTMLDivElement | null) => {
+    this.contentDiv = div
+  }
+
+  private filterCategories (chosenCategories: Category[], allCategories: Category[] = []) {
+    return allCategories
+      .filter(zone => chosenCategories.findIndex(category => category.id === zone.id) < 0)
+  }
+
+  private onChosenClick = (selectedId: number) => (ev: React.MouseEvent<HTMLDivElement>) => {
+    const target = ev.currentTarget
+    const buttonPosition = this.getButtonVertFromPoint(target.offsetTop + target.clientHeight)
+
+    this.setState({ selectedId, buttonPosition })
+  }
+
+  private onUnchosenClick = (selectedId: number) => () => {
+    const category = this.props.data.zones.find(cat => cat.id === selectedId)
+
+    const chosenCategories = [
+      ...this.props.categories,
+      category,
+    ]
+
+    this.setState({ selectedId: null })
+    this.props.changeOrder(chosenCategories)
+  }
+
+  private onKillClick = () => {
+    const { selectedId } = this.state
+    const chosenCategories = this.props.categories.filter(cat => cat.id !== selectedId)
+
+    this.setState({ selectedId: null })
+    this.props.changeOrder(chosenCategories)
+  }
+
+  private onUpClick = () => {
+    const { selectedId } = this.state
+    const newIndex = Math.max(this.props.categories.findIndex(cat => cat.id === selectedId) - 1, 0)
+
+    const chosenCategories = this.jumpCategory(selectedId, newIndex)
+
+    this.props.changeOrder(chosenCategories)
+  }
+
+  private onDownClick = () => {
+    const { selectedId } = this.state
+    const newIndex = Math.min(this.props.categories.findIndex(cat => cat.id === selectedId) + 1, this.props.categories.length - 1)
+
+    const chosenCategories = this.jumpCategory(selectedId, newIndex)
+
+    this.props.changeOrder(chosenCategories)
+  }
+
+  private onCancelClick = () => {
+    this.setState({ selectedId: null })
+  }
+
+  private jumpCategory = (selectedId: number, newIndex: number) => {
+    const category = this.props.data.zones.find(cat => cat.id === selectedId)
+    const filteredCategories = this.props.categories.filter(cat => cat.id !== selectedId)
+
+    return [
+      ...filteredCategories.slice(0, newIndex),
+      category,
+      ...filteredCategories.slice(newIndex),
+    ]
+  }
+
+  private getButtonVertFromPoint = (offsetTop: number) => {
+    const scrollTop = this.contentDiv ? this.contentDiv.scrollTop : 0
+    return Math.max(offsetTop - scrollTop + 10, 40)
   }
 }
 
@@ -241,9 +215,7 @@ const withQuery = graphql(
 )
 
 export default compose(
+  themed,
   connect(mapStateToProps, mapDispatchToProps),
   withQuery,
-  DragDropContext(TouchBackend({
-    delayTouchStart: DRAG_DELAY,
-  })),
 )(CategorySettingsBase)
