@@ -27,6 +27,7 @@ export default (options: PlayMediaOptions) =>
 
     const {
       mediaUrl: originalMediaUrl,
+      isVideo,
     } = options
 
     const state = getState()
@@ -59,9 +60,10 @@ export default (options: PlayMediaOptions) =>
       }
 
       const encodedUrl = encodeURIComponent(originalMediaUrl)
+      const rewriteStyle = isVideo ? 'tunneled-rewrite' : 'tunneled-icy'
 
       port()
-        .then(portNum => `http://127.0.0.1:${portNum}/tunneled-rewrite/${encodedUrl}?m3u8=true`)
+        .then(portNum => `http://127.0.0.1:${portNum}/${rewriteStyle}/${encodedUrl}?m3u8=true`)
         .then(mediaUrl => {
           dispatch(playMedia({
             ...options,
