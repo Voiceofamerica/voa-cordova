@@ -14,5 +14,5 @@ module.exports = function showAdvMenu(callback) {
 function quit(avdMenu) {
   avdMenu.close()
   console.log('To add or edit an AVD, open Android Studio and go to: Tools -> Android -> AVD Manager')
-  process.exit(0)
+  process.exit(1)
 }

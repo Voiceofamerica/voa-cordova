@@ -25,6 +25,9 @@ function main() {
     } else {
       console.log('AVD discovered')
     }
+  }).catch(err => {
+    console.error('An error occurred', err)
+    process.exit(2)
   })
 }
 
