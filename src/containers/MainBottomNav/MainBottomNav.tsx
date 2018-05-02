@@ -78,7 +78,7 @@ class MainBottomNavBase extends React.Component<Props> {
     let className = mediaDrawerOpen ? `${bottomNav} ${mediaIsOpen}` : bottomNav
 
     return (
-      <BottomNav className={className}>
+      <BottomNav flex className={className}>
         {left}
         <RoundItem onClick={this.roundItemAction} className={centerButton}>
           { this.renderImage() }

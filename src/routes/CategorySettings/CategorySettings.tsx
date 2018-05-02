@@ -103,7 +103,7 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
             </PopupButtonGroup>
           </div>
         </Loader>
-        <BottomNav>
+        <BottomNav flex>
           <IconItem onClick={() => history.goBack()}>
             <SvgIcon src={require('svg/back.svg')} className={icon} />
           </IconItem>

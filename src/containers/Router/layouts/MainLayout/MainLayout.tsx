@@ -14,6 +14,8 @@ import Category from 'types/Category'
 
 import { homeLabels } from 'labels'
 
+import { layout } from '../layout.scss'
+
 interface StateProps {
   categories: Category[]
 }
@@ -39,8 +41,8 @@ function MainLayout ({ component: Component, categories, ...rest }: Props) {
       const categoryId = isHeadlines ? 1 : parseInt(categoryIdStr, 10)
 
       return (
-        <div>
-          <TopNav>
+        <div className={layout}>
+          <TopNav flex>
             <StaticItem />
             <TopNavItem selected={isHeadlines} onClick={() => replace('/')}>
               {homeLabels.headlines}
@@ -57,9 +59,11 @@ function MainLayout ({ component: Component, categories, ...rest }: Props) {
             </StaticItem>
           </TopNav>
 
-          <ErrorBoundary>
-            <Component {...props as any} />
-          </ErrorBoundary>
+          <div className={layout}>
+            <ErrorBoundary>
+              <Component {...props as any} />
+            </ErrorBoundary>
+          </div>
 
           <DefaultBottomNav history={props.history} />
         </div>

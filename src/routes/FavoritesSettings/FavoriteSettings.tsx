@@ -60,7 +60,7 @@ class FavoriteSettingsRoute extends React.Component<Props> {
             </SwipeToDelete>
           ))
         }
-        <BottomNav>
+        <BottomNav flex>
           <IconItem onClick={() => history.goBack()}>
             <SvgIcon src={require('svg/back.svg')} className={icon} />
           </IconItem>
