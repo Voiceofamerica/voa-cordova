@@ -19,6 +19,7 @@ type ProgramType = 'audio' | 'video'
 
 const AUDIO: ProgramType = 'audio'
 const VIDEO: ProgramType = 'video'
+const DEFAULT = VIDEO
 
 const PROGRAM_ZONES: Category[] = [
   {
@@ -108,13 +109,13 @@ class ProgramsScreen extends React.Component<Props> {
 
   setZoneId = (zoneId: number) => {
     const { history, match } = this.props
-    const { type = VIDEO } = match.params
+    const { type = DEFAULT } = match.params
     history.replace(`/programs/${type}/${zoneId}`)
   }
 
   renderPrograms () {
     const { history, match } = this.props
-    const { type = VIDEO } = match.params
+    const { type = DEFAULT } = match.params
     const zoneId = this.getZoneId()
 
     if (type === AUDIO) {
@@ -127,7 +128,7 @@ class ProgramsScreen extends React.Component<Props> {
   }
 
   renderProgramTypes () {
-    const { type = VIDEO } = this.props.match.params
+    const { type = DEFAULT } = this.props.match.params
 
     return (
       <div className={programTypeNav}>
