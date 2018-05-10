@@ -75,25 +75,21 @@ class ArticleRouteBase extends React.Component<Props, State> {
     detailAnalyticsSent: false,
   }
 
+  container = React.createRef<HTMLDivElement>()
+
+  componentDidMount () {
+    this.sendDetailAnalyticsEvent()
+  }
+
   componentDidUpdate (prevProps: Props) {
     if (prevProps.match.params.id !== this.props.match.params.id) {
-      this.setState({ detailAnalyticsSent: false })
-      const containerElement = this.refs.container as HTMLDivElement
+      this.setState({ detailAnalyticsSent: false }, () => this.sendDetailAnalyticsEvent())
+      const containerElement = this.container.current
       if (containerElement) {
         containerElement.scrollTop = 0
       }
-    } else if (!this.state.detailAnalyticsSent) {
-      const { loading, content } = this.props.data
-      if (!loading && content && content[0]) {
-        this.setState({ detailAnalyticsSent: true })
-        const article = content[0]
-        this.props.analytics.articleDetail({
-          articleId: `${article.id}`,
-          articleTitle: article.title,
-          authors: this.getAuthorsString(),
-          pubDate: article.pubDate,
-        }).catch()
-      }
+    } else {
+      this.sendDetailAnalyticsEvent()
     }
   }
 
@@ -255,7 +251,7 @@ class ArticleRouteBase extends React.Component<Props, State> {
     const paragraphs = article.content.split(/\n/g)
 
     return (
-      <div className={container} ref='container'>
+      <div className={container} ref={this.container}>
         {this.renderImage()}
         {this.renderHeading()}
         <div className={articleText}>
@@ -407,6 +403,22 @@ class ArticleRouteBase extends React.Component<Props, State> {
     }
     const article = this.props.data.content[0]
     return article.authors.map(({ name: { first, last } }) => `${first} ${last}`).join('; ')
+  }
+
+  private sendDetailAnalyticsEvent = () => {
+    if (!this.state.detailAnalyticsSent) {
+      const { loading, content } = this.props.data
+      if (!loading && content && content[0]) {
+        this.setState({ detailAnalyticsSent: true })
+        const article = content[0]
+        this.props.analytics.articleDetail({
+          articleId: `${article.id}`,
+          articleTitle: article.title,
+          authors: this.getAuthorsString(),
+          pubDate: article.pubDate,
+        }).catch()
+      }
+    }
   }
 }
 
