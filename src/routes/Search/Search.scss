@@ -12,13 +12,8 @@
   background: transparent;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-  padding-top: 45px;
 
   .inputs {
-    position: absolute;
-    top: $menu-height;
-    left: 0;
-    right: 0;
     height: $menu-height;
     display: flex;
     flex-direction: row;
@@ -105,8 +100,7 @@
 }
 
 .searchArea {
-  height: 100%;
-  padding-top: $menu-height;
+  flex: 1;
   display: flex;
 
   .emptyText {

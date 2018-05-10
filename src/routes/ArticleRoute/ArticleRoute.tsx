@@ -195,12 +195,12 @@ class ArticleRouteBase extends React.Component<Props, State> {
     }
 
     return (
-      <IconItem
+      <div
         className={mediaButton}
         onClick={onClick}
       >
         <SvgIcon src={videoSvg} className={mediaButtonIcon} />
-      </IconItem>
+      </div>
     )
   }
 
@@ -226,12 +226,12 @@ class ArticleRouteBase extends React.Component<Props, State> {
     }
 
     return (
-      <IconItem
+      <div
         className={mediaButton}
         onClick={onClick}
       >
         <SvgIcon src={audioSvg} className={mediaButtonIcon}/>
-      </IconItem>
+      </div>
     )
   }
 

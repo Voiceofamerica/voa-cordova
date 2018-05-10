@@ -145,7 +145,7 @@ class ProgramsScreen extends React.Component<Props> {
     const selectedId = this.getZoneId()
     return (
       <ThemeProvider value={TopNavTheme}>
-        <TopNav>
+        <TopNav flex>
           <StaticItem />
           {
             PROGRAM_ZONES.map(({ id, name }) => {

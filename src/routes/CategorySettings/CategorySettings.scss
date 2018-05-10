@@ -14,8 +14,10 @@
   -webkit-user-select: none;
 
   .content {
+    flex: 1;
+    padding: 10px;
     overflow-y: scroll;
-    padding-bottom: calc(#{$menu-height} + 10px);
+    padding-bottom: 20px;
   }
 
   .icon {

@@ -38,8 +38,6 @@ class SearchBase extends React.Component<Props, State> {
     debouncedQuery: this.props.match.params.query,
   }
 
-  private inputHeight: number = 0
-
   private setDebouncedQuery = throttle(
       (debouncedQuery: string) => {
         this.setState({ debouncedQuery })
@@ -94,7 +92,7 @@ class SearchBase extends React.Component<Props, State> {
     const { query = '', zoneId = '0' } = this.props.match.params
 
     return (
-      <div ref={el => this.inputHeight = el && el.clientHeight || 0 } className={inputs}>
+      <div className={inputs}>
         <div onClick={() => history.goBack()} className={backButton}>{searchLabels.back}</div>
         <div className={inputsPill}>
           <div className={dropdownPill}>
@@ -109,11 +107,9 @@ class SearchBase extends React.Component<Props, State> {
             <span className={dropdownArrow}><i className='mdi mdi-chevron-down' /></span>
           </div>
           <div className={searchInputContainer}>
-            {/* <form onSubmit={ev => this.setQuery(ev.currentTarget.value)}> */}
-              <input autoFocus className={searchInput} value={query}
-              onChange={ev => this.setQuery(ev.currentTarget.value)}
-              placeholder={searchLabels.query} />
-            {/* </form> */}
+            <input autoFocus className={searchInput} value={query}
+            onChange={ev => this.setQuery(ev.currentTarget.value)}
+            placeholder={searchLabels.query} />
           </div>
         </div>
       </div>
@@ -124,12 +120,10 @@ class SearchBase extends React.Component<Props, State> {
     const { zoneId = '0' } = this.props.match.params
     const { debouncedQuery = '' } = this.state
 
-    const marginBottom = this.inputHeight
-
     return (
-      <div className={searchScreen} style={{ marginBottom }}>
+      <div className={searchScreen}>
+      {this.renderInputs()}
         <SearchArea goTo={this.goTo} query={debouncedQuery} zoneId={parseInt(zoneId, 10)} />
-        {this.renderInputs()}
       </div>
     )
   }
