@@ -35,26 +35,26 @@ type Props = ChildProps<OwnProps & StateProps & DispatchProps, CategorySettingsQ
 
 interface LocalState {
   selectedId: number | null
-  buttonPosition: number
+  topButtonPosition: number
+  bottomButtonPosition: number
 }
 
 class CategorySettingsBase extends React.Component<Props, LocalState> {
   state: LocalState = {
     selectedId: null,
-    buttonPosition: 0,
+    topButtonPosition: 0,
+    bottomButtonPosition: 0,
   }
-
-  private contentDiv: HTMLDivElement | null
 
   render () {
     const { data, history, categories: chosenCategories, theme = {} } = this.props
-    const { selectedId, buttonPosition } = this.state
+    const { selectedId, topButtonPosition, bottomButtonPosition } = this.state
     const unChosenCategories = this.filterCategories(chosenCategories, data.zones)
 
     return (
       <div className={categorySettings}>
         <Loader data={data}>
-          <div ref={this.setContentDiv} className={content}>
+          <div className={content}>
             <PillManager>
               <Pill>{homeLabels.headlines}</Pill>
             </PillManager>
@@ -69,7 +69,7 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
               </PillSpacer>
               {
                 chosenCategories.map(({ id, name }) => (
-                  <Pill key={id} onClick={this.onChosenClick(id)} selected={id === selectedId}>
+                  <Pill key={id} onClick={this.onPillClick(id, true)} selected={id === selectedId}>
                     {name}
                   </Pill>
                 ))
@@ -81,13 +81,13 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
               </PillSpacer>
               {
                 unChosenCategories.map(({ id, name }) => (
-                  <Pill key={id} onClick={this.onUnchosenClick(id)}>
+                  <Pill key={id} onClick={this.onPillClick(id, false)} selected={id === selectedId}>
                     {name}
                   </Pill>
                 ))
               }
             </PillManager>
-            <PopupButtonGroup verticalPosition={buttonPosition} show={selectedId !== null}>
+            <PopupButtonGroup verticalPosition={topButtonPosition} show={selectedId && chosenCategories.some(cat => cat.id === selectedId)}>
               <PopupButton onClick={this.onKillClick}>
                 <SvgIcon src='close' style={{ color: theme.red }} />
               </PopupButton>
@@ -97,8 +97,16 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
               <PopupButton onClick={this.onDownClick}>
                 <SvgIcon src='chevronDown' />
               </PopupButton>
-              <PopupButton onClick={this.onCancelClick} style={{ fontSize: 10 }}>
-                Cancel
+              <PopupButton onClick={this.onCancelClick} style={{ fontSize: 15, minWidth: 50 }}>
+                {categorySettingsLabels.cancel}
+              </PopupButton>
+            </PopupButtonGroup>
+            <PopupButtonGroup verticalPosition={bottomButtonPosition} show={selectedId && unChosenCategories.some(cat => cat.id === selectedId)}>
+              <PopupButton onClick={this.onAddClick}>
+                <SvgIcon src='plus' style={{ color: theme.accentGreen }} />
+              </PopupButton>
+              <PopupButton onClick={this.onCancelClick} style={{ fontSize: 15, minWidth: 50 }}>
+                {categorySettingsLabels.cancel}
               </PopupButton>
             </PopupButtonGroup>
           </div>
@@ -112,37 +120,36 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
     )
   }
 
-  private setContentDiv = (div: HTMLDivElement | null) => {
-    this.contentDiv = div
-  }
-
   private filterCategories (chosenCategories: Category[], allCategories: Category[] = []) {
     return allCategories
       .filter(zone => chosenCategories.findIndex(category => category.id === zone.id) < 0)
   }
 
-  private onChosenClick = (selectedId: number) => (ev: React.MouseEvent<HTMLDivElement>) => {
+  private onPillClick = (selectedId: number, top: boolean) => (ev: React.MouseEvent<HTMLDivElement>) => {
     const target = ev.currentTarget
-    const buttonPosition = this.getButtonVertFromPoint(target.offsetTop + target.clientHeight)
+    const rect = target.getBoundingClientRect()
+    const buttonPosition = rect.top + rect.height + 10
+    const positionName: keyof LocalState = top ? 'topButtonPosition' : 'bottomButtonPosition'
 
-    this.setState({ selectedId, buttonPosition })
+    this.setState({ selectedId, [positionName]: buttonPosition } as any)
   }
 
-  private onUnchosenClick = (selectedId: number) => () => {
+  private onKillClick = () => {
+    const { selectedId } = this.state
+    const chosenCategories = this.props.categories.filter(cat => cat.id !== selectedId)
+
+    this.setState({ selectedId: null })
+    this.props.changeOrder(chosenCategories)
+  }
+
+  private onAddClick = () => {
+    const { selectedId } = this.state
     const category = this.props.data.zones.find(cat => cat.id === selectedId)
 
     const chosenCategories = [
       ...this.props.categories,
       category,
     ]
-
-    this.setState({ selectedId: null })
-    this.props.changeOrder(chosenCategories)
-  }
-
-  private onKillClick = () => {
-    const { selectedId } = this.state
-    const chosenCategories = this.props.categories.filter(cat => cat.id !== selectedId)
 
     this.setState({ selectedId: null })
     this.props.changeOrder(chosenCategories)
@@ -179,11 +186,6 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
       category,
       ...filteredCategories.slice(newIndex),
     ]
-  }
-
-  private getButtonVertFromPoint = (offsetTop: number) => {
-    const scrollTop = this.contentDiv ? this.contentDiv.scrollTop : 0
-    return Math.max(offsetTop - scrollTop + 10, 40)
   }
 }
 

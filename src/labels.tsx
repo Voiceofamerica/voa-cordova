@@ -40,6 +40,7 @@ export const categorySettingsLabels = {
   allCategories: '所有分类',
   dragAndDrop: '长按拖动调整分类',
   headlinesFirst: '最新要闻列在首位',
+  cancel: '取消',
 }
 
 export const circumventionDrawerLabels = {
