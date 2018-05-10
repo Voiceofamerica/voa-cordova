@@ -20,10 +20,9 @@
   .content {
     position: absolute;
     top: 0;
-    bottom: 5vw;
+    bottom: 0;
     right: 0;
     left: 0;
-    padding-top: $menu-height;
     transition: opacity 0.5s;
     overflow: hidden;
     -webkit-overflow-scrolling: touch;
