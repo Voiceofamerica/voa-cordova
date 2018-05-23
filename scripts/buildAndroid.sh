@@ -1,4 +1,4 @@
-set -euxo pipefail
+set -euo pipefail
 
 echo "Building Android Local App"
 NODE_ENV=development cordova build android -- --keystore="./build.keystore" --storePassword="$STORE_PASSWORD" --alias="voa-zh" --password="$ALIAS_PASSWORD" --target local

@@ -1,4 +1,4 @@
-set -euxo pipefail
+set -euo pipefail
 
 echo "Checking if unzip is installed"
 which unzip
