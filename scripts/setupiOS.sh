@@ -1,11 +1,8 @@
-brew install ldid
-export TERM=${TERM:-xterm}
-export THEOS=~/theos
+set -euxo pipefail
 
-if grep -q "export TERM=\${TERM:-xterm}" "~/.bash_profile"
-then
-  echo "export TERM=\${TERM:-xterm}" >> ~/.bash_profile
-fi
+brew install ldid
+
+export THEOS=~/theos
 
 if grep -q "export THEOS=~/theos" "~/.bash_profile"
 then

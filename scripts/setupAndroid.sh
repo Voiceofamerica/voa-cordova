@@ -1,5 +1,4 @@
-
-export TERM=${TERM:-xterm}
+set -euxo pipefail
 
 echo "Checking if unzip is installed"
 which unzip
@@ -9,9 +8,4 @@ then
   apt install unzip
 else
   echo "Found unzip"
-fi
-
-if grep -q "export TERM=${TERM:-xterm}" "~/.bashrc"
-then
-  echo "export TERM=${TERM:-xterm}" >> ~/.bashrc
 fi
