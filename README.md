@@ -17,7 +17,8 @@
   * `pod setup`
 * While building iOS you may need to:
   * cd platforms/ios
-  * pod install
+  * pod install (or pod update)
+  * Launch `.xcworkspace` in `XCode` to build the project
 
 ## Quickstart
 

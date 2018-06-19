@@ -65,5 +65,5 @@
     <plugin name="cordova-plugin-music-controls" spec="@voiceofamerica/cordova-plugin-music-controls@^3.0.5" />
     <plugin name="phonegap-plugin-push" spec="^2.1.3" />
     <engine name="android" spec="^6.4.0" />
-    <engine name="ios" spec="~4.5.4" />
+    <engine name="ios" spec="^4.5.4" />
 </widget>
