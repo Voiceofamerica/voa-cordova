@@ -113,7 +113,7 @@ class CategorySettingsBase extends React.Component<Props, LocalState> {
         </Loader>
         <BottomNav flex>
           <IconItem onClick={() => history.goBack()}>
-            <SvgIcon src={require('svg/back.svg')} className={icon} />
+            <SvgIcon src='back' className={icon} />
           </IconItem>
         </BottomNav>
       </div>

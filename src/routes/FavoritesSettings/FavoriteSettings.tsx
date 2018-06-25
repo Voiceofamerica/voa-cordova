@@ -62,7 +62,7 @@ class FavoriteSettingsRoute extends React.Component<Props> {
         }
         <BottomNav flex>
           <IconItem onClick={() => history.goBack()}>
-            <SvgIcon src={require('svg/back.svg')} className={icon} />
+            <SvgIcon src='back' className={icon} />
           </IconItem>
         </BottomNav>
       </div>
