@@ -11,7 +11,6 @@ import toggleCircumventionDrawer from 'redux-store/actions/toggleCircumventionDr
 import toggleMediaPlaying from 'redux-store/actions/toggleMediaPlaying'
 import AppState from 'types/AppState'
 
-
 import { bottomNav, centerIcon, mediaIsOpen, centerButton, backgroundImage, overlay } from './MainBottomNav.scss'
 
 interface OwnProps {
