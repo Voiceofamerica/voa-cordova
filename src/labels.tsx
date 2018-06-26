@@ -1,4 +1,3 @@
-
 import * as React from 'react'
 import { push } from 'react-router-redux'
 import store from 'redux-store'
@@ -10,6 +9,8 @@ import { setAnalyticsOptions } from '@voiceofamerica/voa-shared/helpers/analytic
 import { setDirection } from '@voiceofamerica/voa-shared/helpers/textDirectionHelper'
 
 import { Audience } from 'helpers/graphql-types'
+
+export const defaultAppTopic = 'zh'
 
 setAnalyticsOptions({
   language: 'mandarin',
@@ -46,27 +47,33 @@ export const categorySettingsLabels = {
 export const circumventionDrawerLabels = {
   enabledContent: (
     <div>
+      <p>安全访问已启动</p>
       <p>
-        安全访问已启动
-      </p>
-      <p>
-        <a href='#' onClick={() => {
-          store.dispatch(push('/settings'))
-          store.dispatch(toggleCircumventionDrawer({ open: false }))
-        }}>设置</a>
+        <a
+          href="#"
+          onClick={() => {
+            store.dispatch(push('/settings'))
+            store.dispatch(toggleCircumventionDrawer({ open: false }))
+          }}
+        >
+          设置
+        </a>
       </p>
     </div>
   ),
   disabledContent: (
     <div>
+      <p>安全访问停止</p>
       <p>
-        安全访问停止
-      </p>
-      <p>
-        <a href='#' onClick={() => {
-          store.dispatch(push('/settings'))
-          store.dispatch(toggleCircumventionDrawer({ open: false }))
-        }}>设置</a>
+        <a
+          href="#"
+          onClick={() => {
+            store.dispatch(push('/settings'))
+            store.dispatch(toggleCircumventionDrawer({ open: false }))
+          }}
+        >
+          设置
+        </a>
       </p>
     </div>
   ),
@@ -105,7 +112,8 @@ export const mediaPlayerLabels = {
   empty: (
     <div>
       <p>
-        这是美国之音的<span style={hilight}>多媒体</span>播放器。 当您选择一个伴随音频或视频的故事时，它在这里播放。
+        这是美国之音的<span style={hilight}>多媒体</span>播放器。
+        当您选择一个伴随音频或视频的故事时，它在这里播放。
       </p>
       <p>
         您可以随时查看原始故事或查找新故事，而无需通过在此页面上向下滑动来停止音频或视频。
@@ -152,7 +160,8 @@ export const settingsLabels = {
   panic: '马上删除此程序',
   sendToFriends: '推荐给朋友',
   sendFeedback: '发送反馈',
-  aboutVoa: '美国之音(VOA)向国际受众发送准确、平衡和全面的新闻与信息。美国之音创建于1942年，用电台向封闭和被战火蹂躏的地区播送新闻。目前美国之音已发展成为一个多媒体新闻部门，通过网络、移动设备和社交媒体，以40多种语言为人们服务。',
+  aboutVoa:
+    '美国之音(VOA)向国际受众发送准确、平衡和全面的新闻与信息。美国之音创建于1942年，用电台向封闭和被战火蹂躏的地区播送新闻。目前美国之音已发展成为一个多媒体新闻部门，通过网络、移动设备和社交媒体，以40多种语言为人们服务。',
   feedbackEmail: 'zhapp@voanews.com',
   feedbackSubject: encodeURIComponent('美国之音'),
   feedbackBody: encodeURIComponent(''),
@@ -162,6 +171,7 @@ export const settingsLabels = {
   psiphonOff: '关掉',
   takeEffectOnRestart: '您必须重新启动才能生效',
   okay: '好的',
+  notifications: '推送消息',
 }
 
 export const textSettingsLabels = {

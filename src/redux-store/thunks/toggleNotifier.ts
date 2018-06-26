@@ -1,39 +1,32 @@
-
 import { Dispatch } from 'redux'
-import { Moment } from 'moment'
 import AppState from 'types/AppState'
 
-import toggleNotification from '../actions/toggleNotification'
-import { schedule, cancel } from 'helpers/localNotifications'
+import toggleDailyNotification from '../actions/toggleDailyNotification'
+import { subscribeToTopic, unsubscribeFromTopic } from 'helpers/pushNotifications'
 
 interface ToggleNotifierOptions {
-  id: string
-  title?: string
-  time?: Moment
-  on?: boolean
+  on: boolean
+  topic: string
 }
 
-export default (options: ToggleNotifierOptions) =>
-  async (dispatch: Dispatch<AppState>, getState: () => AppState) => {
-    const { id, on = !getState().notifications[id], title, time } = options
+export default (options: ToggleNotifierOptions) => (dispatch: Dispatch<AppState>) => {
+  const { on, topic } = options
 
-    const trigger = time ? {
-      at: time.toDate(),
-    } : undefined
-
-    if (on) {
-      await schedule({
-        id,
-        title,
-        trigger,
-      }).then((ret) => {
-        console.log(ret)
-        dispatch(toggleNotification({ id, on }))
-      })
-    } else {
-      await cancel([id]).then((ret) => {
-        console.log(ret)
-        dispatch(toggleNotification({ id, on }))
-      })
-    }
+  if (on) {
+    subscribeToTopic(topic).subscribe(success => {
+      dispatch(
+        toggleDailyNotification({
+          on: success,
+        }),
+      )
+    })
+  } else {
+    unsubscribeFromTopic(topic).subscribe(success => {
+      dispatch(
+        toggleDailyNotification({
+          on: !success,
+        }),
+      )
+    })
   }
+}

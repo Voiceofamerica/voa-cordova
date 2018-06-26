@@ -1,10 +1,11 @@
-
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
 import { connect, Dispatch } from 'react-redux'
 import { compose } from 'redux'
 
-import analytics, { AnalyticsProps } from '@voiceofamerica/voa-shared/helpers/analyticsHelper'
+import analytics, {
+  AnalyticsProps,
+} from '@voiceofamerica/voa-shared/helpers/analyticsHelper'
 import Modal, { ModalButton } from '@voiceofamerica/voa-shared/components/Modal'
 import clearAll from 'redux-store/actions/clearAll'
 import { routerActions } from 'react-router-redux'
@@ -20,9 +21,26 @@ import {
   favoritesSettingsLabels,
   textSettingsLabels,
   mediaSettingsLabels,
+  defaultAppTopic,
 } from 'labels'
 
-import { settings, panicButtonHolder, panicButton, panicButtonIcon, buttons, settingsRow, settingsButton, row, aboutVoa, content, settingsItem, settingsRowHeader, settingsValuesRow, active } from './Settings.scss'
+import {
+  settings,
+  panicButtonHolder,
+  panicButton,
+  panicButtonIcon,
+  buttons,
+  settingsRow,
+  settingsButton,
+  row,
+  aboutVoa,
+  content,
+  settingsItem,
+  settingsRowHeader,
+  settingsValuesRow,
+  active,
+} from './Settings.scss'
+import toggleNotifierThunk from 'redux-store/thunks/toggleNotifier'
 
 const SHARE_URL = 'https://www.voanews.com/p/5850.html'
 
@@ -63,6 +81,7 @@ interface StateProps {
   textSize: number
   mediaPlaybackRate: number
   psiphonEnabled: boolean
+  notificationsEnabled: boolean
 }
 
 interface DispatchProps {
@@ -70,6 +89,7 @@ interface DispatchProps {
   setTextSize: (size: number) => void
   setPlaybackRate: (speed: number) => void
   togglePsiphon: (enabled: boolean) => void
+  toggleNotifications: (enabled: boolean) => void
 }
 
 type RouteProps = RouteComponentProps<void>
@@ -79,7 +99,7 @@ type Props = RouteProps & AnalyticsProps & StateProps & DispatchProps
 class SettingsRoute extends React.Component<Props> {
   private modal: Modal | null
 
-  renderPanicButton () {
+  renderPanicButton() {
     const { clearAll } = this.props
 
     return (
@@ -94,77 +114,81 @@ class SettingsRoute extends React.Component<Props> {
     )
   }
 
-  renderFavoritesSettings () {
+  renderFavoritesSettings() {
     const { history } = this.props
 
     return (
       <div className={settingsRow}>
-        <button className={settingsButton} onClick={() => history.push(`/settings/favorites`)}>
+        <button
+          className={settingsButton}
+          onClick={() => history.push(`/settings/favorites`)}
+        >
           {favoritesSettingsLabels.header}
         </button>
       </div>
     )
   }
 
-  renderCategoriesSettings () {
+  renderCategoriesSettings() {
     const { history } = this.props
 
     return (
       <div className={settingsRow}>
-        <button className={settingsButton} onClick={() => history.push(`/settings/categories`)}>
+        <button
+          className={settingsButton}
+          onClick={() => history.push(`/settings/categories`)}
+        >
           {categorySettingsLabels.header}
         </button>
       </div>
     )
   }
 
-  renderTextSettings () {
+  renderTextSettings() {
     const { textSize, setTextSize } = this.props
 
     return (
       <div className={settingsRow}>
-        <div className={settingsRowHeader}>
-          {textSettingsLabels.textSize}
-        </div>
+        <div className={settingsRowHeader}>{textSettingsLabels.textSize}</div>
         <div className={settingsValuesRow}>
-          {
-            data.textSize.map(size => (
-              <div
-                key={size.value}
-                className={`${settingsItem} ${size.value === textSize ? active : ''}`}
-                onClick={() => setTextSize(size.value)}
-              >{size.description}</div>
-            ))
-          }
+          {data.textSize.map(size => (
+            <div
+              key={size.value}
+              className={`${settingsItem} ${size.value === textSize ? active : ''}`}
+              onClick={() => setTextSize(size.value)}
+            >
+              {size.description}
+            </div>
+          ))}
         </div>
       </div>
     )
   }
 
-  renderPlaybackSpeed () {
+  renderPlaybackSpeed() {
     const { mediaPlaybackRate, setPlaybackRate } = this.props
 
     return (
       <div className={settingsRow}>
-        <div className={settingsRowHeader}>
-          {mediaSettingsLabels.chooseSpeed}
-        </div>
+        <div className={settingsRowHeader}>{mediaSettingsLabels.chooseSpeed}</div>
         <div className={settingsValuesRow}>
-          {
-            data.speed.map(speed => (
-              <div
-                key={speed.value}
-                className={`${settingsItem} ${speed.value === mediaPlaybackRate ? active : ''}`}
-                onClick={() => setPlaybackRate(speed.value)}
-              >{speed.description}</div>
-            ))
-          }
+          {data.speed.map(speed => (
+            <div
+              key={speed.value}
+              className={`${settingsItem} ${
+                speed.value === mediaPlaybackRate ? active : ''
+              }`}
+              onClick={() => setPlaybackRate(speed.value)}
+            >
+              {speed.description}
+            </div>
+          ))}
         </div>
       </div>
     )
   }
 
-  renderSendToFriends () {
+  renderSendToFriends() {
     return (
       <div className={settingsRow}>
         <button className={settingsButton} onClick={this.shareApp}>
@@ -174,8 +198,10 @@ class SettingsRoute extends React.Component<Props> {
     )
   }
 
-  renderSendFeedback () {
-    const url = `mailto:${settingsLabels.feedbackEmail}?subject=${settingsLabels.feedbackSubject}&body=${settingsLabels.feedbackBody}`
+  renderSendFeedback() {
+    const url = `mailto:${settingsLabels.feedbackEmail}?subject=${
+      settingsLabels.feedbackSubject
+    }&body=${settingsLabels.feedbackBody}`
 
     return (
       <div className={settingsRow}>
@@ -186,24 +212,20 @@ class SettingsRoute extends React.Component<Props> {
     )
   }
 
-  renderAboutVoa () {
+  renderAboutVoa() {
     return (
       <div className={settingsRow}>
-        <span className={aboutVoa}>
-          {settingsLabels.aboutVoa}
-        </span>
+        <span className={aboutVoa}>{settingsLabels.aboutVoa}</span>
       </div>
     )
   }
 
-  renderPsiphonToggle () {
+  renderPsiphonToggle() {
     const { psiphonEnabled } = this.props
 
     return (
       <div className={settingsRow}>
-        <div className={settingsRowHeader}>
-          {settingsLabels.psiphon}
-        </div>
+        <div className={settingsRowHeader}>{settingsLabels.psiphon}</div>
         <div className={settingsValuesRow}>
           <div
             className={`${settingsItem} ${psiphonEnabled ? active : ''}`}
@@ -222,21 +244,46 @@ class SettingsRoute extends React.Component<Props> {
     )
   }
 
-  render () {
+  renderNotificationToggle() {
+    const { notificationsEnabled } = this.props
+
+    return (
+      <div className={settingsRow}>
+        <div className={settingsRowHeader}>{settingsLabels.notifications}</div>
+        <div className={settingsValuesRow}>
+          <div
+            className={`${settingsItem} ${notificationsEnabled ? active : ''}`}
+            onClick={() => this.props.toggleNotifications(true)}
+          >
+            {settingsLabels.psiphonOn}
+          </div>
+          <div
+            className={`${settingsItem} ${!notificationsEnabled ? active : ''}`}
+            onClick={() => this.props.toggleNotifications(false)}
+          >
+            {settingsLabels.psiphonOff}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  render() {
     return (
       <div className={settings}>
         <div className={content}>
-          { this.renderRestartModal() }
-          { this.renderPanicButton() }
+          {this.renderRestartModal()}
+          {this.renderPanicButton()}
           <div className={buttons}>
-            { this.renderFavoritesSettings() }
-            { this.renderCategoriesSettings() }
-            { this.renderTextSettings() }
-            { this.renderPlaybackSpeed() }
-            { this.renderPsiphonToggle() }
-            { this.renderSendToFriends() }
-            { this.renderSendFeedback() }
-            { this.renderAboutVoa() }
+            {this.renderFavoritesSettings()}
+            {this.renderCategoriesSettings()}
+            {this.renderTextSettings()}
+            {this.renderPlaybackSpeed()}
+            {this.renderNotificationToggle()}
+            {this.renderPsiphonToggle()}
+            {this.renderSendToFriends()}
+            {this.renderSendFeedback()}
+            {this.renderAboutVoa()}
           </div>
         </div>
       </div>
@@ -246,7 +293,7 @@ class SettingsRoute extends React.Component<Props> {
   private renderRestartModal = () => (
     <Modal ref={this.setModal}>
       {settingsLabels.takeEffectOnRestart}
-      <ModalButton id='ok'>{settingsLabels.okay}</ModalButton>
+      <ModalButton id="ok">{settingsLabels.okay}</ModalButton>
     </Modal>
   )
 
@@ -270,10 +317,12 @@ class SettingsRoute extends React.Component<Props> {
 
     togglePsiphon(value)
 
-    this.props.analytics.setProxy({
-      pageTitle: title,
-      enabled: value,
-    }).catch()
+    this.props.analytics
+      .setProxy({
+        pageTitle: title,
+        enabled: value,
+      })
+      .catch()
   }
 
   private setModal = (el: Modal | null) => {
@@ -285,6 +334,7 @@ const mapStateToProps = (state: AppState): StateProps => ({
   textSize: state.settings.textSize,
   mediaPlaybackRate: state.settings.mediaPlaybackRate,
   psiphonEnabled: state.settings.psiphonEnabled,
+  notificationsEnabled: state.settings.dailyNotificationOn,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => ({
@@ -292,12 +342,12 @@ const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => ({
     dispatch(clearAll())
     dispatch(routerActions.replace('/'))
   },
-  setTextSize: (textSize) =>
-    dispatch(setTextSize({ textSize })),
-  setPlaybackRate: (mediaPlaybackRate) =>
+  setTextSize: textSize => dispatch(setTextSize({ textSize })),
+  setPlaybackRate: mediaPlaybackRate =>
     dispatch(setMediaPlaybackRate({ mediaPlaybackRate })),
-  togglePsiphon: (psiphonEnabled) =>
-    dispatch(togglePsiphonThunk({ psiphonEnabled })),
+  togglePsiphon: psiphonEnabled => dispatch(togglePsiphonThunk({ psiphonEnabled })),
+  toggleNotifications: notificationsEnabled =>
+    dispatch(toggleNotifierThunk({ on: notificationsEnabled, topic: defaultAppTopic })),
 })
 
 const withRedux = connect(mapStateToProps, mapDispatchToProps)
@@ -307,7 +357,4 @@ const withAnalytics = analytics<Props>({
   title: title,
 })
 
-export default compose(
-  withRedux,
-  withAnalytics,
-)(SettingsRoute)
+export default compose(withRedux, withAnalytics)(SettingsRoute)

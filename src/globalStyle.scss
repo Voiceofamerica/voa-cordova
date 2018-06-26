@@ -3,6 +3,32 @@ $primary-color: #333;
 @import '~@voiceofamerica/voa-shared/commonStyles/index';
 @import '~mdi/scss/materialdesignicons.scss';
 
+$rt-font-family: NotoSans;
+$rt-toast-background: #fff;
+$rt-color-default: #D41010;
+
+@import '~react-toastify/scss/main';
+
+.toast-text {
+  color: #fff
+}
+
+.toast-title {
+  font-weight: bold;
+}
+
+.toast-message {
+  font-size: 14px;
+}
+
+.toast-dismiss {
+  float: right;
+  color: #fff;
+  font-style: italic;
+  top: 5px;
+  right: 5px;
+}
+
 @font-face {
   font-family: NotoSans;
   src: url(./fonts/NotoSansSC-Regular.woff2);

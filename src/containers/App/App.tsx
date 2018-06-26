@@ -1,4 +1,3 @@
-
 import * as React from 'react'
 import { Provider } from 'react-redux'
 import { ApolloProvider } from 'react-apollo'
@@ -11,75 +10,133 @@ import CircumventionDrawer from 'containers/CircumventionDrawer'
 import Intro from 'containers/Intro'
 import client from 'helpers/graphql-client'
 import { showControls } from '@voiceofamerica/voa-shared/helpers/mediaControlHelper'
-import { scheduleDaily } from 'helpers/localNotifications'
 import { setPsiphonConfig, start } from '@voiceofamerica/voa-shared/helpers/psiphonHelper'
 import { deviceIsReady } from '@voiceofamerica/voa-shared/helpers/cordovaHelper'
 
 import { app } from './App.scss'
 
+import {
+  initializeNotifications,
+  NotificationStatus,
+  notificationSubject,
+} from 'helpers/pushNotifications'
+import toggleDailyNotification from 'redux-store/actions/toggleDailyNotification'
+import { defaultAppTopic } from '../../labels'
+
+import { ToastContainer, toast, Slide } from 'react-toastify'
+
 interface State {
   appReady: boolean
 }
 
+interface IToast {
+  notification: PhonegapPluginPush.NotificationEventResponse
+  closeToast?
+}
+
+const ToastMessage = (props: IToast) => (
+  <div>
+    <div className="toast-title">{props.notification.title}</div>
+    <div className="toast-message">{props.notification.message}</div>
+    <button className="toast-dismiss" onClick={props.closeToast}>
+      Dismiss
+    </button>
+  </div>
+)
+
 export default class App extends React.Component<{}, State> {
+  helloButtonLabel = 'Hello 😀'
+  dummyData: PhonegapPluginPush.NotificationEventResponse = {
+    title: 'Article Title',
+    message: 'Article Message',
+    count: '1',
+    image: null,
+    sound: null,
+    additionalData: null,
+  }
+
   state: State = {
     appReady: false,
   }
 
-  componentDidMount () {
-    renderReady.then(() => {
-      const appState = store.getState()
-      if (appState.settings.dailyNotificationOn) {
-        scheduleDaily().catch(err => console.error(err))
-      }
+  toastId: number = null
 
-      console.log('psiphon enabled?', appState.settings.psiphonEnabled)
-      if (appState.settings.psiphonEnabled) {
-        setPsiphonConfig(require('../../psiphon_config.json'))
-        start()
-          .then(this.ready)
-          .catch(err => {
-            console.error('FATAL: psiphon failed to start correctly', err)
-          })
-      } else if (!__HOST__) {
-        deviceIsReady
-          .then(this.ready)
-          .catch(err => {
-            console.error('FATAL: something went wrong during initialization', err)
-          })
-      } else {
-        this.ready()
-      }
+  dismissToast = () => toast.dismiss(this.toastId)
 
-      if (appState.media.mediaTitle) {
-        showControls({
-          title: appState.media.mediaTitle,
-          playing: false,
-        }).catch(() => {
-          console.warn('media controls failed to load')
-        })
-      }
-    }).catch(err => {
-      console.error('FATAL: redux store failed to hyrate correctly', err)
+  handleToastNotification(data: PhonegapPluginPush.NotificationEventResponse) {
+    this.toastId = toast(<ToastMessage notification={data} />, {
+      bodyClassName: 'toast-text',
     })
   }
 
-  render () {
+  componentDidMount() {
+    renderReady
+      .then(() => {
+        const appState = store.getState()
+
+        initializeNotifications(defaultAppTopic).subscribe(status => {
+          if (status !== NotificationStatus.initialized) {
+            const isOn = status === NotificationStatus.subscribed
+            store.dispatch(toggleDailyNotification({ on: isOn }))
+            notificationSubject.subscribe(this.handleToastNotification)
+          }
+        })
+
+        console.log('psiphon enabled?', appState.settings.psiphonEnabled)
+        if (appState.settings.psiphonEnabled) {
+          setPsiphonConfig(require('../../psiphon_config.json'))
+          start()
+            .then(this.ready)
+            .catch(err => {
+              console.error('FATAL: psiphon failed to start correctly', err)
+            })
+        } else if (!__HOST__) {
+          deviceIsReady.then(this.ready).catch(err => {
+            console.error('FATAL: something went wrong during initialization', err)
+          })
+        } else {
+          this.ready()
+        }
+
+        if (appState.media.mediaTitle) {
+          showControls({
+            title: appState.media.mediaTitle,
+            playing: false,
+          }).catch(() => {
+            console.warn('media controls failed to load')
+          })
+        }
+      })
+      .catch(err => {
+        console.error('FATAL: redux store failed to hyrate correctly', err)
+      })
+  }
+
+  render() {
     const { appReady } = this.state
     return (
       <ApolloProvider client={client}>
         <Provider store={store}>
-          {
-            appReady
-            ? <div key='app' className={app}>
-                <Intro />
-                <PsiphonIndicator />
-                <Router />
-                <MediaPlayer />
-                <CircumventionDrawer />
-              </div>
-            : <div key='app' />
-          }
+          {appReady ? (
+            <div key="app" className={app}>
+              <ToastContainer
+                transition={Slide}
+                autoClose={false}
+                position={'top-center'}
+                closeButton={false}
+              />
+              <Intro />
+              <PsiphonIndicator />
+              <Router />
+              <MediaPlayer />
+              <CircumventionDrawer />
+              <button onClick={() => this.handleToastNotification(this.dummyData)}>
+                {this.helloButtonLabel}
+              </button>
+            </div>
+          ) : (
+            <div key="app" />
+          )}
         </Provider>
       </ApolloProvider>
     )
