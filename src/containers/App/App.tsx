@@ -130,9 +130,9 @@ export default class App extends React.Component<{}, State> {
               <Router />
               <MediaPlayer />
               <CircumventionDrawer />
-              <button onClick={() => this.handleToastNotification(this.dummyData)}>
+              {/* <button onClick={() => this.handleToastNotification(this.dummyData)}>
                 {this.helloButtonLabel}
-              </button>
+              </button> */}
             </div>
           ) : (
             <div key="app" />
