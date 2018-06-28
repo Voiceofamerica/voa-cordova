@@ -13,15 +13,27 @@ import { showControls } from '@voiceofamerica/voa-shared/helpers/mediaControlHel
 import { setPsiphonConfig, start } from '@voiceofamerica/voa-shared/helpers/psiphonHelper'
 import { deviceIsReady } from '@voiceofamerica/voa-shared/helpers/cordovaHelper'
 
-import { app } from './App.scss'
+import {
+  app,
+  toastText,
+  toastDismiss,
+  toastMessage,
+  toastMore,
+  toastTitle,
+} from './App.scss'
+
+import { push } from 'react-router-redux'
 
 import {
   initializeNotifications,
   NotificationStatus,
   notificationSubject,
+  VoaNotification,
 } from 'helpers/pushNotifications'
 import toggleDailyNotification from 'redux-store/actions/toggleDailyNotification'
 import { defaultAppTopic } from '../../labels'
+
+import { distinctUntilChanged } from 'rxjs/operators'
 
 import { ToastContainer, toast, Slide } from 'react-toastify'
 
@@ -30,31 +42,31 @@ interface State {
 }
 
 interface IToast {
-  notification: PhonegapPluginPush.NotificationEventResponse
+  notification: VoaNotification
   closeToast?
 }
 
 const ToastMessage = (props: IToast) => (
   <div>
-    <div className="toast-title">{props.notification.title}</div>
-    <div className="toast-message">{props.notification.message}</div>
-    <button className="toast-dismiss" onClick={props.closeToast}>
+    <div className={toastTitle}>{props.notification.title}</div>
+    <div className={toastMessage}>{props.notification.message}</div>
+    {props.notification.additionalData.articleId ? (
+      <button
+        className={toastMore}
+        onClick={() =>
+          store.dispatch(push(`/article/${props.notification.additionalData.articleId}`))
+        }
+      >
+        Read more ...
+      </button>
+    ) : null}
+    <button className={toastDismiss} onClick={props.closeToast}>
       Dismiss
     </button>
   </div>
 )
 
 export default class App extends React.Component<{}, State> {
-  helloButtonLabel = 'Hello 😀'
-  dummyData: PhonegapPluginPush.NotificationEventResponse = {
-    title: 'Article Title',
-    message: 'Article Message',
-    count: '1',
-    image: null,
-    sound: null,
-    additionalData: null,
-  }
-
   state: State = {
     appReady: false,
   }
@@ -63,9 +75,9 @@ export default class App extends React.Component<{}, State> {
 
   dismissToast = () => toast.dismiss(this.toastId)
 
-  handleToastNotification(data: PhonegapPluginPush.NotificationEventResponse) {
+  handleToastNotification(data: VoaNotification) {
     this.toastId = toast(<ToastMessage notification={data} />, {
-      bodyClassName: 'toast-text',
+      bodyClassName: toastText,
     })
   }
 
@@ -74,13 +86,15 @@ export default class App extends React.Component<{}, State> {
       .then(() => {
         const appState = store.getState()
 
-        initializeNotifications(defaultAppTopic).subscribe(status => {
-          if (status !== NotificationStatus.initialized) {
-            const isOn = status === NotificationStatus.subscribed
-            store.dispatch(toggleDailyNotification({ on: isOn }))
-            notificationSubject.subscribe(this.handleToastNotification)
-          }
-        })
+        initializeNotifications(defaultAppTopic)
+          .pipe(distinctUntilChanged())
+          .subscribe(status => {
+            if (status !== NotificationStatus.initialized) {
+              const isOn = status === NotificationStatus.subscribed
+              store.dispatch(toggleDailyNotification({ on: isOn }))
+              notificationSubject.subscribe(this.handleToastNotification)
+            }
+          })
 
         console.log('psiphon enabled?', appState.settings.psiphonEnabled)
         if (appState.settings.psiphonEnabled) {
@@ -130,9 +144,6 @@ export default class App extends React.Component<{}, State> {
               <Router />
               <MediaPlayer />
               <CircumventionDrawer />
-              {/* <button onClick={() => this.handleToastNotification(this.dummyData)}>
-                {this.helloButtonLabel}
-              </button> */}
             </div>
           ) : (
             <div key="app" />

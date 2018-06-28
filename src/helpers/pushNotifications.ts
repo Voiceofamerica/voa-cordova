@@ -1,10 +1,17 @@
 import { Observable } from 'rxjs/Observable'
 import { ReplaySubject } from 'rxjs/ReplaySubject'
+import { AsyncSubject } from 'rxjs/AsyncSubject'
 import { of } from 'rxjs/observable/of'
 
-export const notificationSubject = new ReplaySubject<
-  PhonegapPluginPush.NotificationEventResponse
->(1)
+interface VoaAdditionalData extends PhonegapPluginPush.NotificationEventAdditionalData {
+  articleId?: string
+}
+
+export interface VoaNotification extends PhonegapPluginPush.NotificationEventResponse {
+  additionalData: VoaAdditionalData
+}
+
+export const notificationSubject = new ReplaySubject<VoaNotification>(10)
 
 let push: PhonegapPluginPush.PushNotification = null
 
@@ -15,6 +22,8 @@ export enum NotificationStatus {
 }
 
 function initialize(topic?: string): Observable<boolean> {
+  const initSubject = new AsyncSubject<boolean>()
+
   push = PushNotification.init({
     android: {
       senderID: '240913753196',
@@ -28,14 +37,15 @@ function initialize(topic?: string): Observable<boolean> {
 
   push.on('registration', data => {
     console.log('Push notification registration id:', data.registrationId)
+    subscribeToTopic(topic)
   })
   push.on('notification', handleNotification)
   push.on('error', e => console.error('Notification error:', e))
 
-  return subscribeToTopic(topic)
+  return initSubject.asObservable()
 }
 
-function handleNotification(data: PhonegapPluginPush.NotificationEventResponse) {
+function handleNotification(data: VoaNotification) {
   notificationSubject.next(data)
   push.finish(
     () => {
