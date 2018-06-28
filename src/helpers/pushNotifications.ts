@@ -37,7 +37,7 @@ function initialize(topic?: string): Observable<boolean> {
 
   push.on('registration', data => {
     console.log('Push notification registration id:', data.registrationId)
-    subscribeToTopic(topic)
+    subscribeToTopic(topic).subscribe(initSubject)
   })
   push.on('notification', handleNotification)
   push.on('error', e => console.error('Notification error:', e))
