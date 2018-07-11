@@ -75,13 +75,13 @@ export default class App extends React.Component<{}, State> {
 
   dismissToast = () => toast.dismiss(this.toastId)
 
-  handleToastNotification(data: VoaNotification) {
+  handleToastNotification (data: VoaNotification) {
     this.toastId = toast(<ToastMessage notification={data} />, {
       bodyClassName: toastText,
     })
   }
 
-  componentDidMount() {
+  componentDidMount () {
     renderReady
       .then(() => {
         const appState = store.getState()
@@ -126,13 +126,13 @@ export default class App extends React.Component<{}, State> {
       })
   }
 
-  render() {
+  render () {
     const { appReady } = this.state
     return (
       <ApolloProvider client={client}>
         <Provider store={store}>
           {appReady ? (
-            <div key="app" className={app}>
+            <div key='app' className={app}>
               <ToastContainer
                 transition={Slide}
                 autoClose={false}
@@ -146,7 +146,7 @@ export default class App extends React.Component<{}, State> {
               <CircumventionDrawer />
             </div>
           ) : (
-            <div key="app" />
+            <div key='app' />
           )}
         </Provider>
       </ApolloProvider>

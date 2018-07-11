@@ -21,7 +21,7 @@ export enum NotificationStatus {
   failed,
 }
 
-function initialize(topic?: string): Observable<boolean> {
+function initialize (topic?: string): Observable<boolean> {
   const initSubject = new AsyncSubject<boolean>()
 
   push = PushNotification.init({
@@ -45,7 +45,7 @@ function initialize(topic?: string): Observable<boolean> {
   return initSubject.asObservable()
 }
 
-function handleNotification(data: VoaNotification) {
+function handleNotification (data: VoaNotification) {
   notificationSubject.next(data)
   push.finish(
     () => {
@@ -61,7 +61,7 @@ function handleNotification(data: VoaNotification) {
   )
 }
 
-export function subscribeToTopic(topic: string): Observable<boolean> {
+export function subscribeToTopic (topic: string): Observable<boolean> {
   const subscribeObservable = new ReplaySubject<boolean>()
 
   if (topic) {
@@ -83,7 +83,7 @@ export function subscribeToTopic(topic: string): Observable<boolean> {
   return subscribeObservable
 }
 
-export function unsubscribeFromTopic(topic: string) {
+export function unsubscribeFromTopic (topic: string) {
   const unsubscribeObservable = new ReplaySubject<boolean>()
 
   if (topic) {
@@ -105,7 +105,7 @@ export function unsubscribeFromTopic(topic: string) {
   return unsubscribeObservable
 }
 
-export function initializeNotifications(topic?: string): Observable<NotificationStatus> {
+export function initializeNotifications (topic?: string): Observable<NotificationStatus> {
   const initilizationObservable = new ReplaySubject<NotificationStatus>()
 
   if (push === null) {

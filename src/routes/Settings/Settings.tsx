@@ -99,7 +99,7 @@ type Props = RouteProps & AnalyticsProps & StateProps & DispatchProps
 class SettingsRoute extends React.Component<Props> {
   private modal: Modal | null
 
-  renderPanicButton() {
+  renderPanicButton () {
     const { clearAll } = this.props
 
     return (
@@ -114,7 +114,7 @@ class SettingsRoute extends React.Component<Props> {
     )
   }
 
-  renderFavoritesSettings() {
+  renderFavoritesSettings () {
     const { history } = this.props
 
     return (
@@ -129,7 +129,7 @@ class SettingsRoute extends React.Component<Props> {
     )
   }
 
-  renderCategoriesSettings() {
+  renderCategoriesSettings () {
     const { history } = this.props
 
     return (
@@ -144,7 +144,7 @@ class SettingsRoute extends React.Component<Props> {
     )
   }
 
-  renderTextSettings() {
+  renderTextSettings () {
     const { textSize, setTextSize } = this.props
 
     return (
@@ -165,7 +165,7 @@ class SettingsRoute extends React.Component<Props> {
     )
   }
 
-  renderPlaybackSpeed() {
+  renderPlaybackSpeed () {
     const { mediaPlaybackRate, setPlaybackRate } = this.props
 
     return (
@@ -188,7 +188,7 @@ class SettingsRoute extends React.Component<Props> {
     )
   }
 
-  renderSendToFriends() {
+  renderSendToFriends () {
     return (
       <div className={settingsRow}>
         <button className={settingsButton} onClick={this.shareApp}>
@@ -198,7 +198,7 @@ class SettingsRoute extends React.Component<Props> {
     )
   }
 
-  renderSendFeedback() {
+  renderSendFeedback () {
     const url = `mailto:${settingsLabels.feedbackEmail}?subject=${
       settingsLabels.feedbackSubject
     }&body=${settingsLabels.feedbackBody}`
@@ -212,7 +212,7 @@ class SettingsRoute extends React.Component<Props> {
     )
   }
 
-  renderAboutVoa() {
+  renderAboutVoa () {
     return (
       <div className={settingsRow}>
         <span className={aboutVoa}>{settingsLabels.aboutVoa}</span>
@@ -220,7 +220,7 @@ class SettingsRoute extends React.Component<Props> {
     )
   }
 
-  renderPsiphonToggle() {
+  renderPsiphonToggle () {
     const { psiphonEnabled } = this.props
 
     return (
@@ -244,7 +244,7 @@ class SettingsRoute extends React.Component<Props> {
     )
   }
 
-  renderNotificationToggle() {
+  renderNotificationToggle () {
     const { notificationsEnabled } = this.props
 
     return (
@@ -268,7 +268,7 @@ class SettingsRoute extends React.Component<Props> {
     )
   }
 
-  render() {
+  render () {
     return (
       <div className={settings}>
         <div className={content}>
@@ -293,7 +293,7 @@ class SettingsRoute extends React.Component<Props> {
   private renderRestartModal = () => (
     <Modal ref={this.setModal}>
       {settingsLabels.takeEffectOnRestart}
-      <ModalButton id="ok">{settingsLabels.okay}</ModalButton>
+      <ModalButton id='ok'>{settingsLabels.okay}</ModalButton>
     </Modal>
   )
 

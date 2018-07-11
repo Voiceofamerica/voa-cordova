@@ -50,7 +50,7 @@ export const circumventionDrawerLabels = {
       <p>安全访问已启动</p>
       <p>
         <a
-          href="#"
+          href='#'
           onClick={() => {
             store.dispatch(push('/settings'))
             store.dispatch(toggleCircumventionDrawer({ open: false }))
@@ -66,7 +66,7 @@ export const circumventionDrawerLabels = {
       <p>安全访问停止</p>
       <p>
         <a
-          href="#"
+          href='#'
           onClick={() => {
             store.dispatch(push('/settings'))
             store.dispatch(toggleCircumventionDrawer({ open: false }))
