@@ -10,7 +10,6 @@ import toggleMediaDrawer from 'redux-store/actions/toggleMediaDrawer'
 import toggleCircumventionDrawer from 'redux-store/actions/toggleCircumventionDrawer'
 import toggleMediaPlaying from 'redux-store/actions/toggleMediaPlaying'
 import AppState from 'types/AppState'
-import { play, pause } from '../../svg'
 
 import { bottomNav, centerIcon, mediaIsOpen, centerButton, backgroundImage, overlay } from './MainBottomNav.scss'
 
@@ -56,9 +55,9 @@ class MainBottomNavBase extends React.Component<Props> {
   renderIcon () {
     const { mediaPlaying } = this.props
     if (mediaPlaying) {
-      return <SvgIcon src={pause} className={centerIcon} />
+      return <SvgIcon src='pause' className={centerIcon} />
     } else {
-      return <SvgIcon src={play} className={centerIcon} style={{marginLeft: '0.2em'}} />
+      return <SvgIcon src='play' className={centerIcon} style={{marginLeft: '0.2em'}} />
     }
   }
 

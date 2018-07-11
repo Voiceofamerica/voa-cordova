@@ -43,10 +43,10 @@ export default class DefaultBottomNav extends React.Component<Props> {
 
     return [
       <IconItem key={0} active={homeActive} onClick={() => history.replace('/')}>
-        <SvgIcon src={require('svg/home.svg')} className={homeIconClass} />
+        <SvgIcon src='home' className={homeIconClass} />
       </IconItem>,
       <IconItem key={1} active={editorsChoiceActive} onClick={() => history.replace('/editorsChoice')}>
-        <SvgIcon src={require('svg/editors_choice.svg')} className={editorsChoiceIconClass} />
+        <SvgIcon src='editorsChoice' className={editorsChoiceIconClass} />
       </IconItem>,
     ]
   }
@@ -63,10 +63,10 @@ export default class DefaultBottomNav extends React.Component<Props> {
 
     return [
       <IconItem key={0} active={programsActive} onClick={() => history.replace('/programs')}>
-        <SvgIcon src={require('svg/programs.svg')} className={programsIconClass} />
+        <SvgIcon src='programs' className={programsIconClass} />
       </IconItem>,
       <IconItem key={1} active={settingsActive} onClick={() => history.replace('/settings')}>
-        <SvgIcon src={require('svg/settings.svg')} className={settingsIconClass} />
+        <SvgIcon src='settings' className={settingsIconClass} />
       </IconItem>,
     ]
   }
