@@ -98,13 +98,13 @@ interface Props extends RouteComponentProps<Params>, AnalyticsProps {
 class ProgramsScreen extends React.Component<Props> {
   setProgramType = (programType: ProgramType) => {
     const { history, match } = this.props
-    const { zone } = match.params
+    const { type } = match.params
 
-    if (zone) {
-      history.replace(`/programs/${programType}/${zone}`)
-    } else {
-      history.replace(`/programs/${programType}`)
+    if (type === programType) {
+      return
     }
+
+    history.replace(`/programs/${programType}`)
   }
 
   setZoneId = (zoneId: number) => {
