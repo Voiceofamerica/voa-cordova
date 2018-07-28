@@ -44,7 +44,7 @@ interface State {
 
 interface IToast {
   notification: VoaNotification
-  closeToast?
+  closeToast?: () => void
 }
 
 const ToastMessage = (props: IToast) => (
@@ -52,14 +52,14 @@ const ToastMessage = (props: IToast) => (
     <div className={toastTitle}>{props.notification.title}</div>
     <div className={toastMessage}>{props.notification.message}</div>
     {props.notification.additionalData.articleId ? (
-      <button
+      <a
         className={toastMore}
         onClick={() =>
           store.dispatch(push(`/article/${props.notification.additionalData.articleId}`))
         }
       >
         Read more ...
-      </button>
+      </a>
     ) : null}
     <button className={toastDismiss} onClick={props.closeToast}>
       Dismiss

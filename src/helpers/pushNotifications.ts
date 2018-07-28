@@ -37,7 +37,11 @@ function initialize (topic?: string): Observable<boolean> {
 
   push.on('registration', data => {
     console.log('Push notification registration id:', data.registrationId)
-    subscribeToTopic(topic).subscribe(initSubject)
+    if (topic) {
+      subscribeToTopic(topic).subscribe(initSubject)
+    } else {
+      initSubject.next(false)
+    }
   })
   push.on('notification', handleNotification)
   push.on('error', e => console.error('Notification error:', e))
@@ -64,21 +68,22 @@ function handleNotification (data: VoaNotification) {
 export function subscribeToTopic (topic: string): Observable<boolean> {
   const subscribeObservable = new ReplaySubject<boolean>()
 
-  if (topic) {
-    push.subscribe(
-      topic,
-      () => {
-        console.log('success subscribing to topic')
-        subscribeObservable.next(true)
-      },
-      () => {
-        console.log('error subscribing to topic')
-        subscribeObservable.next(false)
-      },
-    )
-  } else {
-    return of(false)
+  if (topic === undefined || topic === null) {
+    subscribeObservable.error(new Error (`topic cannot be null or undefined`))
+    return subscribeObservable
   }
+
+  push.subscribe(
+    topic,
+    () => {
+      console.log('success subscribing to topic')
+      subscribeObservable.next(true)
+    },
+    () => {
+      console.log('error subscribing to topic')
+      subscribeObservable.next(false)
+    },
+  )
 
   return subscribeObservable
 }
@@ -86,21 +91,22 @@ export function subscribeToTopic (topic: string): Observable<boolean> {
 export function unsubscribeFromTopic (topic: string) {
   const unsubscribeObservable = new ReplaySubject<boolean>()
 
-  if (topic) {
-    push.unsubscribe(
-      topic,
-      () => {
-        console.log('success subscribing to topic')
-        unsubscribeObservable.next(true)
-      },
-      () => {
-        console.log('error subscribing to topic')
-        unsubscribeObservable.next(false)
-      },
-    )
-  } else {
-    return of(false)
+  if (topic === undefined || topic === null) {
+    unsubscribeObservable.error(new Error (`topic cannot be null or undefined`))
+    return unsubscribeObservable
   }
+
+  push.unsubscribe(
+    topic,
+    () => {
+      console.log('success subscribing to topic')
+      unsubscribeObservable.next(true)
+    },
+    () => {
+      console.log('error subscribing to topic')
+      unsubscribeObservable.next(false)
+    },
+  )
 
   return unsubscribeObservable
 }
