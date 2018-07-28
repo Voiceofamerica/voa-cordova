@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import { ApolloProvider } from 'react-apollo'
 
 import store, { renderReady } from 'redux-store'
+import PsiphonLoading from 'components/PsiphonLoading'
 import PsiphonIndicator from 'containers/PsiphonIndicator'
 import Router from 'containers/Router'
 import MediaPlayer from 'containers/MediaPlayer'
@@ -82,6 +83,13 @@ export default class App extends React.Component<{}, State> {
   }
 
   componentDidMount () {
+    deviceIsReady.then(() => {
+      const splash = (navigator as any).splashscreen
+      splash.hide()
+    }).catch(err => {
+      console.warn('could not hide splashscreen', err)
+    })
+
     renderReady
       .then(() => {
         const appState = store.getState()
@@ -105,9 +113,11 @@ export default class App extends React.Component<{}, State> {
               console.error('FATAL: psiphon failed to start correctly', err)
             })
         } else if (!__HOST__) {
-          deviceIsReady.then(this.ready).catch(err => {
-            console.error('FATAL: something went wrong during initialization', err)
-          })
+          deviceIsReady
+            .then(this.ready)
+            .catch(err => {
+              console.error('FATAL: something went wrong during initialization', err)
+            })
         } else {
           this.ready()
         }
@@ -120,8 +130,7 @@ export default class App extends React.Component<{}, State> {
             console.warn('media controls failed to load')
           })
         }
-      })
-      .catch(err => {
+      }).catch(err => {
         console.error('FATAL: redux store failed to hyrate correctly', err)
       })
   }
@@ -146,7 +155,10 @@ export default class App extends React.Component<{}, State> {
               <CircumventionDrawer />
             </div>
           ) : (
-            <div key='app' />
+            <div key='app' className={app}>
+              <Intro />
+              <PsiphonLoading />
+            </div>
           )}
         </Provider>
       </ApolloProvider>
@@ -155,10 +167,6 @@ export default class App extends React.Component<{}, State> {
 
   private ready = () => {
     this.setState({ appReady: true }, () => {
-      const splash = (navigator as any).splashscreen
-      if (splash) {
-        splash.hide()
-      }
       if (typeof StatusBar !== 'undefined') {
         StatusBar.overlaysWebView(false)
         StatusBar.backgroundColorByHexString('#eeeeee')

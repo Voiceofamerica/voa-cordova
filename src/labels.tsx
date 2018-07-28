@@ -142,6 +142,11 @@ export const programsScreenLabels = {
   empty: '什么都没有',
 }
 
+export const psiphonLoadingLabels = {
+  bold: 'Please be patient.',
+  text: 'This may take a few minutes while we gather the best information for you.',
+}
+
 export const pullToRefreshLabels = {
   pull: '释放刷新',
   release: '释放刷新',
