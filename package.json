@@ -29,7 +29,7 @@
     "build:clean": "rimraf plugins && rimraf platforms",
     "build:full": "run-s -c cordova:prepare cordova:prepare cordova:prepare copy:assets build",
     "copy:assets": "run-p copy:assets:*",
-    "copy:assets:ios": "rsync -rv ./assets/ios/Images.xcassets/ ./platforms/ios/美国之音/Images.xcassets/",
+    "copy:assets:ios": "rsync -rv ./assets/ios/Images.xcassets/ ./platforms/ios/VOAChinese/Images.xcassets/",
     "copy:assets:android": "rsync -rv ./assets/android/res/ ./platforms/android/res/",
     "build:android:clean": "rimraf platforms/android && npm run build:webpack && cordova prepare android && npm run copy:assets:android && cordova build android",
     "build:android": "npm run build:webpack && cordova build android",
