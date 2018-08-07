@@ -1,6 +1,15 @@
+
 import * as React from 'react'
 import { Provider } from 'react-redux'
 import { ApolloProvider } from 'react-apollo'
+import { push } from 'react-router-redux'
+
+import { showControls } from '@voiceofamerica/voa-shared/helpers/mediaControlHelper'
+import { setPsiphonConfig, start } from '@voiceofamerica/voa-shared/helpers/psiphonHelper'
+import { deviceIsReady } from '@voiceofamerica/voa-shared/helpers/cordovaHelper'
+import { initializeNotifications, coldStartSubject, notificationSubject } from '@voiceofamerica/voa-shared/helpers/pushNotificationHelper'
+import setNotificationStatus from '@voiceofamerica/voa-shared/redux/actions/setNotificationStatus'
+import NotificationToast from '@voiceofamerica/voa-shared/components/NotificationToast'
 
 import store, { renderReady } from 'redux-store'
 import PsiphonLoading from 'components/PsiphonLoading'
@@ -10,76 +19,17 @@ import MediaPlayer from 'containers/MediaPlayer'
 import CircumventionDrawer from 'containers/CircumventionDrawer'
 import Intro from 'containers/Intro'
 import client from 'helpers/graphql-client'
-import { showControls } from '@voiceofamerica/voa-shared/helpers/mediaControlHelper'
-import { setPsiphonConfig, start } from '@voiceofamerica/voa-shared/helpers/psiphonHelper'
-import { deviceIsReady } from '@voiceofamerica/voa-shared/helpers/cordovaHelper'
+import { defaultAppTopic } from 'labels'
 
-import {
-  app,
-  toastText,
-  toastDismiss,
-  toastMessage,
-  toastMore,
-  toastTitle,
-} from './App.scss'
-
-import { push } from 'react-router-redux'
-
-import {
-  initializeNotifications,
-  NotificationStatus,
-  notificationSubject,
-  VoaNotification,
-} from 'helpers/pushNotifications'
-import toggleDailyNotification from 'redux-store/actions/toggleDailyNotification'
-import { defaultAppTopic } from '../../labels'
-
-import { distinctUntilChanged } from 'rxjs/operators'
-
-import { ToastContainer, toast, Slide } from 'react-toastify'
+import { app } from './App.scss'
 
 interface State {
   appReady: boolean
 }
 
-interface IToast {
-  notification: VoaNotification
-  closeToast?: () => void
-}
-
-const ToastMessage = (props: IToast) => (
-  <div>
-    <div className={toastTitle}>{props.notification.title}</div>
-    <div className={toastMessage}>{props.notification.message}</div>
-    {props.notification.additionalData.articleId ? (
-      <a
-        className={toastMore}
-        onClick={() =>
-          store.dispatch(push(`/article/${props.notification.additionalData.articleId}`))
-        }
-      >
-        Read more ...
-      </a>
-    ) : null}
-    <button className={toastDismiss} onClick={props.closeToast}>
-      Dismiss
-    </button>
-  </div>
-)
-
 export default class App extends React.Component<{}, State> {
   state: State = {
     appReady: false,
-  }
-
-  toastId: number = null
-
-  dismissToast = () => toast.dismiss(this.toastId)
-
-  handleToastNotification (data: VoaNotification) {
-    this.toastId = toast(<ToastMessage notification={data} />, {
-      bodyClassName: toastText,
-    })
   }
 
   componentDidMount () {
@@ -95,14 +45,22 @@ export default class App extends React.Component<{}, State> {
         const appState = store.getState()
 
         initializeNotifications(defaultAppTopic)
-          .pipe(distinctUntilChanged())
           .subscribe(status => {
-            if (status !== NotificationStatus.initialized) {
-              const isOn = status === NotificationStatus.subscribed
-              store.dispatch(toggleDailyNotification({ on: isOn }))
-              notificationSubject.subscribe(this.handleToastNotification)
+            if (status.initialized && status.subscriptions.length > 0) {
+              store.dispatch(setNotificationStatus({ shouldGetPushNotifications: true }))
             }
           })
+
+        notificationSubject.subscribe(notification => {
+          console.log('notification', notification)
+        })
+
+        coldStartSubject.subscribe(notification => {
+          console.log('coldStart', notification)
+          if (notification.additionalData.articleId) {
+            this.goToArticle(notification.additionalData.articleId)
+          }
+        })
 
         console.log('psiphon enabled?', appState.settings.psiphonEnabled)
         if (appState.settings.psiphonEnabled) {
@@ -142,13 +100,8 @@ export default class App extends React.Component<{}, State> {
         <Provider store={store}>
           {appReady ? (
             <div key='app' className={app}>
-              <ToastContainer
-                transition={Slide}
-                autoClose={false}
-                position={'top-center'}
-                closeButton={false}
-              />
               <Intro />
+              <NotificationToast goToArticle={this.goToArticle} />
               <PsiphonIndicator />
               <Router />
               <MediaPlayer />
@@ -156,13 +109,16 @@ export default class App extends React.Component<{}, State> {
             </div>
           ) : (
             <div key='app' className={app}>
-              <Intro />
               <PsiphonLoading />
             </div>
           )}
         </Provider>
       </ApolloProvider>
     )
+  }
+
+  private goToArticle = (articleId: string) => {
+    store.dispatch(push(`/article/${articleId}`))
   }
 
   private ready = () => {

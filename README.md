@@ -17,16 +17,17 @@
   * `pod setup`
 * While building iOS you may need to:
   * cd platforms/ios
-  * pod install (or pod update)
-  * Launch `.xcworkspace` in `XCode` to build the project
+  * `pod install` (or pod update)
+  * Always launch `.xcworkspace` in XCode, rather than the `.xcodeproj` to build the project
 
 ## Quickstart
 
 To set up:
 
 * `npm install`
-* `npx cordova prepare`
-  * If you encounter plugin installation errors, re-run `npx cordova prepare` until you get no errors
+* `npm run setup`
+  * To set up for just android development, use `npm run setup:android`
+  * To set up for just iOS development, use `npm run setup:ios`
 * If you have the password to `protected.zip`, you can run `npm run protected:unzip` and supply the password when prompted
 
 To build & run:
@@ -112,3 +113,6 @@ In order to be able to build and run Android, you'll need to do have the followi
 
 Run the following command and follow the prompts:
 `keytool -genkey -v -keystore build.keystore -alias [app-name] -keyalg RSA -keysize 2048 -validity 10000`
+
+### Push notifications setup
+For iOS, in the developer console you will need to mark your app ID as requiring the push notifications service.  In addition, you will need to create an Apple Push Services certificate.  Once you have both, you will need to use them to create an app in the Firebase console to be able to use push notifications.
