@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="108011" id="com.voanews.voazh" version="1.8.1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="108014" id="com.voanews.voazh" version="1.8.1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name short="美国之音">VOAChinese</name>
     <description>
         美国之音将代表整个美国，而不是美国社会的个别阶层。所以，美国之音将平衡、全面地反映重要的美国思想和体制。
@@ -39,6 +39,7 @@
         <resource-file src="assets/android/res/mipmap-xxhdpi/ic_launcher_round.png" target="res/mipmap-xxhdpi/ic_launcher_round.png" />
         <resource-file src="assets/android/res/mipmap-xxxhdpi/ic_launcher.png" target="res/mipmap-xxxhdpi/ic_launcher.png" />
         <resource-file src="assets/android/res/mipmap-xxxhdpi/ic_launcher_round.png" target="res/mipmap-xxxhdpi/ic_launcher_round.png" />
+        <resource-file src="assets/android/google-services.json" target="google-services.json" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
@@ -46,21 +47,22 @@
         <preference name="AllowInlineMediaPlayback" value="true" />
         <preference name="StatusBarOverlaysWebView" value="false" />
         <preference name="StatusBarBackgroundColor" value="#eeeeee" />
+        <resource-file src="assets/ios/GoogleService-Info.plist" />
     </platform>
-    <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
-    <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
-    <plugin name="adobe-mobile-services" spec="^4.13.1-cor" />
+    <plugin name="cordova-plugin-whitelist" spec="1.3.2" />
+    <plugin name="cordova-plugin-splashscreen" spec="4.0.3" />
+    <plugin name="adobe-mobile-services" spec="4.13.1-cor" />
     <plugin name="psiphon-cordova-plugin" spec="^0.10.2" />
-    <plugin name="cordova-plugin-fullscreen" spec="^1.2.0" />
-    <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
-    <plugin name="cordova-plugin-x-socialsharing" spec="^5.2.1" />
-    <plugin name="cordova-pdf-generator" spec="^1.9.3" />
-    <plugin name="cordova-plugin-add-swift-support" spec="^1.7.1" />
-    <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.1" />
-    <plugin name="cordova-plugin-device" spec="^2.0.1" />
-    <plugin name="nl.x-services.plugins.backgroundaudio" spec="^1.0.1" />
-    <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
-    <plugin name="cordova-plugin-music-controls" spec="@voiceofamerica/cordova-plugin-music-controls@^3.0.5" />
+    <plugin name="cordova-plugin-fullscreen" spec="1.2.0" />
+    <plugin name="ionic-plugin-keyboard" spec="2.2.1" />
+    <plugin name="cordova-plugin-x-socialsharing" spec="5.2.1" />
+    <plugin name="cordova-pdf-generator" spec="1.9.3" />
+    <plugin name="cordova-plugin-add-swift-support" spec="1.7.1" />
+    <plugin name="cordova-plugin-device" spec="2.0.1" />
+    <plugin name="nl.x-services.plugins.backgroundaudio" spec="1.0.1" />
+    <plugin name="cordova-plugin-statusbar" spec="2.4.1" />
+    <plugin name="cordova-plugin-music-controls" spec="@voiceofamerica/cordova-plugin-music-controls@3.0.6" />
+    <plugin name="phonegap-plugin-push" spec="2.1.3" />
     <engine name="android" spec="^6.4.0" />
     <engine name="ios" spec="^4.5.4" />
 </widget>

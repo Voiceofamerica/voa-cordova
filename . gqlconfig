@@ -1,5 +1,0 @@
-{
-  schema: {
-    files: 'node_modules/@voiceofamerica/voa-core-shared/lib/graphql/**/*.graphql'
-  }
-}

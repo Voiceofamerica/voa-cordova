@@ -14,3 +14,36 @@ $ios-padding: 20px;
   right: 0;
   bottom: 0;
 }
+
+.toastText {
+  color: #fff
+}
+
+.toastTitle {
+  font-weight: bold;
+}
+
+.toastMessage {
+  font-size: 14px;
+}
+
+.toastDismiss {
+  float: right;
+  color: #fff;
+  font-style: italic;
+  bottom: 5px;
+  right: 5px;
+  background-color: transparent;
+  border: 0;
+}
+
+.toastMore {
+  float: left;
+  color: #fff;
+  font-style: italic;
+  bottom: 5px;
+  left: 5px;
+  background-color: transparent;
+  border: 0;
+}
+

@@ -1,4 +1,3 @@
-
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
@@ -14,11 +13,7 @@ isWebHost(__HOST__)
 const rootElement = document.getElementById('app')
 
 let render = (Component, cb?) => {
-  ReactDOM.render(
-    <Component />,
-    rootElement,
-    cb,
-  )
+  ReactDOM.render(<Component />, rootElement, cb)
 }
 if (module.hot) {
   render = Component => {
