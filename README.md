@@ -2,7 +2,7 @@
 
 ## Download the App
 
-* ...
+* On Apple App Store or Google Play Store
 
 ## Pre-requisites
 
