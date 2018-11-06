@@ -76,13 +76,14 @@ bash "${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/PsiphonTunnel.framework/st
 In order to be able to build and run Android, you'll need to do have the following:
 
 * From SDK Platforms:
-  1.  At least Android 7.1.1 (api level 25)
+  1. At least Android 7.1.1 (api level 25)
 * From SDK Tools:
   1.  Android SDK Build-Tools
   1.  Android Emulator
   1.  Android SDK Platform-Tools
   1.  Android SDK Tools
   1.  Intel x86 Emulator Accelerator (HAXM installer)
+  1.  Install ADB `brew cask install android-platform-tools`
 * Either a working ADV or a physical device that can be connected to the computer
   * When you run `npm run start:android`, you should either see the text `AVD Discovered` or a CLI menu
     * If you see the CLI menu but you see no ADVs (nothing is selectable besides `Quit`), you either need to ensure your physical device is connected properly or create a working ADV
